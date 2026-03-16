@@ -34,16 +34,27 @@
         <!-- Desktop Screen -->
         <Grid x:Name="DesktopScreen" Visibility="Visible" Grid.ColumnSpan="2">
             <Image Source="/images/pc_background.png" Stretch="Fill"/>
-            <Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="66" Width="66" BorderBrush="{x:Null}" Foreground="{x:Null}" Grid.ColumnSpan="2">
+            <Button Name="PowerButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="66" Width="66" BorderBrush="{x:Null}" Foreground="{x:Null}" Grid.ColumnSpan="2" Click="PowerButton_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="/images/power_button.png"/>
                 </Button.Background>
             </Button>
-            <Button HorizontalAlignment="Left" Margin="71,0,0,0" VerticalAlignment="Bottom" Width="66" Height="66" BorderBrush="{x:Null}">
+            <Button Name="TerminalButton" HorizontalAlignment="Left" Margin="71,0,0,0" VerticalAlignment="Bottom" Width="66" Height="66" BorderBrush="{x:Null}">
                 <Button.Background>
-                    <ImageBrush ImageSource="/Terminal_Icon.png" TileMode="None" Stretch="UniformToFill"/>
+                    <ImageBrush TileMode="None" Stretch="UniformToFill" ImageSource="/images/Terminal_Icon.png"/>
                 </Button.Background>
             </Button>
+            <StackPanel x:Name="PowerOptions" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="0,-72,0,0" Width="170" Height="180">
+               
+
+                <Button x:Name="Shutdown" Height="60" Width="170" BorderBrush="Black">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/images/shutdown_button.png" Stretch="UniformToFill" TileMode="None"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="Restart" Content="Restart" HorizontalAlignment="Left" VerticalAlignment="Top" Height="60" Width="170" Background="#FF5E5656"/>
+                 
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

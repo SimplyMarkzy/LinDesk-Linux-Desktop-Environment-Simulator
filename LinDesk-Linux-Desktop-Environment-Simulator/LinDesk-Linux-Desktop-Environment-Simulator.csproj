@@ -10,6 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\shutdownb_icon.png" />
+    <None Remove="images\terminal_icon.png" />
     <None Remove="Terminal_Icon.png" />
   </ItemGroup>
 
@@ -20,7 +22,16 @@
     <Resource Include="images\power_button.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Terminal_Icon.png" />
+    <Resource Include="images\shutdownb_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Terminal_Icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="images\terminal_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

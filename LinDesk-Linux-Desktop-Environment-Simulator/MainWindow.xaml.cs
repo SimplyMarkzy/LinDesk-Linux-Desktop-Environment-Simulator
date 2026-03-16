@@ -191,6 +191,11 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 LoginStatus.Text = "Invalid username or password. Please try again.";
             }
         }
+
+        private void PowerButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
     
 
