@@ -44,17 +44,24 @@
                     <ImageBrush TileMode="None" Stretch="UniformToFill" ImageSource="/images/Terminal_Icon.png"/>
                 </Button.Background>
             </Button>
-            <StackPanel x:Name="PowerOptions" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="0,-72,0,0" Width="170" Height="180">
-               
+            <Grid x:Name="PowerOptions" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="0,-72,0,0" Width="170" Height="180">
 
-                <Button x:Name="Shutdown" Height="60" Width="170" BorderBrush="Black">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/images/shutdown_button.png" Stretch="UniformToFill" TileMode="None"/>
-                    </Button.Background>
-                </Button>
-                <Button x:Name="Restart" Content="Restart" HorizontalAlignment="Left" VerticalAlignment="Top" Height="60" Width="170" Background="#FF5E5656"/>
-                 
-            </StackPanel>
+
+                <Button x:Name="Shutdown" Content="Shutdown" Height="60" Width="170" BorderBrush="Black" Margin="0,0,0,120" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FF5E5656" Click="Shutdown_Click"/>
+                <Button x:Name="Restart" Content="Restart" HorizontalAlignment="Center" VerticalAlignment="Center" Height="60" Width="170" Background="#FF5E5656" Click="Restart_Click"/>
+                <Button x:Name="Sleep" Content="Sleep" HorizontalAlignment="Center" Margin="0,120,0,0" VerticalAlignment="Top" Height="60" Width="170" Background="#FF5E5656" Click="Sleep_Click"/>
+
+            </Grid>
+
+        </Grid>
+        <!-- Sleep Screen -->
+        <Grid x:Name="SleepMode" Visibility="Collapsed" Grid.ColumnSpan="2" MouseLeftButtonDown="SleepScreen_MouseLeftButtonDown">
+
+            <Rectangle HorizontalAlignment="Center" Height="1064" Stroke="Black" VerticalAlignment="Center" Width="1920" Fill="#FF2D2828"/>
+            <Label Content="THIS IS A TEMPORARY SLEEP MODE SCREEN!!!" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="1282" FontSize="60"/>
+
+
+
         </Grid>
     </Grid>
 </Window>

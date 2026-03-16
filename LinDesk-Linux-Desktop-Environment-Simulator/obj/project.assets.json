@@ -8,24 +8,19 @@
     "net9.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Uzivatel\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\jajin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Uzivatel\\Source\\Repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj",
+      "projectUniqueName": "C:\\Users\\jajin\\Source\\Repos\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj",
       "projectName": "LinDesk-Linux-Desktop-Environment-Simulator",
-      "projectPath": "C:\\Users\\Uzivatel\\Source\\Repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj",
-      "packagesPath": "C:\\Users\\Uzivatel\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Uzivatel\\Source\\Repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\obj\\",
+      "projectPath": "C:\\Users\\jajin\\Source\\Repos\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj",
+      "packagesPath": "C:\\Users\\jajin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jajin\\Source\\Repos\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Uzivatel\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\jajin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -75,7 +70,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

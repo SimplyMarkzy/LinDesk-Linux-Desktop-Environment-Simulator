@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,11 +24,19 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             InitializeComponent();
             Loaded += MainWindow_Loaded;
         }
-        
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            // nastartuje boot seqvenciu nasho oska.
+            // "await" znamena ze program caka dokim sa dokonci metoda StartBootSequence
+            await StartBootSequence();
+        }
+        private async Task StartBootSequence()
         {
             //async funguje tak ze mozem tuto metodu bez blokovania vykreslovacieho thredu vykonat operacie bez toho aby som musel cakat na dokoncenie vsetkych operacii,
             //co je idealne pre simulaciu bootovania, kde chcem zobrazovat postupne text bez toho aby sa aplikacia zasekla
+            BootOutput.Clear();
+            DesktopScreen.Visibility = Visibility.Collapsed; // skryje hlavny desktop
+            BootScreen.Visibility = Visibility.Visible; // zobrazy bootovaci panel
             await Task.Delay(1000); //simulate initial delay
             {
                 List<string> bootLines = new List<string>()
@@ -58,6 +69,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 "[ OK ] Detecting mouse...",
 "[ OK ] Loading graphics driver...",
 "[ OK ] Initializing display subsystem...",
+"[ Check ] Loading absolutely unnecessary modules...",
 "[ OK ] Starting display server...",
 "[ OK ] Initializing framebuffer...",
 "[ OK ] Loading font subsystem...",
@@ -85,6 +97,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 "[ OK ] Initializing sound subsystem...",
 "[ OK ] Detecting audio devices...",
 "[ OK ] Audio driver loaded",
+"[ OK ] Compiling excuses for slow startup...",
 "[ OK ] Preparing user environment...",
 "[ OK ] Mounting /home directory...",
 "[ OK ] Mounting temporary storage...",
@@ -160,16 +173,17 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 "[ OK ] Preparing login prompt...",
 "Linux Desktop Enviroment Simulator boot complete."
             };
-
+                Random r = new Random();
                 foreach (string line in bootLines)
                 {
-                 
+
                     BootOutput.AppendText(line + Environment.NewLine); // pridá text na koniec a skočí na nový riadok podľa typu systému
                     BootOutput.ScrollToEnd(); // automaticky odroluje na koniec, aby bol vždy vidieť najnovší text
-                    await Task.Delay(100);
+                    int wait = r.Next(1, 500); // random time in milliseconds
+                    await Task.Delay(wait);
                 }
 
-                await Task.Delay(10000);
+                await Task.Delay(3000);
                 BootScreen.Visibility = Visibility.Collapsed; // skryje bootovací panel po dokončení simulace
                 LoginScreen.Visibility = Visibility.Visible; // zobrazí přihlašovací obrazovku
 
@@ -179,10 +193,10 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             if (UsernameBox.Text == "demo" && PasswordBox.Text == "demo")
-            { 
-                Thread.Sleep(3000); 
+            {
+                Thread.Sleep(3000);
                 LoginScreen.Visibility = Visibility.Collapsed; // skryje přihlašovací obrazovku
                 DesktopScreen.Visibility = Visibility.Visible; // zobrazí hlavní desktop
             }
@@ -194,9 +208,41 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
         private void PowerButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (PowerOptions.Visibility == Visibility.Collapsed)
+            {
+                PowerOptions.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                PowerOptions.Visibility = Visibility.Collapsed;
+            }
         }
-    }
-    
 
+        private void Shutdown_Click(object sender, RoutedEventArgs e)
+        {
+            Thread.Sleep(1000); //simulate shutdown delay
+            Process.GetCurrentProcess().Kill();
+        }
+
+        private void Restart_Click(object sender, RoutedEventArgs e)
+        {
+            Thread.Sleep(1000); //simulate restart delay
+            StartBootSequence();
+        }
+
+        private void Sleep_Click(object sender, RoutedEventArgs e)
+
+        {
+            Thread.Sleep(1000); //simulate sleep delay
+            DesktopScreen.Visibility = Visibility.Collapsed; // schova hlavny desktop
+            SleepMode.Visibility = Visibility.Visible; // zobrazy obrazovku sleep
+        }
+        private void SleepScreen_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Thread.Sleep(1000); //simulate wake up delay
+            SleepMode.Visibility = Visibility.Collapsed; // schova obrazovku sleep
+            DesktopScreen.Visibility = Visibility.Visible; // zobrazy hlavny desktop
+        }
+
+    }
 }
