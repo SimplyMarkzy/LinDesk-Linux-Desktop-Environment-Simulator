@@ -9,4 +9,18 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Terminal_Icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\pc_background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\power_button.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Terminal_Icon.png" />
+  </ItemGroup>
+
 </Project>

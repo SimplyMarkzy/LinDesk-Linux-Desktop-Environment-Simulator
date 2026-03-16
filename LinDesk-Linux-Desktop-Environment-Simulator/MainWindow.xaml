@@ -5,11 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LinDesk_Linux_Desktop_Environment_Simulator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow"  Height="1080" Width="1920">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="191*"/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
 
         <!-- Boot Screen -->
-        <Grid x:Name="BootScreen" Visibility="Visible">
+        <Grid x:Name="BootScreen" Visibility="Collapsed" Grid.ColumnSpan="2">
 
             <TextBox x:Name="BootOutput"
                  Background="Black"
@@ -19,18 +24,26 @@
         </Grid>
 
         <!-- Login Screen -->
-        <Grid x:Name="LoginScreen" Visibility="Collapsed">
+        <Grid x:Name="LoginScreen" Visibility="Collapsed" Grid.ColumnSpan="2">
             <Button Name="LoginButton" Content="Login" HorizontalAlignment="Center" Margin="0,287,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Click="LoginButton_Click"/>
             <TextBlock HorizontalAlignment="Center" Margin="0,171,0,0" TextWrapping="Wrap" Text="Lindesk Login" VerticalAlignment="Top" Height="46" Width="180" FontSize="24"/>
             <TextBox Name="UsernameBox" HorizontalAlignment="Center" Margin="0,222,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" Width="120"/>
             <TextBox Name="PasswordBox" HorizontalAlignment="Center" Margin="0,245,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Width="120" BorderBrush="#FF595B62"/>
             <TextBlock Name="LoginStatus" HorizontalAlignment="Left" Margin="251,347,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="209"/>
-
         </Grid>
-
         <!-- Desktop Screen -->
-        <Grid x:Name="DesktopScreen" Visibility="Collapsed">
-
+        <Grid x:Name="DesktopScreen" Visibility="Visible" Grid.ColumnSpan="2">
+            <Image Source="/images/pc_background.png" Stretch="Fill"/>
+            <Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="66" Width="66" BorderBrush="{x:Null}" Foreground="{x:Null}" Grid.ColumnSpan="2">
+                <Button.Background>
+                    <ImageBrush ImageSource="/images/power_button.png"/>
+                </Button.Background>
+            </Button>
+            <Button HorizontalAlignment="Left" Margin="71,0,0,0" VerticalAlignment="Bottom" Width="66" Height="66" BorderBrush="{x:Null}">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Terminal_Icon.png" TileMode="None" Stretch="UniformToFill"/>
+                </Button.Background>
+            </Button>
         </Grid>
     </Grid>
 </Window>
