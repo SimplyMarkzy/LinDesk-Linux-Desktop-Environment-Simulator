@@ -19,6 +19,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
     /// </summary>
     public partial class MainWindow : Window
     {
+        string Prefix ="demo@LinDesk:~$ ";
         public MainWindow()
         {
             InitializeComponent();
@@ -35,6 +36,8 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             //async funguje tak ze mozem tuto metodu bez blokovania vykreslovacieho thredu vykonat operacie bez toho aby som musel cakat na dokoncenie vsetkych operacii,
             //co je idealne pre simulaciu bootovania, kde chcem zobrazovat postupne text bez toho aby sa aplikacia zasekla
             BootOutput.Clear();
+            UsernameBox.Clear();
+            PasswordBox.Clear();
             DesktopScreen.Visibility = Visibility.Collapsed; // skryje hlavny desktop
             BootScreen.Visibility = Visibility.Visible; // zobrazy bootovaci panel
             await Task.Delay(1000); //simulate initial delay
@@ -179,7 +182,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
                     BootOutput.AppendText(line + Environment.NewLine); // pridá text na koniec a skočí na nový riadok podľa typu systému
                     BootOutput.ScrollToEnd(); // automaticky odroluje na koniec, aby bol vždy vidieť najnovší text
-                    int wait = r.Next(1, 500); // random time in milliseconds
+                    int wait = r.Next(1, 300); // random time in milliseconds
                     await Task.Delay(wait);
                 }
 
@@ -244,5 +247,23 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             DesktopScreen.Visibility = Visibility.Visible; // zobrazy hlavny desktop
         }
 
+        private void TerminalButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Terminal.Visibility == Visibility.Collapsed)
+                Terminal.Visibility = Visibility.Visible;
+            else
+                Terminal.Visibility = Visibility.Collapsed;
+        }
+        private void Terminal_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (Terminal.Visibility== Visibility.Visible && e.Key == Key.Enter)
+            {
+                LinuxTextWriter.AppendText(Prefix + Environment.NewLine);
+                LinuxTextWriter.ScrollToEnd();
+                TerminalText.AppendText(Environment.NewLine);
+                TerminalText.ScrollToEnd();
+            }
+            
+        }
     }
 }

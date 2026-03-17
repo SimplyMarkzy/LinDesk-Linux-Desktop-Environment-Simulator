@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LinDesk_Linux_Desktop_Environment_Simulator"
+        RenderOptions.BitmapScalingMode="LowQuality"
+        RenderOptions.EdgeMode="Aliased"
         mc:Ignorable="d"
         Title="MainWindow"  Height="1080" Width="1920">
     <Grid>
@@ -39,7 +41,7 @@
                     <ImageBrush ImageSource="/images/power_button.png"/>
                 </Button.Background>
             </Button>
-            <Button Name="TerminalButton" HorizontalAlignment="Left" Margin="71,0,0,0" VerticalAlignment="Bottom" Width="66" Height="66" BorderBrush="{x:Null}">
+            <Button Name="TerminalButton" HorizontalAlignment="Left" Margin="71,0,0,0" VerticalAlignment="Bottom" Width="66" Height="66" BorderBrush="{x:Null}" Click="TerminalButton_Click">
                 <Button.Background>
                     <ImageBrush TileMode="None" Stretch="UniformToFill" ImageSource="/images/Terminal_Icon.png"/>
                 </Button.Background>
@@ -50,6 +52,12 @@
                 <Button x:Name="Shutdown" Content="Shutdown" Height="60" Width="170" BorderBrush="Black" Margin="0,0,0,120" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FF5E5656" Click="Shutdown_Click"/>
                 <Button x:Name="Restart" Content="Restart" HorizontalAlignment="Center" VerticalAlignment="Center" Height="60" Width="170" Background="#FF5E5656" Click="Restart_Click"/>
                 <Button x:Name="Sleep" Content="Sleep" HorizontalAlignment="Center" Margin="0,120,0,0" VerticalAlignment="Top" Height="60" Width="170" Background="#FF5E5656" Click="Sleep_Click"/>
+
+            </Grid>
+            <Grid x:Name="Terminal" Visibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Rectangle Name="TerminalWindow" HorizontalAlignment="Center" Height="600" Stroke="Black" VerticalAlignment="Center" Width="1000" Fill="#FF2D2828"/>
+                <TextBox Name="TerminalText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" FontSize="20" VerticalAlignment="Center" Width="816" Height="600" Background="#FF2D2828" Foreground="Lime" Margin="186,0,0,0" KeyDown="Terminal_KeyDown"/>
+                <TextBox Name="LinuxTextWriter" HorizontalAlignment="Left" TextWrapping="Wrap" Text=" demo@LinDesk:~$" FontSize="20" VerticalAlignment="Center" Height="600" Width="181" Background="#FF2D2828" Foreground="Lime"/>
 
             </Grid>
 
