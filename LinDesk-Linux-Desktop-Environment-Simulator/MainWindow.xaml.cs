@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static LinDesk_Linux_Desktop_Environment_Simulator.TerminalLogic;
 
 namespace LinDesk_Linux_Desktop_Environment_Simulator
 {
@@ -19,11 +20,14 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
     /// </summary>
     public partial class MainWindow : Window
     {
-        string Prefix ="demo@LinDesk:~$ ";
+        string Prefix ="demo@LinDesk:~$";
+        private int inputStart;
         public MainWindow()
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
+            terminal = new TerminalController(TerminalBox);
+            terminal.Start();
         }
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -38,6 +42,8 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             BootOutput.Clear();
             UsernameBox.Clear();
             PasswordBox.Clear();
+            Terminal.Visibility = Visibility.Collapsed;
+            PowerOptions.Visibility = Visibility.Collapsed;
             DesktopScreen.Visibility = Visibility.Collapsed; // skryje hlavny desktop
             BootScreen.Visibility = Visibility.Visible; // zobrazy bootovaci panel
             await Task.Delay(1000); //simulate initial delay
@@ -254,16 +260,27 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             else
                 Terminal.Visibility = Visibility.Collapsed;
         }
-        private void Terminal_KeyDown(object sender, KeyEventArgs e)
+        private TerminalController terminal;
+
+
+        private void TerminalBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (Terminal.Visibility== Visibility.Visible && e.Key == Key.Enter)
-            {
-                LinuxTextWriter.AppendText(Prefix + Environment.NewLine);
-                LinuxTextWriter.ScrollToEnd();
-                TerminalText.AppendText(Environment.NewLine);
-                TerminalText.ScrollToEnd();
-            }
-            
+            terminal.HandleKeyDown(e);
+        }
+
+        private void TerminalBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            terminal.HandlePreviewKeyDown(e);
+        }
+
+        private void TerminalBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            terminal.HandlePreviewMouseDown(e);
+        }
+
+        private void TerminalBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            terminal.HandleSelectionChanged();
         }
     }
 }
