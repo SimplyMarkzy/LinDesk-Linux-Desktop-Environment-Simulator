@@ -197,7 +197,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
 
-            if (UsernameBox.Text == "demo" && PasswordBox.Text == "demo")
+            if (UsernameBox.Text == "demo" && PasswordBox.Password == "demo")
             {
                 Thread.Sleep(3000);
                 LoginScreen.Visibility = Visibility.Collapsed; // skryje přihlašovací obrazovku

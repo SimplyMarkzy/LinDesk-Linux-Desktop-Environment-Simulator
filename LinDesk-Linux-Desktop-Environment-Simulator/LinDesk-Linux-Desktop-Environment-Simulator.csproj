@@ -10,12 +10,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\loginBck.jpg" />
+    <None Remove="images\loginBckBlurred.jpg" />
     <None Remove="images\shutdownb_icon.png" />
+    <None Remove="images\sipka login.jpg" />
     <None Remove="images\terminal_icon.png" />
     <None Remove="Terminal_Icon.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\loginBck.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\loginBckBlurred.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\pc_background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -23,6 +32,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\shutdownb_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\sipka login.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\Terminal_Icon.png" />

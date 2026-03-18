@@ -26,15 +26,33 @@
         </Grid>
 
         <!-- Login Screen -->
-        <Grid x:Name="LoginScreen" Visibility="Collapsed" Grid.ColumnSpan="2">
-            <Button Name="LoginButton" Content="Login" HorizontalAlignment="Center" Margin="0,287,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Click="LoginButton_Click"/>
-            <TextBlock HorizontalAlignment="Center" Margin="0,171,0,0" TextWrapping="Wrap" Text="Lindesk Login" VerticalAlignment="Top" Height="46" Width="180" FontSize="24"/>
-            <TextBox Name="UsernameBox" HorizontalAlignment="Center" Margin="0,222,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" Width="120"/>
-            <TextBox Name="PasswordBox" HorizontalAlignment="Center" Margin="0,245,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Width="120" BorderBrush="#FF595B62"/>
-            <TextBlock Name="LoginStatus" HorizontalAlignment="Left" Margin="251,347,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="209"/>
+        <Grid x:Name="LoginScreen" Visibility="Visible" Grid.ColumnSpan="2">
+            <Grid.Background>
+                <ImageBrush Stretch="Fill" ImageSource="/images/loginBckBlurred.jpg"/>
+            </Grid.Background>
+            <Button Name="LoginButton" Content="" HorizontalAlignment="Left" Margin="1030,565,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Click="LoginButton_Click" Height="33" BorderThickness="0,1,1,1" Width="58" BorderBrush="#FF595B62">
+                <Button.Background>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="/images/sipka login.jpg" TileMode="None">
+                        <ImageBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.495" ScaleX="5" ScaleY="3"/>
+                                <SkewTransform CenterX="0.495" CenterY="0.5"/>
+                                <RotateTransform CenterX="0.495" CenterY="0.5"/>
+                                <TranslateTransform X="0"/>
+                            </TransformGroup>
+                        </ImageBrush.RelativeTransform>
+                    </ImageBrush>
+                </Button.Background>
+            </Button>
+            <TextBlock HorizontalAlignment="Center" Margin="0,171,0,0" TextWrapping="Wrap" Text="Lindesk Login" VerticalAlignment="Top" Height="33" Width="120" FontSize="24"/>
+            <TextBox Name="UsernameBox"  Margin="888,504,907,532"   VerticalContentAlignment="Center" Width="125" BorderBrush="DarkGray" Height="28" Foreground="White" FontSize="13" FontWeight="Medium" FontFamily="Montserrat" Background="Transparent" BorderThickness="0,0,0,2" RenderTransformOrigin="-3.756,-0.742" />
+
+            <PasswordBox Name="PasswordBox" HorizontalAlignment="Left" Margin="884,564,0,0"   VerticalAlignment="Top" Width="125" BorderBrush="#FF595B62" Height="34"/>
+            <TextBlock x:Name="LoginStatus" HorizontalAlignment="Left" Margin="251,347,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="209"/>
+            <TextBlock Name="Username" Foreground="DarkGray"  Margin="888,457,916,583"  Text="Username"/>
         </Grid>
         <!-- Desktop Screen -->
-        <Grid x:Name="DesktopScreen" Visibility="Visible" Grid.ColumnSpan="2">
+        <Grid x:Name="DesktopScreen" Visibility="Collapsed" Grid.ColumnSpan="2">
             <Image Source="/images/pc_background.png" Stretch="Fill"/>
             <Button Name="PowerButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="66" Width="66" BorderBrush="{x:Null}" Foreground="{x:Null}" Grid.ColumnSpan="2" Click="PowerButton_Click">
                 <Button.Background>
