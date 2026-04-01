@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Drawing;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -11,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static LinDesk_Linux_Desktop_Environment_Simulator.TerminalLogic;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace LinDesk_Linux_Desktop_Environment_Simulator
 {
@@ -20,25 +23,40 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
     /// </summary>
     public partial class MainWindow : Window
     {
-        string Prefix ="demo@LinDesk:~$";
-        private int inputStart;
+        string Prefix = "demo@LinDesk:~$ ";
+        public string executedLine;
+
+        // Renamed to avoid ambiguity / duplicate definition errors
+        private List<string> _terminalHistory = new List<string>();
+        private int historyIndex = -1;
+
         public MainWindow()
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
-            terminal = new TerminalController(TerminalBox);
-            terminal.Start();
+
+            // init single-line prompt and hook events
+            TerminalBox.Document.Blocks.Clear();
+            TerminalBox.Document.Blocks.Add(new Paragraph(new Run(Prefix)));
+            TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+            TerminalBox.Focus();
+
+            TerminalBox.PreviewKeyDown += TerminalBox_PreviewKeyDown;
+            TerminalBox.TextChanged += TerminalBox_TextChangedHandler;
         }
+
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // nastartuje boot seqvenciu nasho oska.
-            // "await" znamena ze program caka dokim sa dokonci metoda StartBootSequence
-            await StartBootSequence();
+            // Start boot sequence asynchronously and await it to avoid CS1998 warning.
+            //await StartBootSequence();
         }
+
         private async Task StartBootSequence()
         {
             //async funguje tak ze mozem tuto metodu bez blokovania vykreslovacieho thredu vykonat operacie bez toho aby som musel cakat na dokoncenie vsetkych operacii,
             //co je idealne pre simulaciu bootovania, kde chcem zobrazovat postupne text bez toho aby sa aplikacia zasekla
+            TerminalBox.Document.Blocks.Clear(); // vyčistí obsah terminálu
+            TerminalBox.Document.Blocks.Add(new Paragraph(new Run(Prefix))); // přidá nový řádek s promptem
             BootOutput.Clear();
             UsernameBox.Clear();
             PasswordBox.Clear();
@@ -206,7 +224,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             if (UsernameBox.Text == "demo" && PasswordBox.Text == "demo")
             {
                 Thread.Sleep(3000);
-                LoginScreen.Visibility = Visibility.Collapsed; // skryje přihlašovací obrazovku
+                LoginScreen.Visibility = Visibility.Collapsed; // skryje přihlašovaciu obrazovku
                 DesktopScreen.Visibility = Visibility.Visible; // zobrazí hlavní desktop
             }
             else
@@ -233,10 +251,11 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             Process.GetCurrentProcess().Kill();
         }
 
-        private void Restart_Click(object sender, RoutedEventArgs e)
+        private async void Restart_Click(object sender, RoutedEventArgs e)
         {
-            Thread.Sleep(1000); //simulate restart delay
-            StartBootSequence();
+            // make non-blocking delay then await boot sequence to avoid CS4014
+            await Task.Delay(1000); //simulate restart delay
+            await StartBootSequence();
         }
 
         private void Sleep_Click(object sender, RoutedEventArgs e)
@@ -260,27 +279,118 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             else
                 Terminal.Visibility = Visibility.Collapsed;
         }
-        private TerminalController terminal;
-
-
-        private void TerminalBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            terminal.HandleKeyDown(e);
-        }
-
+        //táto čast kódu sa volá že vibecoding
         private void TerminalBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            terminal.HandlePreviewKeyDown(e);
-        }
+            // caret index is a zero-based integer representing the current position of the
+            // blinking text insertion cursor within a text input field
+            // compute caret index from document start
+            var caret = TerminalBox.CaretPosition;
+            int caretIndex = new TextRange(TerminalBox.Document.ContentStart, caret).Text.Length;
 
-        private void TerminalBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            terminal.HandlePreviewMouseDown(e);
-        }
+            // if a selection exists, compute selection indexes
+            var selection = TerminalBox.Selection;
+            int selectionStart = new TextRange(TerminalBox.Document.ContentStart, selection.Start).Text.Length;
+            int selectionEnd = new TextRange(TerminalBox.Document.ContentStart, selection.End).Text.Length;
 
-        private void TerminalBox_SelectionChanged(object sender, RoutedEventArgs e)
+            // prevent Backspace/Delete when caret or selection would affect the prefix
+            if (e.Key == Key.Back)
+            {
+                if (caretIndex <= Prefix.Length || selectionStart < Prefix.Length)
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+            if (e.Key == Key.Delete)
+            {
+                if (caretIndex < Prefix.Length || selectionStart < Prefix.Length)
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+            if (e.Key == Key.Enter)
+            {
+                // Handle Enter: capture the whole last prompt+command as a single string,
+                // add it to history, reinsert a new prompt line and keep caret at the end.
+                e.Handled = true;
+
+                var fullTextRange = new TextRange(TerminalBox.Document.ContentStart, TerminalBox.Document.ContentEnd);
+                string full = fullTextRange.Text ?? "";
+
+                // Normalize: remove CR chars
+                string cleaned = full.Replace("\r", "");
+
+                // FlowDocument often has a trailing newline; remove one trailing '\n' if present
+                if (cleaned.EndsWith("\n"))
+                {
+                    cleaned = cleaned.Substring(0, cleaned.Length - 1);
+                }
+
+                // Find last occurrence of the prompt prefix
+                int idx = cleaned.LastIndexOf(Prefix);
+                
+                if (idx >= 0)
+                {
+                    // include prefix and everything after it
+                    executedLine = cleaned.Substring(idx);
+                }
+                else
+                {
+                    // fallback: just use whatever is after the start
+                    executedLine = Prefix;
+                }
+                
+                // Write the executed line into the TerminalHistory TextBox (if present) so history is visible
+                if (TerminalHistory != null)
+                {
+                    // Append full executedLine (including prefix) and scroll to end
+                    TerminalHistory.AppendText(executedLine + Environment.NewLine);
+                    try
+                    {
+                        TerminalHistory.ScrollToEnd();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+
+                // Append a new prompt line so the user can continue typing
+                TerminalBox.Document.Blocks.Add(new Paragraph(new Run(Prefix)));
+                TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+                TerminalBox.Focus();
+                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel);
+                DebugLabel.Content = $"Executed: '{executedLine}'"; // for debugging: show the captured command line
+            }
+        }
+        private void TerminalBox_TextChangedHandler(object sender, TextChangedEventArgs e)
         {
-            terminal.HandleSelectionChanged();
+            // get full plain text (may include trailing newline)
+            var full = new TextRange(TerminalBox.Document.ContentStart, TerminalBox.Document.ContentEnd).Text ?? "";
+
+            // remove CR/LF that FlowDocument adds for layout
+            string cleaned = full.Replace("\r", "").Replace("\n", "");
+
+            // if prefix got removed (paste or other), restore it
+            if (!cleaned.StartsWith(Prefix))
+            {
+                // preserve any typed text after where prefix should be
+                string tail = cleaned;
+                // if tail already contains prefix somewhere, strip everything before that occurrence
+                int idx = tail.IndexOf(Prefix);
+                if (idx >= 0)
+                    tail = tail.Substring(idx + Prefix.Length);
+                TerminalBox.Document.Blocks.Clear();
+                TerminalBox.Document.Blocks.Add(new Paragraph(new Run(Prefix + tail)));
+                TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+            }
+            else
+            {
+                // keep caret at end so user types after prompt
+                TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+            }
         }
     }
 }

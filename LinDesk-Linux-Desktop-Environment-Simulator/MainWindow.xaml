@@ -46,18 +46,20 @@
                     <ImageBrush TileMode="None" Stretch="UniformToFill" ImageSource="/images/Terminal_Icon.png"/>
                 </Button.Background>
             </Button>
-            <Grid x:Name="PowerOptions" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="0,-72,0,0" Width="170" Height="180">
-
-
-                <Button x:Name="Shutdown" Content="Shutdown" Height="60" Width="170" BorderBrush="Black" Margin="0,0,0,120" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FF5E5656" Click="Shutdown_Click"/>
+            <Grid x:Name="PowerOptions" Visibility="Collapsed" VerticalAlignment="Bottom" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,65" Width="170" Height="180">
+                <Button x:Name="Shutdown" Content="Shutdown" Height="60" Width="170" Margin="0,0,0,120" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FF5E5656" Click="Shutdown_Click"/>
                 <Button x:Name="Restart" Content="Restart" HorizontalAlignment="Center" VerticalAlignment="Center" Height="60" Width="170" Background="#FF5E5656" Click="Restart_Click"/>
                 <Button x:Name="Sleep" Content="Sleep" HorizontalAlignment="Center" Margin="0,120,0,0" VerticalAlignment="Top" Height="60" Width="170" Background="#FF5E5656" Click="Sleep_Click"/>
-
             </Grid>
             <Grid x:Name="Terminal" Visibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Rectangle Name="TerminalWindow" HorizontalAlignment="Center" Height="600" Stroke="Black" VerticalAlignment="Center" Width="1000" Fill="#FF2D2828"/>
-                <TextBox Name="TerminalBox" FontFamily="Consolas" FontSize="16" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" KeyDown="TerminalBox_KeyDown" PreviewKeyDown="TerminalBox_PreviewKeyDown" PreviewMouseDown="TerminalBox_PreviewMouseDown" SelectionChanged="TerminalBox_SelectionChanged" Background="#FF2D2828"/>
+                <TextBox Name="TerminalHistory" Background="{x:Null}" FontSize="24" Foreground="Lime" FontFamily="Consolas" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1000" Height="570" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden"/>
+                <RichTextBox Name="TerminalBox" FontFamily="Consolas" FontSize="24" Foreground="Lime" AcceptsReturn="True" Background="#FF2D2828" Height="30" Width="1000" VerticalAlignment="Bottom"/>
             </Grid>
+            <Label Name="DebugLabel" Content="DebugLabel" FontSize="24" HorizontalAlignment="Left" Margin="196,146,0,0" VerticalAlignment="Top" Width="528"/>
+            <Label Name="PrefixLabel" Content="Prefix" HorizontalAlignment="Left" Margin="1516,90,0,0" VerticalAlignment="Top" Width="114"/>
+            <Label Name="CommandLabel" Content="CommandLabel" HorizontalAlignment="Left" Margin="1516,59,0,0" VerticalAlignment="Top" Width="166"/>
+            <Label Name="DirectoryLabel" Content="DirectoryLabel" HorizontalAlignment="Left" Margin="1516,116,0,0" VerticalAlignment="Top" Width="143"/>
 
         </Grid>
         <!-- Sleep Screen -->
