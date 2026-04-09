@@ -23,7 +23,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
     /// </summary>
     public partial class MainWindow : Window
     {
-        string Prefix = "demo@LinDesk:~$ ";
+        public string Prefix = "demo@LinDesk:~$ ";
         public string executedLine;
 
         // Renamed to avoid ambiguity / duplicate definition errors
@@ -34,7 +34,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
-
+            TerminalHistory.Text = "Welcome to LinDesk 1.0 (Simulated Environment)\r\n\r\nSystem information as of session start:\r\n\r\n  System load: 0.03\r\n  Processes: 112 running\r\n  Memory usage: 842MB / 4096MB\r\n  Disk usage: 12% of 120GB\r\n  Network: connected\r\n\r\nNo updates available.\r\n\r\nDocumentation: https://lindesk.local/docs\r\nSupport: https://lindesk.local/support\r\n\r\nTip: Type 'help' to see available commands.\r\n\r\ndemo@lindesk:~$\r\n";
             // init single-line prompt and hook events
             TerminalBox.Document.Blocks.Clear();
             TerminalBox.Document.Blocks.Add(new Paragraph(new Run(Prefix)));
