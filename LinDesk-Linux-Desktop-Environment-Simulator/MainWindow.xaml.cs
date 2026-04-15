@@ -1,4 +1,5 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System.Drawing;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -11,41 +12,59 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static LinDesk_Linux_Desktop_Environment_Simulator.TerminalLogic;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace LinDesk_Linux_Desktop_Environment_Simulator
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        string Prefix ="demo@LinDesk:~$";
-        private int inputStart;
+        public string MainPrefix = "demo@LinDesk:~$ ";
+        public string executedLine;
+        public DirectoryConstructor CurrentDirectory;
+        public DirectoryHandler directoryHandler = new DirectoryHandler();
+
         public MainWindow()
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
-            terminal = new TerminalController(TerminalBox);
-            terminal.Start();
+
+            CurrentDirectory = directoryHandler.Root;
+            
+            TerminalHistory.AppendText("Welcome to LinDesk 1.0 (Simulated Environment)\r\n\r\nSystem information as of session start:\r\n\r  System load: 0.03\n  Processes: 112 running\n  Memory usage: 842MB / 4096MB\n  Disk usage: 12% of 120GB\n  Network: connected\r\n\r\nNo updates available.\r\n\r\nDocumentation: https://lindesk.local/docs\r\nSupport: https://lindesk.local/support\r\n\r\nTip: Type 'help' to see available commands.\r\n\r\ndemo@lindesk:~$\r\n");
+            
+            // init single-line prompt and hook events
+            TerminalBox.Document.Blocks.Clear();
+            TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix)));
+                TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+            TerminalBox.Focus();
+
+            TerminalBox.PreviewKeyDown += TerminalBox_PreviewKeyDown;
+            TerminalBox.TextChanged += TerminalBox_TextChangedHandler;
+            _ = UpdateLabel(); // start background task to update directory label
         }
+
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // nastartuje boot seqvenciu nasho oska.
-            // "await" znamena ze program caka dokim sa dokonci metoda StartBootSequence
+            // Start boot sequence asynchronously and await it to avoid CS1998 warning.
             //await StartBootSequence();
         }
+
         private async Task StartBootSequence()
         {
             //async funguje tak ze mozem tuto metodu bez blokovania vykreslovacieho thredu vykonat operacie bez toho aby som musel cakat na dokoncenie vsetkych operacii,
             //co je idealne pre simulaciu bootovania, kde chcem zobrazovat postupne text bez toho aby sa aplikacia zasekla
+            TerminalBox.Document.Blocks.Clear(); // vyčistí obsah terminálu
+            TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix))); // přidá nový řádek s promptem
             BootOutput.Clear();
             UsernameBox.Clear();
             PasswordBox.Clear();
             Terminal.Visibility = Visibility.Collapsed;
             PowerOptions.Visibility = Visibility.Collapsed;
-            DesktopScreen.Visibility = Visibility.Collapsed; // skryje hlavny desktop
+            DesktopScreen.Visibility = Visibility.Collapsed; // skryje hlavni desktop
             BootScreen.Visibility = Visibility.Visible; // zobrazy bootovaci panel
+           
             await Task.Delay(1000); //simulate initial delay
             {
                 List<string> bootLines = new List<string>()
@@ -200,61 +219,18 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
         }
 
-        private async void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            LoginButton.IsEnabled = false;
-            LoginStatus.Text = string.Empty;
-            string user = UsernameBox.Text?.Trim() ?? string.Empty;
-            string pass = PasswordBox.Password ?? string.Empty;
 
-            // simulate authentication delay
-            await Task.Delay(600);
-
-            if (user == "demo" && pass == "demo")
+            if (UsernameBox.Text == "demo" && PasswordBox.Text == "demo")
             {
-                // successful login
-                LoginScreen.Visibility = Visibility.Collapsed; // hide login
-                DesktopScreen.Visibility = Visibility.Visible; // show desktop
+                Thread.Sleep(3000);
+                LoginScreen.Visibility = Visibility.Collapsed; // skryje přihlašovaciu obrazovku
+                DesktopScreen.Visibility = Visibility.Visible; // zobrazí hlavní desktop
             }
             else
             {
                 LoginStatus.Text = "Invalid username or password. Please try again.";
-            }
-
-            LoginButton.IsEnabled = true;
-        }
-
-        private void Reset_Click(object sender, RoutedEventArgs e)
-        {
-            // simple reset behavior: clear fields
-            UsernameBox.Clear();
-            PasswordBox.Clear();
-            PasswordVisibleBox.Text = string.Empty;
-            LoginStatus.Text = "Password reset not implemented.";
-        }
-
-        private void PwdReveal_Checked(object sender, RoutedEventArgs e)
-        {
-            // show plain-text password
-            PasswordVisibleBox.Text = PasswordBox.Password;
-            PasswordVisibleBox.Visibility = Visibility.Visible;
-            PasswordBox.Visibility = Visibility.Collapsed;
-        }
-
-        private void PwdReveal_Unchecked(object sender, RoutedEventArgs e)
-        {
-            // hide plain-text password
-            PasswordBox.Password = PasswordVisibleBox.Text;
-            PasswordVisibleBox.Visibility = Visibility.Collapsed;
-            PasswordBox.Visibility = Visibility.Visible;
-        }
-
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            // keep visible textbox in sync when reveal is active
-            if (PasswordVisibleBox.Visibility == Visibility.Visible)
-            {
-                PasswordVisibleBox.Text = PasswordBox.Password;
             }
         }
 
@@ -276,10 +252,11 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             Process.GetCurrentProcess().Kill();
         }
 
-        private void Restart_Click(object sender, RoutedEventArgs e)
+        private async void Restart_Click(object sender, RoutedEventArgs e)
         {
-            Thread.Sleep(1000); //simulate restart delay
-            StartBootSequence();
+            // make non-blocking delay then await boot sequence to avoid CS4014
+            await Task.Delay(1000); //simulate restart delay
+            await StartBootSequence();
         }
 
         private void Sleep_Click(object sender, RoutedEventArgs e)
@@ -303,32 +280,125 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             else
                 Terminal.Visibility = Visibility.Collapsed;
         }
-        private TerminalController terminal;
-
-
-        private void TerminalBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            terminal.HandleKeyDown(e);
-        }
-
+        //táto čast kódu sa volá že vibecoding
         private void TerminalBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            terminal.HandlePreviewKeyDown(e);
+            var caret = TerminalBox.CaretPosition;
+            // compute absolute indexes (strip CR)
+            int caretIndex = new TextRange(TerminalBox.Document.ContentStart, caret).Text.Replace("\r", "").Length;
+            var selection = TerminalBox.Selection;
+            int selectionStart = new TextRange(TerminalBox.Document.ContentStart, selection.Start).Text.Replace("\r", "").Length;
+            int selectionEnd = new TextRange(TerminalBox.Document.ContentStart, selection.End).Text.Replace("\r", "").Length;
+
+            // compute full cleaned text and last prompt index
+            string fullCleaned = new TextRange(TerminalBox.Document.ContentStart, TerminalBox.Document.ContentEnd).Text.Replace("\r", "");
+            int lastPromptIdx = fullCleaned.LastIndexOf(MainPrefix);
+            if (lastPromptIdx < 0) lastPromptIdx = 0;
+
+            // compute positions relative to last prompt
+            int relativeCaret = caretIndex - lastPromptIdx;
+            int relativeSelectionStart = selectionStart - lastPromptIdx;
+            int relativeSelectionEnd = selectionEnd - lastPromptIdx;
+
+            // prevent Backspace/Delete when caret or selection would affect the current prompt prefix
+            if (e.Key == Key.Back)
+            {
+                if (relativeCaret <= MainPrefix.Length || relativeSelectionStart < MainPrefix.Length)
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+            if (e.Key == Key.Delete)
+            {
+                if (relativeCaret < MainPrefix.Length || relativeSelectionStart < MainPrefix.Length)
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+            if (e.Key == Key.Enter)
+            {
+                e.Handled = true;
+
+                var fullTextRange = new TextRange(TerminalBox.Document.ContentStart, TerminalBox.Document.ContentEnd);
+                string full = fullTextRange.Text ?? "";
+
+                // Normalize: remove CR chars
+                string cleaned = full.Replace("\r", "");
+
+                // FlowDocument often has a trailing newline; remove one trailing '\n' if present
+                if (cleaned.EndsWith("\n"))
+                {
+                    cleaned = cleaned.Substring(0, cleaned.Length - 1);
+                }
+
+                int idx = cleaned.LastIndexOf(MainPrefix);
+
+                if (idx >= 0)
+                {
+                    executedLine = cleaned.Substring(idx);
+                }
+                else
+                {
+                    executedLine = MainPrefix;
+                }
+
+                if (TerminalHistory != null)
+                {
+                    TerminalHistory.AppendText(executedLine + Environment.NewLine);
+                    try
+                    {
+                        TerminalHistory.ScrollToEnd();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+
+                TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix)));
+                TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+                TerminalBox.Focus();
+                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel,  DirectoryLabel, CurrentDirectory, MainPrefix);
+                DebugLabel.Content = $"Executed: '{executedLine}'";
+            }
         }
-
-        private void TerminalBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void TerminalBox_TextChangedHandler(object sender, TextChangedEventArgs e)
         {
-            terminal.HandlePreviewMouseDown(e);
+           // get last paragraph text (preserves previous prompt lines)
+           var lastBlock = TerminalBox.Document.Blocks.LastBlock as Paragraph;
+           string lastText = lastBlock != null
+           ? new TextRange(lastBlock.ContentStart, lastBlock.ContentEnd).Text.Replace("\r", "").Replace("\n", ""):
+           "";
+           
+            // if the current editing line lost the prefix, restore it while preserving typed tail
+           if (!lastText.StartsWith(MainPrefix))
+           { 
+
+              string tail = lastText;
+              int idx = tail.IndexOf(MainPrefix);
+              if (idx >= 0) tail = tail.Substring(idx + MainPrefix.Length);
+
+           // replace only the last block so previous prompts remain intact
+           if (lastBlock != null)
+              TerminalBox.Document.Blocks.Remove(lastBlock);
+              TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix + tail)));
+              TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+           }
+           else 
+           {
+             TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+           }
+
         }
-
-        private void TerminalBox_SelectionChanged(object sender, RoutedEventArgs e)
+        private async Task UpdateLabel()
         {
-            terminal.HandleSelectionChanged();
-        }
-
-        private void UsernameBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
+            while (true)
+            {
+                await Task.Delay(1000);
+                DirectoryLabel.Content = $"Current Directory: {CurrentDirectory.DirectoryName}";
+            }
         }
     }
 }
