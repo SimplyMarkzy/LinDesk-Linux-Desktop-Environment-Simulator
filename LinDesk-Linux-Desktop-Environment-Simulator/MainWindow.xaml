@@ -20,8 +20,8 @@
                      FontFamily="Consolas"
                      IsReadOnly="True"
                      BorderThickness="0"
-                     VerticalScrollBarVisibility="Auto"
-                     HorizontalScrollBarVisibility="Auto"/>
+                     VerticalScrollBarVisibility="Hidden"
+                     HorizontalScrollBarVisibility="Hidden"/>
         </Grid>
 
         <!-- Login Screen -->
@@ -148,29 +148,34 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
-
-                    <TextBox Name="TerminalHistory"
-                             Grid.Row="0"
-                             Background="{x:Null}"
-                             FontSize="24"
-                             Foreground="Lime"
-                             FontFamily="Consolas"
-                             TextWrapping="Wrap"
-                             IsReadOnly="True"
-                             BorderThickness="0"
-                             VerticalScrollBarVisibility="Hidden"
-                             HorizontalScrollBarVisibility="Hidden"/>
-
-                    <RichTextBox Name="TerminalBox"
-                                 Grid.Row="1"
-                                 FontFamily="Consolas"
-                                 FontSize="24"
-                                 Foreground="Lime"
-                                 AcceptsReturn="True"
-                                 Background="#FF2D2828"
-                                 BorderThickness="0"
-                                 VerticalScrollBarVisibility="Hidden"
-                                 HorizontalScrollBarVisibility="Hidden"/>
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type Paragraph}">
+                            <Setter Property="Margin" Value="0"/>
+                        </Style>
+                    </Grid.Resources>
+                    <RichTextBox 
+                        Name="TerminalHistory"
+                        Grid.Row="0"
+                        Background="{x:Null}"
+                        FontSize="24"
+                        Foreground="Lime"
+                        FontFamily="Consolas"
+                        IsReadOnly="True"
+                        BorderThickness="0"
+                        VerticalScrollBarVisibility="Hidden"
+                        HorizontalScrollBarVisibility="Hidden"/>
+                    
+                    <RichTextBox 
+                        Name="TerminalBox"
+                        Grid.Row="1"
+                        FontFamily="Consolas"
+                        FontSize="24"
+                        Foreground="Lime"
+                        AcceptsReturn="True"
+                        Background="#FF2D2828"
+                        BorderThickness="0"
+                        VerticalScrollBarVisibility="Hidden"
+                        HorizontalScrollBarVisibility="Hidden"/>
                 </Grid>
             </Grid>
 
@@ -192,6 +197,13 @@
                        Content="DebugLabel"
                        FontSize="16"
                        Width="250"/>
+                <Label Name="CurrentDirectoryDebug"
+                       Content="CurrentDirectory" 
+                       HorizontalAlignment="Left" 
+                       Margin="1266,170,0,0" 
+                       VerticalAlignment="Top" 
+                       Width="250"
+                       FontSize="16"/>
             </StackPanel>
 
         </Grid>

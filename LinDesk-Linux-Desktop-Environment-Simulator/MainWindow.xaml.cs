@@ -18,31 +18,31 @@ using System.Collections.Generic;
 
 namespace LinDesk_Linux_Desktop_Environment_Simulator
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        public string Prefix = "demo@LinDesk:~$ ";
+        public string MainPrefix = "demo@LinDesk:~$ ";
         public string executedLine;
-
-        // Renamed to avoid ambiguity / duplicate definition errors
-        private List<string> _terminalHistory = new List<string>();
-        private int historyIndex = -1;
+        public DirectoryConstructor CurrentDirectory;
+        public DirectoryHandler directoryHandler = new DirectoryHandler();
 
         public MainWindow()
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
-            TerminalHistory.Text = "Welcome to LinDesk 1.0 (Simulated Environment)\r\n\r\nSystem information as of session start:\r\n\r\n  System load: 0.03\r\n  Processes: 112 running\r\n  Memory usage: 842MB / 4096MB\r\n  Disk usage: 12% of 120GB\r\n  Network: connected\r\n\r\nNo updates available.\r\n\r\nDocumentation: https://lindesk.local/docs\r\nSupport: https://lindesk.local/support\r\n\r\nTip: Type 'help' to see available commands.\r\n\r\ndemo@lindesk:~$\r\n";
+
+            CurrentDirectory = directoryHandler.Root;
+            
+            TerminalHistory.AppendText("Welcome to LinDesk 1.0 (Simulated Environment)\r\n\r\nSystem information as of session start:\r\n\r  System load: 0.03\n  Processes: 112 running\n  Memory usage: 842MB / 4096MB\n  Disk usage: 12% of 120GB\n  Network: connected\r\n\r\nNo updates available.\r\n\r\nDocumentation: https://lindesk.local/docs\r\nSupport: https://lindesk.local/support\r\n\r\nTip: Type 'help' to see available commands.\r\n\r\ndemo@lindesk:~$\r\n");
+            
             // init single-line prompt and hook events
             TerminalBox.Document.Blocks.Clear();
-            TerminalBox.Document.Blocks.Add(new Paragraph(new Run(Prefix)));
-            TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+            TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix)));
+                TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
             TerminalBox.Focus();
 
             TerminalBox.PreviewKeyDown += TerminalBox_PreviewKeyDown;
             TerminalBox.TextChanged += TerminalBox_TextChangedHandler;
+            _ = UpdateLabel(); // start background task to update directory label
         }
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -56,14 +56,15 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             //async funguje tak ze mozem tuto metodu bez blokovania vykreslovacieho thredu vykonat operacie bez toho aby som musel cakat na dokoncenie vsetkych operacii,
             //co je idealne pre simulaciu bootovania, kde chcem zobrazovat postupne text bez toho aby sa aplikacia zasekla
             TerminalBox.Document.Blocks.Clear(); // vyčistí obsah terminálu
-            TerminalBox.Document.Blocks.Add(new Paragraph(new Run(Prefix))); // přidá nový řádek s promptem
+            TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix))); // přidá nový řádek s promptem
             BootOutput.Clear();
             UsernameBox.Clear();
             PasswordBox.Clear();
             Terminal.Visibility = Visibility.Collapsed;
             PowerOptions.Visibility = Visibility.Collapsed;
-            DesktopScreen.Visibility = Visibility.Collapsed; // skryje hlavny desktop
+            DesktopScreen.Visibility = Visibility.Collapsed; // skryje hlavni desktop
             BootScreen.Visibility = Visibility.Visible; // zobrazy bootovaci panel
+           
             await Task.Delay(1000); //simulate initial delay
             {
                 List<string> bootLines = new List<string>()
@@ -282,21 +283,27 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         //táto čast kódu sa volá že vibecoding
         private void TerminalBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            // caret index is a zero-based integer representing the current position of the
-            // blinking text insertion cursor within a text input field
-            // compute caret index from document start
             var caret = TerminalBox.CaretPosition;
-            int caretIndex = new TextRange(TerminalBox.Document.ContentStart, caret).Text.Length;
-
-            // if a selection exists, compute selection indexes
+            // compute absolute indexes (strip CR)
+            int caretIndex = new TextRange(TerminalBox.Document.ContentStart, caret).Text.Replace("\r", "").Length;
             var selection = TerminalBox.Selection;
-            int selectionStart = new TextRange(TerminalBox.Document.ContentStart, selection.Start).Text.Length;
-            int selectionEnd = new TextRange(TerminalBox.Document.ContentStart, selection.End).Text.Length;
+            int selectionStart = new TextRange(TerminalBox.Document.ContentStart, selection.Start).Text.Replace("\r", "").Length;
+            int selectionEnd = new TextRange(TerminalBox.Document.ContentStart, selection.End).Text.Replace("\r", "").Length;
 
-            // prevent Backspace/Delete when caret or selection would affect the prefix
+            // compute full cleaned text and last prompt index
+            string fullCleaned = new TextRange(TerminalBox.Document.ContentStart, TerminalBox.Document.ContentEnd).Text.Replace("\r", "");
+            int lastPromptIdx = fullCleaned.LastIndexOf(MainPrefix);
+            if (lastPromptIdx < 0) lastPromptIdx = 0;
+
+            // compute positions relative to last prompt
+            int relativeCaret = caretIndex - lastPromptIdx;
+            int relativeSelectionStart = selectionStart - lastPromptIdx;
+            int relativeSelectionEnd = selectionEnd - lastPromptIdx;
+
+            // prevent Backspace/Delete when caret or selection would affect the current prompt prefix
             if (e.Key == Key.Back)
             {
-                if (caretIndex <= Prefix.Length || selectionStart < Prefix.Length)
+                if (relativeCaret <= MainPrefix.Length || relativeSelectionStart < MainPrefix.Length)
                 {
                     e.Handled = true;
                     return;
@@ -304,7 +311,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             }
             if (e.Key == Key.Delete)
             {
-                if (caretIndex < Prefix.Length || selectionStart < Prefix.Length)
+                if (relativeCaret < MainPrefix.Length || relativeSelectionStart < MainPrefix.Length)
                 {
                     e.Handled = true;
                     return;
@@ -312,8 +319,6 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             }
             if (e.Key == Key.Enter)
             {
-                // Handle Enter: capture the whole last prompt+command as a single string,
-                // add it to history, reinsert a new prompt line and keep caret at the end.
                 e.Handled = true;
 
                 var fullTextRange = new TextRange(TerminalBox.Document.ContentStart, TerminalBox.Document.ContentEnd);
@@ -328,24 +333,19 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     cleaned = cleaned.Substring(0, cleaned.Length - 1);
                 }
 
-                // Find last occurrence of the prompt prefix
-                int idx = cleaned.LastIndexOf(Prefix);
-                
+                int idx = cleaned.LastIndexOf(MainPrefix);
+
                 if (idx >= 0)
                 {
-                    // include prefix and everything after it
                     executedLine = cleaned.Substring(idx);
                 }
                 else
                 {
-                    // fallback: just use whatever is after the start
-                    executedLine = Prefix;
+                    executedLine = MainPrefix;
                 }
-                
-                // Write the executed line into the TerminalHistory TextBox (if present) so history is visible
+
                 if (TerminalHistory != null)
                 {
-                    // Append full executedLine (including prefix) and scroll to end
                     TerminalHistory.AppendText(executedLine + Environment.NewLine);
                     try
                     {
@@ -357,39 +357,47 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     }
                 }
 
-                // Append a new prompt line so the user can continue typing
-                TerminalBox.Document.Blocks.Add(new Paragraph(new Run(Prefix)));
+                TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix)));
                 TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
                 TerminalBox.Focus();
-                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel);
-                DebugLabel.Content = $"Executed: '{executedLine}'"; // for debugging: show the captured command line
+                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel,  DirectoryLabel, CurrentDirectory, MainPrefix);
+                DebugLabel.Content = $"Executed: '{executedLine}'";
             }
         }
         private void TerminalBox_TextChangedHandler(object sender, TextChangedEventArgs e)
         {
-            // get full plain text (may include trailing newline)
-            var full = new TextRange(TerminalBox.Document.ContentStart, TerminalBox.Document.ContentEnd).Text ?? "";
+           // get last paragraph text (preserves previous prompt lines)
+           var lastBlock = TerminalBox.Document.Blocks.LastBlock as Paragraph;
+           string lastText = lastBlock != null
+           ? new TextRange(lastBlock.ContentStart, lastBlock.ContentEnd).Text.Replace("\r", "").Replace("\n", ""):
+           "";
+           
+            // if the current editing line lost the prefix, restore it while preserving typed tail
+           if (!lastText.StartsWith(MainPrefix))
+           { 
 
-            // remove CR/LF that FlowDocument adds for layout
-            string cleaned = full.Replace("\r", "").Replace("\n", "");
+              string tail = lastText;
+              int idx = tail.IndexOf(MainPrefix);
+              if (idx >= 0) tail = tail.Substring(idx + MainPrefix.Length);
 
-            // if prefix got removed (paste or other), restore it
-            if (!cleaned.StartsWith(Prefix))
+           // replace only the last block so previous prompts remain intact
+           if (lastBlock != null)
+              TerminalBox.Document.Blocks.Remove(lastBlock);
+              TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix + tail)));
+              TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+           }
+           else 
+           {
+             TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+           }
+
+        }
+        private async Task UpdateLabel()
+        {
+            while (true)
             {
-                // preserve any typed text after where prefix should be
-                string tail = cleaned;
-                // if tail already contains prefix somewhere, strip everything before that occurrence
-                int idx = tail.IndexOf(Prefix);
-                if (idx >= 0)
-                    tail = tail.Substring(idx + Prefix.Length);
-                TerminalBox.Document.Blocks.Clear();
-                TerminalBox.Document.Blocks.Add(new Paragraph(new Run(Prefix + tail)));
-                TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
-            }
-            else
-            {
-                // keep caret at end so user types after prompt
-                TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+                await Task.Delay(1000);
+                DirectoryLabel.Content = $"Current Directory: {CurrentDirectory.DirectoryName}";
             }
         }
     }
