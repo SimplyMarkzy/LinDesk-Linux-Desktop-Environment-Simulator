@@ -218,7 +218,6 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             }
 
         }
-
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -280,6 +279,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             else
                 Terminal.Visibility = Visibility.Collapsed;
         }
+        
         //táto čast kódu sa volá že vibecoding
         private void TerminalBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -360,7 +360,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix)));
                 TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
                 TerminalBox.Focus();
-                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel,  DirectoryLabel, CurrentDirectory, MainPrefix);
+                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel,  DirectoryLabel, ref CurrentDirectory, ref MainPrefix);
                 DebugLabel.Content = $"Executed: '{executedLine}'";
             }
         }
@@ -399,6 +399,11 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 await Task.Delay(1000);
                 DirectoryLabel.Content = $"Current Directory: {CurrentDirectory.DirectoryName}";
             }
+        }
+
+        private void TerminalHistory_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Keyboard.Focus(TerminalBox);
         }
     }
 }

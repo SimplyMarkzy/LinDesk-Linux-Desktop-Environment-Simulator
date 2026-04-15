@@ -16,18 +16,19 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 {
     public class TerminalHandler
     {
-        
+
         private static string prefix;
         private static string command;
         private static string directory;
         private static DirectoryHandler directoryHandler = new DirectoryHandler();
-        public static void TerminalExecute(RichTextBox TerminalBox,RichTextBox TerminalHistory, string[] text, string executedLine, Label PrefixLabel, Label CommandLabel, Label CurrentDirectoryDebug, Label DirectoryLabel, DirectoryConstructor CurrentDirectory, string MainPrefix)
+        public static void TerminalExecute(RichTextBox TerminalBox, RichTextBox TerminalHistory, string[] text, string executedLine, Label PrefixLabel, Label CommandLabel, Label CurrentDirectoryDebug, Label DirectoryLabel, ref DirectoryConstructor CurrentDirectory, ref string MainPrefix)
         {
+            directory = "";
             foreach (string line in text)
             {
                 string[] splits = line.Split(" ");
                 PrefixLabel.Content = splits[0];
-                if (splits.Length>1)
+                if (splits.Length > 1)
                 {
                     CommandLabel.Content = splits[1];
                     prefix = splits[0];
@@ -37,7 +38,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 {
                     CommandLabel.Content = "";
                 }
-                if (splits.Length>2)
+                if (splits.Length > 2)
                 {
                     DirectoryLabel.Content = splits[2];
                     prefix = splits[0];
@@ -49,7 +50,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     DirectoryLabel.Content = "";
                 }
             }
-            switch(command)
+            switch (command)
             {
                 case "hello":
                     HelloCommand(TerminalHistory, text);
@@ -58,13 +59,16 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     HelpCommand(TerminalHistory, text);
                     break;
                 case "ls":
-                    listCommand(TerminalHistory, text, prefix, CurrentDirectory);
+                    listCommand(TerminalHistory, text, ref prefix, CurrentDirectory);
                     break;
                 case "cd":
-                    changeDirectoryCommand(TerminalHistory, text, prefix, directory, CurrentDirectory, CurrentDirectoryDebug);
+                    changeDirectoryCommand(TerminalHistory, text, ref prefix, directory, ref CurrentDirectory, CurrentDirectoryDebug);
+                    break;
+                case "mkdir":
+                    MakeDirectoryCommand(TerminalHistory, text, prefix, directory, ref CurrentDirectory);
                     break;
             }
-            
+
 
         }
         public static void HelloCommand(RichTextBox TerminalHistory, string[] text)
@@ -74,9 +78,9 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
         public static void HelpCommand(RichTextBox TerminalHistory, string[] text)
         {
-            TerminalHistory.AppendText("Console Reply: Available Commands: hello, ls");
+            TerminalHistory.AppendText("Console Reply: Available Commands: hello, ls, cd, ");
         }
-        public static void listCommand(RichTextBox TerminalHistory, string[] text, string MainPrefix, DirectoryConstructor CurrentDirectory)
+        public static void listCommand(RichTextBox TerminalHistory, string[] text, ref string MainPrefix, DirectoryConstructor CurrentDirectory)
         {
             Paragraph line = new Paragraph();
             foreach (DirectoryConstructor subDir in CurrentDirectory.SubDirectories)
@@ -85,9 +89,9 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 r.Foreground = System.Windows.Media.Brushes.Blue;
                 line.Inlines.Add(r);
             }
-            foreach(string file in CurrentDirectory.Files)
+            foreach (string file in CurrentDirectory.Files)
             {
-                Run r = new Run(file + " " );
+                Run r = new Run(file + " ");
                 r.Foreground = System.Windows.Media.Brushes.White;
                 line.Inlines.Add(r);
             }
@@ -98,9 +102,9 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             TerminalHistory.AppendText(Environment.NewLine);
             TerminalHistory.AppendText(Environment.NewLine);
         }
-        public static void changeDirectoryCommand(RichTextBox TerminalHistory, string[] text, string MainPrefix, string directory, DirectoryConstructor CurrentDirectory, Label CurrentDirectoryDebug)
+        public static void changeDirectoryCommand(RichTextBox TerminalHistory, string[] text, ref string MainPrefix, string directory, ref DirectoryConstructor CurrentDirectory, Label CurrentDirectoryDebug)
         {
-            if (directory == "")
+            if (string.IsNullOrEmpty(directory))
             {
                 CurrentDirectory = directoryHandler.Root;
             }
@@ -116,16 +120,25 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 }
             }
 
-            MainPrefix = "demo@LinDesk:~/" + CurrentDirectory.DirectoryName + " ";
+            MainPrefix += "/" + CurrentDirectory.DirectoryName;
             CurrentDirectoryDebug.Content = CurrentDirectory.DirectoryName;
         }
-
-
-
-
-
-
+        public static void MakeDirectoryCommand(RichTextBox TerminalHistory, string[] text, string MainPrefix, string directory, ref DirectoryConstructor CurrentDirectory)
+        {
+            if (string.IsNullOrEmpty(directory))
+            {
+                TerminalHistory.AppendText("Console Reply: No directory name provided.");
+            }
+            else
+            {
+                DirectoryConstructor newDir = new DirectoryConstructor(directory, CurrentDirectory);
+                CurrentDirectory.SubDirectories.Add(newDir);
+                newDir.ParentDirectory = CurrentDirectory;
+            }
+        }
+        public static void WhereamiCommand(RichTextBox TerminalHistory, string[] text, string MainPrefix, ref DirectoryConstructor CurrentDirectory)
+        {
+            TerminalHistory.AppendText(MainPrefix);
+        }
     }
-            
-
 }
