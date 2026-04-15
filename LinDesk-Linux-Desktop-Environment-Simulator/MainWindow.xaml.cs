@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -33,7 +33,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         {
             // nastartuje boot seqvenciu nasho oska.
             // "await" znamena ze program caka dokim sa dokonci metoda StartBootSequence
-            await StartBootSequence();
+            //await StartBootSequence();
         }
         private async Task StartBootSequence()
         {
@@ -200,18 +200,61 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            LoginButton.IsEnabled = false;
+            LoginStatus.Text = string.Empty;
+            string user = UsernameBox.Text?.Trim() ?? string.Empty;
+            string pass = PasswordBox.Password ?? string.Empty;
 
-            if (UsernameBox.Text == "demo" && PasswordBox.Text == "demo")
+            // simulate authentication delay
+            await Task.Delay(600);
+
+            if (user == "demo" && pass == "demo")
             {
-                Thread.Sleep(3000);
-                LoginScreen.Visibility = Visibility.Collapsed; // skryje přihlašovací obrazovku
-                DesktopScreen.Visibility = Visibility.Visible; // zobrazí hlavní desktop
+                // successful login
+                LoginScreen.Visibility = Visibility.Collapsed; // hide login
+                DesktopScreen.Visibility = Visibility.Visible; // show desktop
             }
             else
             {
                 LoginStatus.Text = "Invalid username or password. Please try again.";
+            }
+
+            LoginButton.IsEnabled = true;
+        }
+
+        private void Reset_Click(object sender, RoutedEventArgs e)
+        {
+            // simple reset behavior: clear fields
+            UsernameBox.Clear();
+            PasswordBox.Clear();
+            PasswordVisibleBox.Text = string.Empty;
+            LoginStatus.Text = "Password reset not implemented.";
+        }
+
+        private void PwdReveal_Checked(object sender, RoutedEventArgs e)
+        {
+            // show plain-text password
+            PasswordVisibleBox.Text = PasswordBox.Password;
+            PasswordVisibleBox.Visibility = Visibility.Visible;
+            PasswordBox.Visibility = Visibility.Collapsed;
+        }
+
+        private void PwdReveal_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // hide plain-text password
+            PasswordBox.Password = PasswordVisibleBox.Text;
+            PasswordVisibleBox.Visibility = Visibility.Collapsed;
+            PasswordBox.Visibility = Visibility.Visible;
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            // keep visible textbox in sync when reveal is active
+            if (PasswordVisibleBox.Visibility == Visibility.Visible)
+            {
+                PasswordVisibleBox.Text = PasswordBox.Password;
             }
         }
 
@@ -281,6 +324,11 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         private void TerminalBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             terminal.HandleSelectionChanged();
+        }
+
+        private void UsernameBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -8,6 +8,27 @@
         RenderOptions.EdgeMode="Aliased"
         mc:Ignorable="d"
         Title="MainWindow"  Height="1080" Width="1920">
+    <Window.Resources>
+        <!-- Styles and brushes for modern login UI -->
+        <Style x:Key="UnderlineTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="6 6 6 8"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style x:Key="UnderlinePasswordBox" TargetType="PasswordBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="6 6 6 8"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <LinearGradientBrush x:Key="PrimaryButtonBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0" Color="#7C5CFF"/>
+            <GradientStop Offset="1" Color="#6A43FF"/>
+        </LinearGradientBrush>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -25,16 +46,75 @@
                  IsReadOnly="True"/>
         </Grid>
 
-        <!-- Login Screen -->
-        <Grid x:Name="LoginScreen" Visibility="Collapsed" Grid.ColumnSpan="2">
-            <Button Name="LoginButton" Content="Login" HorizontalAlignment="Center" Margin="0,287,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Click="LoginButton_Click"/>
-            <TextBlock HorizontalAlignment="Center" Margin="0,171,0,0" TextWrapping="Wrap" Text="Lindesk Login" VerticalAlignment="Top" Height="46" Width="180" FontSize="24"/>
-            <TextBox Name="UsernameBox" HorizontalAlignment="Center" Margin="0,222,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" Width="120"/>
-            <TextBox Name="PasswordBox" HorizontalAlignment="Center" Margin="0,245,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Width="120" BorderBrush="#FF595B62"/>
-            <TextBlock Name="LoginStatus" HorizontalAlignment="Left" Margin="251,347,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="209"/>
+        <!-- Modern Login Screen (full window with background) -->
+        <Grid x:Name="LoginScreen" Visibility="Visible" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.Background>
+                <ImageBrush ImageSource="/images/pc_background.png" Stretch="UniformToFill" Opacity="0.85"/>
+            </Grid.Background>
+
+            <!-- Full-window overlay to dim background if desired -->
+            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#66000000"/>
+
+            <!-- Centered modern login panel -->
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="520" Height="520">
+                <Border CornerRadius="12" Opacity="0.98" Padding="32">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <!-- Logo substitute -->
+                        <Image Source="/images/lindesklogo-removebg-preview.png" Width="96" Height="96" HorizontalAlignment="Center" Margin="0,4,0,8"/>
+                        <TextBlock Text="Lindesk" Foreground="White" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,2,0,4"/>
+                        <TextBlock Text="Learning to code is useful no matter what your career ambitions are." TextWrapping="Wrap" Foreground="#DAD7FF" Opacity="0.85" FontSize="12" TextAlignment="Center" Margin="0,0,0,18"/>
+
+                        <!-- Username -->
+                        <TextBlock Text="Username" Foreground="#BFC0D6" FontSize="12"/>
+                        <Grid Margin="0,6,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="28"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" FontFamily="Segoe MDL2 Assets" Foreground="#BFC0D6" VerticalAlignment="Center" FontSize="14" Margin="0,0,6,0"/>
+                            <TextBox x:Name="UsernameBox" Grid.Column="1" Style="{StaticResource UnderlineTextBox}" />
+                            <Rectangle Grid.ColumnSpan="2" Height="1" Fill="#C6C6E6" VerticalAlignment="Bottom" Margin="28,0,0,0"/>
+                        </Grid>
+
+                        <!-- Password -->
+                        <TextBlock Text="Password" Foreground="#BFC0D6" FontSize="12"/>
+                        <Grid Margin="0,6,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="28"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="34"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" FontFamily="Segoe MDL2 Assets" Foreground="#BFC0D6" VerticalAlignment="Center" FontSize="14" Margin="0,0,6,0"/>
+                            <PasswordBox x:Name="PasswordBox" Grid.Column="1" Style="{StaticResource UnderlinePasswordBox}" PasswordChanged="PasswordBox_PasswordChanged"/>
+                            <TextBox x:Name="PasswordVisibleBox" Grid.Column="1" Style="{StaticResource UnderlineTextBox}" Visibility="Collapsed"/>
+                            <ToggleButton x:Name="PwdReveal" Grid.Column="2" Width="28" Height="28" VerticalAlignment="Center" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" Foreground="#BFC0D6" Content="" FontFamily="Segoe MDL2 Assets" Checked="PwdReveal_Checked" Unchecked="PwdReveal_Unchecked" Margin="3,0,0,0"/>
+                            <Rectangle Grid.ColumnSpan="3" Height="1" Fill="#C6C6E6" VerticalAlignment="Bottom" Margin="28,0,0,0"/>
+                        </Grid>
+
+                        <!-- Login button -->
+                        <Button x:Name="LoginButton" Content="LOG IN" Height="44" Margin="0,10,0,6" Foreground="White" FontWeight="Bold" BorderThickness="0" Cursor="Hand" Click="LoginButton_Click">
+                            <Button.Background>
+                                <StaticResource ResourceKey="PrimaryButtonBrush"/>
+                            </Button.Background>
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border CornerRadius="22" Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <!-- Forgot -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+
+                        <TextBlock x:Name="LoginStatus" Text="" Foreground="#FF6B6B" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,12,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
         </Grid>
         <!-- Desktop Screen -->
-        <Grid x:Name="DesktopScreen" Visibility="Visible" Grid.ColumnSpan="2">
+        <Grid x:Name="DesktopScreen" Visibility="Collapsed" Grid.ColumnSpan="2">
             <Image Source="/images/pc_background.png" Stretch="Fill"/>
             <Button Name="PowerButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="66" Width="66" BorderBrush="{x:Null}" Foreground="{x:Null}" Grid.ColumnSpan="2" Click="PowerButton_Click">
                 <Button.Background>

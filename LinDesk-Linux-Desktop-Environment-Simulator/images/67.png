@@ -1,0 +1,7 @@
+<svg width="256" height="256" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- štvorec (button) -->
+  <rect x="4" y="4" width="56" height="56" rx="10" ry="10" fill="#1a1a1a"></rect>
+  
+  <!-- šípka doprava -->
+  <path d="M26 20 L40 32 L26 44" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
