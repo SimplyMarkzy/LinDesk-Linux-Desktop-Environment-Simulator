@@ -11,7 +11,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         public string DirectoryName { get; set; }
         public DirectoryConstructor? ParentDirectory { get; set; }
         public List<DirectoryConstructor> SubDirectories { get; set; }
-        public List<string> Files { get; set; }
+        public List<FileConstructor> Files { get; set; }
 
         public DirectoryConstructor(string directoryName, DirectoryConstructor? parentDirectory)
         {
@@ -19,7 +19,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             ParentDirectory = parentDirectory;
 
             SubDirectories = new List<DirectoryConstructor>();
-            Files = new List<string>();
+            Files = new List<FileConstructor>();
         }
     }
 

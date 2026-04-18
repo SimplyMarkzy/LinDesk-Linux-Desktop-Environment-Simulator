@@ -10,13 +10,15 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
     {
         public DirectoryConstructor Root { get; }
         public DirectoryConstructor Home { get; }
-
+        public FileConstructor Test { get; }
         public DirectoryHandler()
         {
             Root = new DirectoryConstructor("/", null); //root directory
             Home = new DirectoryConstructor("home", Root);
             Root.SubDirectories.Add(Home);
-            Root.Files.Add("test.txt");
+            Test = new FileConstructor("test.txt");
+            Test.Content = "This is a test file.";
+            Root.Files.Add(Test);
         }
     }
 }

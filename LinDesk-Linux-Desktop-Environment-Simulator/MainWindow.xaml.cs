@@ -20,7 +20,8 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 {
     public partial class MainWindow : Window
     {
-        public string MainPrefix = "demo@LinDesk:~$ ";
+        public string MainPrefix = "demo@LinDesk:~$";
+        public string justaspace = " ";
         public string executedLine;
         public DirectoryConstructor CurrentDirectory;
         public DirectoryHandler directoryHandler = new DirectoryHandler();
@@ -32,7 +33,8 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
             CurrentDirectory = directoryHandler.Root;
             
-            TerminalHistory.AppendText("Welcome to LinDesk 1.0 (Simulated Environment)\r\n\r\nSystem information as of session start:\r\n\r  System load: 0.03\n  Processes: 112 running\n  Memory usage: 842MB / 4096MB\n  Disk usage: 12% of 120GB\n  Network: connected\r\n\r\nNo updates available.\r\n\r\nDocumentation: https://lindesk.local/docs\r\nSupport: https://lindesk.local/support\r\n\r\nTip: Type 'help' to see available commands.\r\n\r\ndemo@lindesk:~$\r\n");
+            TerminalHistory.AppendText("Welcome to LinDesk 1.0 (Simulated Environment)\r\n\r\nSystem information as of session start:\r\n\r  System load: 0.03\n  Processes: 112 running\n  Memory usage: 842MB / 4096MB\n  Disk usage: 12% of 120GB\n  Network: connected\r\n\r\nNo updates available.\r\n\r\nDocumentation: https://lindesk.local/docs\r\nSupport: https://lindesk.local/support\r\n\r\nTip: Type 'help' to see available commands.\r\nTip: Command history (↑/↓) is not supported in this demo.\r\n\r\ndemo@lindesk:~$\r\n");
+            MainPrefix = MainPrefix + justaspace;
             
             // init single-line prompt and hook events
             TerminalBox.Document.Blocks.Clear();
@@ -283,6 +285,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         //táto čast kódu sa volá že vibecoding
         private void TerminalBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            
             var caret = TerminalBox.CaretPosition;
             // compute absolute indexes (strip CR)
             int caretIndex = new TextRange(TerminalBox.Document.ContentStart, caret).Text.Replace("\r", "").Length;
@@ -355,6 +358,11 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     {
 
                     }
+                }
+
+                if (!MainPrefix.EndsWith(" "))
+                {
+                    MainPrefix += " ";
                 }
 
                 TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel,  DirectoryLabel, ref CurrentDirectory, ref MainPrefix);

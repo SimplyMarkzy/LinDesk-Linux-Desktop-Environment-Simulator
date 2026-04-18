@@ -183,7 +183,8 @@
             <StackPanel HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Margin="0,40,20,0"
-                        Width="250">
+                        Width="250"
+                        Visibility="Collapsed">
                 <Label Name="CommandLabel"
                        Content="CommandLabel"
                        FontSize="16"/>
