@@ -62,7 +62,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     listCommand(TerminalHistory, text, ref prefix, CurrentDirectory);
                     break;
                 case "cd":
-                    changeDirectoryCommand(TerminalHistory, text, ref prefix, directory, ref CurrentDirectory, CurrentDirectoryDebug);
+                    changeDirectoryCommand(TerminalHistory, text, ref MainPrefix, directory, ref CurrentDirectory, CurrentDirectoryDebug);
                     break;
                 case "mkdir":
                     MakeDirectoryCommand(TerminalHistory, text, prefix, directory, ref CurrentDirectory);

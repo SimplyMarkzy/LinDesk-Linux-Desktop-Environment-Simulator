@@ -163,7 +163,7 @@
                         IsReadOnly="True"
                         BorderThickness="0"
                         VerticalScrollBarVisibility="Hidden"
-                        HorizontalScrollBarVisibility="Hidden" MouseDown="TerminalHistory_MouseDown"/>
+                        HorizontalScrollBarVisibility="Hidden"/>
                     
                     <RichTextBox 
                         Name="TerminalBox"

@@ -357,10 +357,10 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     }
                 }
 
+                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel,  DirectoryLabel, ref CurrentDirectory, ref MainPrefix);
                 TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix)));
                 TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
                 TerminalBox.Focus();
-                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel,  DirectoryLabel, ref CurrentDirectory, ref MainPrefix);
                 DebugLabel.Content = $"Executed: '{executedLine}'";
             }
         }
@@ -401,9 +401,5 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             }
         }
 
-        private void TerminalHistory_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Keyboard.Focus(TerminalBox);
-        }
     }
 }
