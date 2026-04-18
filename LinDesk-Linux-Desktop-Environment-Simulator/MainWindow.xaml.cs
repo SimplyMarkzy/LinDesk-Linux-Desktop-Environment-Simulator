@@ -1,20 +1,22 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using System.Windows.Media.Animation;
 
 namespace LinDesk_Linux_Desktop_Environment_Simulator
 {
@@ -240,10 +242,12 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             if (PowerOptions.Visibility == Visibility.Collapsed)
             {
                 PowerOptions.Visibility = Visibility.Visible;
+                FadeIn(PowerOptions);
             }
             else
             {
                 PowerOptions.Visibility = Visibility.Collapsed;
+                FadeOut(PowerOptions);
             }
         }
 
@@ -277,15 +281,19 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         private void TerminalButton_Click(object sender, RoutedEventArgs e)
         {
             if (Terminal.Visibility == Visibility.Collapsed)
+            {
                 Terminal.Visibility = Visibility.Visible;
+                FadeIn(Terminal);
+            }
             else
+            {
                 Terminal.Visibility = Visibility.Collapsed;
+                FadeOut(Terminal);
+            }
         }
-        
-        //táto čast kódu sa volá že vibecoding
         private void TerminalBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            
+            // ai made this code to prevent user from deleting the prompt prefix, not manually written by me
             var caret = TerminalBox.CaretPosition;
             // compute absolute indexes (strip CR)
             int caretIndex = new TextRange(TerminalBox.Document.ContentStart, caret).Text.Replace("\r", "").Length;
@@ -374,8 +382,9 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         }
         private void TerminalBox_TextChangedHandler(object sender, TextChangedEventArgs e)
         {
-           // get last paragraph text (preserves previous prompt lines)
-           var lastBlock = TerminalBox.Document.Blocks.LastBlock as Paragraph;
+            // ai made this code to restore the prompt prefix if user tries to delete it, not manually written by me
+            // get last paragraph text (preserves previous prompt lines)
+            var lastBlock = TerminalBox.Document.Blocks.LastBlock as Paragraph;
            string lastText = lastBlock != null
            ? new TextRange(lastBlock.ContentStart, lastBlock.ContentEnd).Text.Replace("\r", "").Replace("\n", ""):
            "";
@@ -408,6 +417,37 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 DirectoryLabel.Content = $"Current Directory: {CurrentDirectory.DirectoryName}";
             }
         }
+        private void FadeIn(UIElement element)
+        {
+            // ai generated code for fade in animation, not manually written by me
+            element.Visibility = Visibility.Visible;
 
+            DoubleAnimation fade = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(200));
+            element.BeginAnimation(UIElement.OpacityProperty, fade);
+
+            ScaleTransform scale = (ScaleTransform)((FrameworkElement)element).RenderTransform;
+
+            DoubleAnimation scaleUp = new DoubleAnimation(0.95, 1, TimeSpan.FromMilliseconds(200));
+            scale.BeginAnimation(ScaleTransform.ScaleXProperty, scaleUp);
+            scale.BeginAnimation(ScaleTransform.ScaleYProperty, scaleUp);
+        }
+        private void FadeOut(UIElement element)
+        {
+            // ai generated code for fade out animation, not manually written by me
+            DoubleAnimation fade = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(200));
+
+            fade.Completed += (s, e) =>
+            {
+                element.Visibility = Visibility.Collapsed;
+            };
+
+            element.BeginAnimation(UIElement.OpacityProperty, fade);
+
+            ScaleTransform scale = (ScaleTransform)((FrameworkElement)element).RenderTransform;
+
+            DoubleAnimation scaleDown = new DoubleAnimation(1, 0.95, TimeSpan.FromMilliseconds(200));
+            scale.BeginAnimation(ScaleTransform.ScaleXProperty, scaleDown);
+            scale.BeginAnimation(ScaleTransform.ScaleYProperty, scaleDown);
+        }
     }
 }

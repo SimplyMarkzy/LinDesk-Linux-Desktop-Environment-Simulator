@@ -8,7 +8,8 @@
         RenderOptions.BitmapScalingMode="LowQuality"
         RenderOptions.EdgeMode="Aliased"
         Title="MainWindow"
-        WindowState="Maximized">
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
 
     <Grid>
 
@@ -100,60 +101,78 @@
 
             <!-- Power options popup -->
             <Grid x:Name="PowerOptions"
-                  Visibility="Collapsed"
+                  Visibility="Visible"
                   VerticalAlignment="Bottom"
                   HorizontalAlignment="Left"
+                  Opacity="0"
                   Margin="0,0,0,66"
                   Width="170"
                   Height="180">
+                <Grid.RenderTransform>
+                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                </Grid.RenderTransform>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-
+                <Border  
+                CornerRadius="30" 
+                Background="#1e1e1e"
+                Grid.RowSpan="3">
+                </Border>
                 <Button x:Name="Shutdown"
                         Grid.Row="0"
                         Content="Shutdown"
-                        Background="#FF5E5656"
-                        Click="Shutdown_Click"/>
+                        Background="Transparent"
+                        Foreground="WhiteSmoke"
+                        Click="Shutdown_Click"
+                        BorderThickness="0"/>
 
                 <Button x:Name="Restart"
                         Grid.Row="1"
                         Content="Restart"
-                        Background="#FF5E5656"
-                        Click="Restart_Click"/>
+                        Background="Transparent"
+                        Foreground="WhiteSmoke"
+                        Click="Restart_Click"
+                        BorderThickness="0"/>
 
                 <Button x:Name="Sleep"
                         Grid.Row="2"
                         Content="Sleep"
-                        Background="#FF5E5656"
-                        Click="Sleep_Click"/>
+                        Background="Transparent"
+                        Foreground="WhiteSmoke"
+                        Click="Sleep_Click"
+                        BorderThickness="0"/>
             </Grid>
 
             <!-- Terminal window -->
-            <Grid x:Name="Terminal"
-                  Visibility="Visible"
+                <Grid x:Name="Terminal"
+                  Visibility="Collapsed"
                   Width="1000"
                   Height="600"
+                  Opacity="0"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center">
+                <Grid.RenderTransform>
+                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                </Grid.RenderTransform>
 
-                <Rectangle Name="TerminalWindow"
-                           Fill="#FF2D2828"
-                           Stroke="Black"/>
-
+                <Border  
+                  CornerRadius="30" 
+                  Background="#1e1e1e">
+                </Border>
                 <Grid Margin="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="30"/>
-                    </Grid.RowDefinitions>
-                    <Grid.Resources>
-                        <Style TargetType="{x:Type Paragraph}">
-                            <Setter Property="Margin" Value="0"/>
-                        </Style>
-                    </Grid.Resources>
-                    <RichTextBox 
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0"/>
+                            </Style>
+                        </Grid.Resources>
+                        <RichTextBox 
                         Name="TerminalHistory"
                         Grid.Row="0"
                         Background="{x:Null}"
@@ -163,22 +182,23 @@
                         IsReadOnly="True"
                         BorderThickness="0"
                         VerticalScrollBarVisibility="Hidden"
-                        HorizontalScrollBarVisibility="Hidden"/>
-                    
-                    <RichTextBox 
+                        HorizontalScrollBarVisibility="Hidden"
+                        Padding="8"/>
+
+                        <RichTextBox 
                         Name="TerminalBox"
                         Grid.Row="1"
                         FontFamily="Consolas"
                         FontSize="24"
                         Foreground="Lime"
                         AcceptsReturn="True"
-                        Background="#FF2D2828"
+                        Background="Transparent"
                         BorderThickness="0"
                         VerticalScrollBarVisibility="Hidden"
-                        HorizontalScrollBarVisibility="Hidden"/>
+                        HorizontalScrollBarVisibility="Hidden"
+                        Padding="8,0,8,0"/>
+                    </Grid>
                 </Grid>
-            </Grid>
-
             <!-- Debug labels on the right -->
             <StackPanel HorizontalAlignment="Right"
                         VerticalAlignment="Top"
