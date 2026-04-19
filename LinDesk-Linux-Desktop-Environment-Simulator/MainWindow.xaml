@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         RenderOptions.BitmapScalingMode="LowQuality"
         RenderOptions.EdgeMode="Aliased"
-        Title="MainWindow"
+        Title="LinDesk - Linux Desktop Enviroment Simulator"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
+
 
     <Grid>
 
@@ -97,11 +98,28 @@
                                     ImageSource="/images/Terminal_Icon.png"/>
                     </Button.Background>
                 </Button>
+                <Button Name="FileExplorer"
+                        Width="66"
+                        Height="66"
+                        Content="FE"
+                        BorderBrush="{x:Null}"
+                        Background="Gray">
+                </Button>
+                <Button Name="MusicPlayer"
+                        Width="66"
+                        Height="66"
+                        BorderBrush="{x:Null}" >
+                    <Button.Background>
+                        <ImageBrush TileMode="None"
+                                    Stretch="UniformToFill"
+                                    ImageSource="/images/Music_Icon.png"/>
+                    </Button.Background>
+                </Button>
             </StackPanel>
 
             <!-- Power options popup -->
             <Grid x:Name="PowerOptions"
-                  Visibility="Visible"
+                  Visibility="Collapsed"
                   VerticalAlignment="Bottom"
                   HorizontalAlignment="Left"
                   Opacity="0"

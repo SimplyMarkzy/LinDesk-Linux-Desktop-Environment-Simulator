@@ -10,12 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\Music_Icon.png" />
     <None Remove="images\shutdownb_icon.png" />
     <None Remove="images\terminal_icon.png" />
     <None Remove="Terminal_Icon.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\Music_Icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\pc_background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
