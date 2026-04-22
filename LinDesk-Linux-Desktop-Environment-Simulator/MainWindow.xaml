@@ -9,7 +9,8 @@
         RenderOptions.EdgeMode="Aliased"
         Title="LinDesk - Linux Desktop Enviroment Simulator"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
 
 
     <Grid>
@@ -217,7 +218,29 @@
                         Padding="8,0,8,0"/>
                     </Grid>
                 </Grid>
+            <!--  Music Player -->
+            <Grid Name="MP"
+                  Visibility="Visible"
+                  Width="1000"
+                  Height="600"
+                  Opacity="1"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+                <Grid.RenderTransform>
+                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                </Grid.RenderTransform>
+                <Border  
+                      CornerRadius="30" 
+                      Background="#1e1e1e">
+                </Border>
+                <ProgressBar Name="MusicProgressBar" Margin="100,460,100,126" />
+                <Button Name="Rewind" Content="R" Margin="89,504,716,38"/>
+                <Button Name="PlayPause" Content="PP" Margin="402,504,403,38"/>
+                <Button Name="Forward" Content="F" Margin="716,504,89,38"/>
+                <Label Name="Time" Content="00:00/00:00" Margin="788,420,112,157" Background="Gray"/>
+            </Grid>
             <!-- Debug labels on the right -->
+            
             <StackPanel HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Margin="0,40,20,0"

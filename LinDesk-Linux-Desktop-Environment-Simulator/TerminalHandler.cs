@@ -137,6 +137,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         public static void HelpCommand(RichTextBox TerminalHistory, string[] text)
         {
             TerminalHistory.AppendText("Available Commands: hello, ls, cd, mkdir, pwd, touch, rm,\r\n clear, cat, echo, whoami, date, nano :( ");
+            TerminalHistory.AppendText(Environment.NewLine);
         }
         public static void HelloCommand(RichTextBox TerminalHistory, string[] text)
         {
