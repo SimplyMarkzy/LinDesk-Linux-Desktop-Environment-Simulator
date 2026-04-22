@@ -63,7 +63,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix))); // přidá nový řádek s promptem
             BootOutput.Clear();
             UsernameBox.Clear();
-            PasswordBox.Clear();
+            pass.Clear();
             Terminal.Visibility = Visibility.Collapsed;
             PowerOptions.Visibility = Visibility.Collapsed;
             DesktopScreen.Visibility = Visibility.Collapsed; // skryje hlavni desktop
@@ -225,7 +225,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
 
-            if (UsernameBox.Text == "demo" && PasswordBox.Text == "demo")
+            if (UsernameBox.Text == "demo" && pass.Password == "demo")
             {
                 Thread.Sleep(3000);
                 LoginScreen.Visibility = Visibility.Collapsed; // skryje přihlašovaciu obrazovku
@@ -291,6 +291,20 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 FadeOut(Terminal);
             }
         }
+        private void MusicPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            if (MP.Visibility == Visibility.Collapsed)
+            {
+                MP.Visibility = Visibility.Visible;
+                FadeIn(MP);
+            }
+            else
+            {
+                MP.Visibility = Visibility.Collapsed;
+                FadeOut(MP);
+            }
+        }
+        
         private void TerminalBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // ai made this code to prevent user from deleting the prompt prefix, not manually written by me
@@ -373,7 +387,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     MainPrefix += " ";
                 }
 
-                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel,  DirectoryLabel, ref CurrentDirectory, ref MainPrefix);
+                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel,  DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor);
                 TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix)));
                 TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
                 TerminalBox.Focus();
@@ -449,5 +463,6 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             scale.BeginAnimation(ScaleTransform.ScaleXProperty, scaleDown);
             scale.BeginAnimation(ScaleTransform.ScaleYProperty, scaleDown);
         }
+
     }
 }

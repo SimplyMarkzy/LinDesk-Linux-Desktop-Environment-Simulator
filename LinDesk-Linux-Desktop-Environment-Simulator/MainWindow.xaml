@@ -8,7 +8,7 @@
         RenderOptions.BitmapScalingMode="LowQuality"
         RenderOptions.EdgeMode="Aliased"
         Title="LinDesk - Linux Desktop Enviroment Simulator"
-        ResizeMode="NoResize"
+        ResizeMode="CanResize"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized">
 
@@ -28,45 +28,99 @@
         </Grid>
 
         <!-- Login Screen -->
-        <Grid x:Name="LoginScreen" Visibility="Collapsed">
-            <StackPanel HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Width="220">
-                <TextBlock Text="Lindesk Login"
-                           FontSize="24"
-                           HorizontalAlignment="Center"
-                           Margin="0,0,0,20"/>
+        <Grid x:Name="LoginScreen"
+              Visibility="Visible">
+            <Grid.Background>
+                <ImageBrush ImageSource="/images/LoginBackground.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+            </Grid.Background>
 
-                <TextBox Name="UsernameBox"
-                         Text="Username"
-                         Width="120"
-                         HorizontalAlignment="Center"
-                         Margin="0,0,0,10"/>
+            <!-- Centered translucent card -->
+            <Border Width="420"
+                    Padding="36"
+                    CornerRadius="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Background="#1AFFFFFF">
 
-                <TextBox Name="PasswordBox"
-                         Text="Password"
-                         Width="120"
-                         HorizontalAlignment="Center"
-                         Margin="0,0,0,15"
-                         BorderBrush="#FF595B62"/>
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="30" Opacity="0.5"/>
+                </Border.Effect>
 
-                <Button Name="LoginButton"
-                        Content="Login"
-                        Width="120"
-                        HorizontalAlignment="Center"
-                        Margin="0,0,0,15"
-                        Click="LoginButton_Click"/>
+                <StackPanel Height="332">
+                    <!-- Logo -->
+                    <Ellipse Width="92" Height="87" HorizontalAlignment="Center">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/images/LDlogo.png"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
 
-                <TextBlock Name="LoginStatus"
-                           Text=""
-                           TextWrapping="Wrap"
-                           Width="209"
-                           HorizontalAlignment="Center"/>
-            </StackPanel>
+                    <TextBlock Text="Lindesk"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               Margin="0,12,0,2"/>
+
+                    <TextBlock Text="Learning to code is useful no matter what your career ambitions are."
+                               TextWrapping="Wrap"
+                               FontSize="12"
+                               Foreground="#DDE6F0"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               Margin="0,0,0,18"/>
+
+                    <!-- Username -->
+                    <StackPanel Margin="0,4,0,8">
+                        <TextBlock Text="Username" Foreground="#BFC8D6" FontSize="12"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="28"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="1" Name="UsernameBox" Background="Transparent" BorderThickness="0" Foreground="White" FontSize="14"/>
+                        </Grid>
+                        <Rectangle Height="1" Fill="#6B6B6B" Margin="28,6,0,0"/>
+                    </StackPanel>
+
+                    <!-- Password -->
+                    <StackPanel Margin="0,4,0,12">
+                        <TextBlock Text="Password" Foreground="#BFC8D6" FontSize="12"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="28"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <PasswordBox Grid.Column="1" x:Name="pass" Background="Transparent" BorderThickness="0" Foreground="White" FontSize="14"/>
+                        </Grid>
+                        <Rectangle Height="1" Fill="#6B6B6B" Margin="28,6,0,0"/>
+                    </StackPanel>
+
+                    <!-- Login button -->
+                    <Button Name="LoginButton" Click="LoginButton_Click" Height="38" Margin="0,4,0,6" FontWeight="Bold" Foreground="White" BorderThickness="0">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#6D5BFF" Offset="0"/>
+                                <GradientStop Color="#8A5BFF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                        <Border CornerRadius="18" Background="Transparent" Padding="8,4">
+                            <TextBlock Text="LOG IN" HorizontalAlignment="Center"/>
+                        </Border>
+                    </Button>
+
+                    <TextBlock Name="LoginStatus" Text="" Foreground="#FFD1D1" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,6,0,6"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0">
+                        <TextBlock Text=" " />
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+
         </Grid>
 
+
         <!-- Desktop Screen -->
-        <Grid x:Name="DesktopScreen" Visibility="Visible">
+        <Grid x:Name="DesktopScreen" Visibility="Collapsed">
 
             <!-- Background -->
             <Image Source="/images/pc_background.png" Stretch="Fill"/>
@@ -109,7 +163,7 @@
                 <Button Name="MusicPlayer"
                         Width="66"
                         Height="66"
-                        BorderBrush="{x:Null}" >
+                        BorderBrush="{x:Null}" Click="MusicPlayer_Click" >
                     <Button.Background>
                         <ImageBrush TileMode="None"
                                     Stretch="UniformToFill"
@@ -220,7 +274,7 @@
                 </Grid>
             <!--  Music Player -->
             <Grid Name="MP"
-                  Visibility="Visible"
+                  Visibility="Collapsed"
                   Width="1000"
                   Height="600"
                   Opacity="1"
@@ -239,7 +293,47 @@
                 <Button Name="Forward" Content="F" Margin="716,504,89,38"/>
                 <Label Name="Time" Content="00:00/00:00" Margin="788,420,112,157" Background="Gray"/>
             </Grid>
-            <!-- Debug labels on the right -->
+            <!--  Nano Content Editor -->
+            <Grid Name="NanoEditor"
+                  Visibility="Visible"
+                  Width="1000"
+                  Height="600"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+                <Border  
+                      CornerRadius="30" 
+                      Background="#1e1e1e">
+                </Border>
+                <Label Name="FileName"
+                       Content="FileName"
+                       FontSize="16"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center"
+                       Foreground="White">
+                </Label>
+                <Label Name="Command"
+                       Content="Save: F10"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Foreground="White"
+                       Padding="30,0,0,30">
+                </Label>
+                <TextBox Name="NanoContent"
+                         Background="Transparent"
+                         Foreground="Lime"
+                         FontFamily="Consolas"
+                         FontSize="32"
+                         BorderThickness="0"
+                         VerticalScrollBarVisibility="Hidden"
+                         HorizontalScrollBarVisibility="Hidden"
+                         VerticalAlignment="Stretch"
+                         HorizontalAlignment="Stretch"
+                         Margin="5,35,5,45"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"/> 
+
+            </Grid>
+                <!-- Debug labels on the right -->
             
             <StackPanel HorizontalAlignment="Right"
                         VerticalAlignment="Top"

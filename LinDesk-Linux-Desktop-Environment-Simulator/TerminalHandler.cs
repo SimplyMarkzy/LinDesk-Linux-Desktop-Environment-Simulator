@@ -22,7 +22,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         private static string directory;
         private static string message;
         private static DirectoryHandler directoryHandler = new DirectoryHandler();
-        public static void TerminalExecute(RichTextBox TerminalBox, RichTextBox TerminalHistory, string[] text, string executedLine, Label PrefixLabel, Label CommandLabel, Label CurrentDirectoryDebug, Label DirectoryLabel, ref DirectoryConstructor CurrentDirectory, ref string MainPrefix)
+        public static void TerminalExecute(RichTextBox TerminalBox, RichTextBox TerminalHistory, string[] text, string executedLine, Label PrefixLabel, Label CommandLabel, Label CurrentDirectoryDebug, Label DirectoryLabel, ref DirectoryConstructor CurrentDirectory, ref string MainPrefix, Grid NanoEditor)
         {
             directory = "";
             foreach (string line in text)
@@ -282,6 +282,10 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             TerminalHistory.AppendText(Environment.NewLine);
             TerminalHistory.AppendText(DateTime.Now.ToString());
             TerminalHistory.AppendText(Environment.NewLine);
+        }
+        public static void Nano(Grid NanoEditor)
+        {
+
         }
     }
 }
