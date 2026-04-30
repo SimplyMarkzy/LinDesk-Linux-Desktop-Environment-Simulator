@@ -2,6 +2,7 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography.X509Certificates;
@@ -22,80 +23,89 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         private static string directory;
         private static string message;
         private static DirectoryHandler directoryHandler = new DirectoryHandler();
-        public static void TerminalExecute(RichTextBox TerminalBox, RichTextBox TerminalHistory, string[] text, string executedLine, Label PrefixLabel, Label CommandLabel, Label CurrentDirectoryDebug, Label DirectoryLabel, ref DirectoryConstructor CurrentDirectory, ref string MainPrefix, Grid NanoEditor)
+        public static void TerminalExecute(RichTextBox TerminalBox, RichTextBox TerminalHistory, string[] text, string executedLine, Label PrefixLabel, Label CommandLabel, Label CurrentDirectoryDebug, Label DirectoryLabel, ref DirectoryConstructor CurrentDirectory, ref string MainPrefix, Grid NanoEditor, Label FileName, TextBox NanoContent, ref FileConstructor CurrentFile, Label NewFileWarning, Grid Terminal)
         {
-            directory = "";
-            foreach (string line in text)
+            if (executedLine == "demo@LinDesk:~$ sudo apt install media player")
             {
-                string[] splits = line.Split(" ");
-                PrefixLabel.Content = splits[0];
-                if (splits.Length > 1)
-                {
-                    CommandLabel.Content = splits[1];
-                    prefix = splits[0];
-                    command = splits[1];
-                }
-                else
-                {
-                    CommandLabel.Content = "";
-                }
-                if (splits.Length > 2)
-                {
-                    DirectoryLabel.Content = splits[2];
-                    prefix = splits[0];
-                    command = splits[1];
-                    directory = splits[2];
-                }
-                else
-                {
-                    DirectoryLabel.Content = "";
-                }
-                //ai recommended this bit here for echo command, it just takes everything after the first two splits and makes it the message to be echoed
-                message = string.Join(" ", splits.Skip(2));
+                MusicPlayerInstall(TerminalHistory);
             }
-            switch (command)
+            else
             {
-                case "hello":
-                    HelloCommand(TerminalHistory, text);
-                    break;
-                case "help":
-                    HelpCommand(TerminalHistory, text);
-                    break;
-                case "ls":
-                    listCommand(TerminalHistory, text, ref prefix, CurrentDirectory);
-                    break;
-                case "cd":
-                    changeDirectoryCommand(TerminalHistory, text, ref MainPrefix, directory, ref CurrentDirectory, CurrentDirectoryDebug);
-                    break;
-                case "mkdir":
-                    MakeDirectoryCommand(TerminalHistory, text, prefix, directory, ref CurrentDirectory);
-                    break;
-                case "pwd":
-                    WhereamiCommand(TerminalHistory, text, prefix, ref CurrentDirectory);
-                    break;
-                case "touch":
-                    Touch(TerminalHistory, text, prefix, directory, ref CurrentDirectory);
-                    break;
-                case "rm":
-                    remove(TerminalHistory, text, prefix, directory, ref CurrentDirectory);
-                    break;
-                case "clear":
-                    ClearTerminal(TerminalHistory);
-                    break;
-                case "cat":
-                    WriteFileContent(TerminalHistory, text, prefix, directory, ref CurrentDirectory);
-                    break;
-                case "echo":
-                    echo(TerminalHistory);
-                    break;
-                case "whoami":
-                    whoami(TerminalHistory);
-                    break;
-                case "date":
-                    CurrentDateTime(TerminalHistory);
-                    break;
+                directory = "";
+                foreach (string line in text)
+                {
+                    string[] splits = line.Split(" ");
+                    PrefixLabel.Content = splits[0];
+                    if (splits.Length > 1)
+                    {
+                        CommandLabel.Content = splits[1];
+                        prefix = splits[0];
+                        command = splits[1];
+                    }
+                    else
+                    {
+                        CommandLabel.Content = "";
+                    }
+                    if (splits.Length > 2)
+                    {
+                        DirectoryLabel.Content = splits[2];
+                        prefix = splits[0];
+                        command = splits[1];
+                        directory = splits[2];
+                    }
+                    else
+                    {
+                        DirectoryLabel.Content = "";
+                    }
+                    //ai recommended this bit here for echo command, it just takes everything after the first two splits and makes it the message to be echoed
+                    message = string.Join(" ", splits.Skip(2));
+                }
+                switch (command)
+                {
+                    case "hello":
+                        HelloCommand(TerminalHistory, text);
+                        break;
+                    case "help":
+                        HelpCommand(TerminalHistory, text);
+                        break;
+                    case "ls":
+                        listCommand(TerminalHistory, text, ref prefix, CurrentDirectory);
+                        break;
+                    case "cd":
+                        changeDirectoryCommand(TerminalHistory, text, ref MainPrefix, directory, ref CurrentDirectory, CurrentDirectoryDebug);
+                        break;
+                    case "mkdir":
+                        MakeDirectoryCommand(TerminalHistory, text, prefix, directory, ref CurrentDirectory);
+                        break;
+                    case "pwd":
+                        WhereamiCommand(TerminalHistory, text, prefix, ref CurrentDirectory);
+                        break;
+                    case "touch":
+                        Touch(TerminalHistory, text, prefix, directory, ref CurrentDirectory);
+                        break;
+                    case "rm":
+                        remove(TerminalHistory, text, prefix, directory, ref CurrentDirectory);
+                        break;
+                    case "clear":
+                        ClearTerminal(TerminalHistory);
+                        break;
+                    case "cat":
+                        WriteFileContent(TerminalHistory, text, prefix, directory, ref CurrentDirectory);
+                        break;
+                    case "echo":
+                        echo(TerminalHistory);
+                        break;
+                    case "whoami":
+                        whoami(TerminalHistory);
+                        break;
+                    case "date":
+                        CurrentDateTime(TerminalHistory);
+                        break;
+                    case "nano":
+                        Nano(NanoEditor, directory, TerminalHistory, FileName, NanoContent, ref CurrentDirectory, ref CurrentFile, NewFileWarning, Terminal);
+                        break;
+                }
             }
-
 
         }
         public static string BuildPrefix(DirectoryConstructor currentDirectory)
@@ -283,9 +293,43 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             TerminalHistory.AppendText(DateTime.Now.ToString());
             TerminalHistory.AppendText(Environment.NewLine);
         }
-        public static void Nano(Grid NanoEditor)
+        public static void Nano(Grid NanoEditor, string directory, RichTextBox TerminalHistory, Label FileName, TextBox NanoContent, ref DirectoryConstructor CurrentDirectory, ref FileConstructor CurrentFile, Label NewFileWarning, Grid Terminal)
         {
 
+            if (directory == "")
+            {
+                TerminalHistory.AppendText("No file name Specified");
+                TerminalHistory.AppendText(Environment.NewLine);
+            }
+            else if (CurrentDirectory.Files.Any(file => file.Name == directory))
+            {
+                CurrentFile = CurrentDirectory.Files.First(file => file.Name == directory);
+                FileName.Content = CurrentFile.Name;
+                NanoContent.Text = CurrentFile.Content;
+                Terminal.Visibility = System.Windows.Visibility.Collapsed;
+                NanoEditor.Visibility = System.Windows.Visibility.Visible;
+                NewFileWarning.Visibility = System.Windows.Visibility.Hidden;
+            }
+            else
+            {
+                FileConstructor newFile = new FileConstructor(directory);
+                CurrentDirectory.Files.Add(newFile);
+                CurrentFile = newFile;
+                FileName.Content = newFile.Name;
+                NanoContent.Text = newFile.Content;
+                Terminal.Visibility = System.Windows.Visibility.Collapsed;
+                NanoEditor.Visibility = System.Windows.Visibility.Visible;
+                NewFileWarning.Visibility = System.Windows.Visibility.Visible;
+
+            }
+        }
+        public static void MusicPlayerInstall(RichTextBox TerminalHistory)
+        {
+            TerminalHistory.AppendText(Environment.NewLine);
+            TerminalHistory.AppendText("Installing media player...");
+            TerminalHistory.AppendText(Environment.NewLine);
+            TerminalHistory.AppendText("Media player installed successfully!");
+            TerminalHistory.AppendText(Environment.NewLine);
         }
     }
 }

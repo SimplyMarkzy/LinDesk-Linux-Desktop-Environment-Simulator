@@ -18,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 
+
 namespace LinDesk_Linux_Desktop_Environment_Simulator
 {
     public partial class MainWindow : Window
@@ -25,8 +26,14 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         public string MainPrefix = "demo@LinDesk:~$";
         public string justaspace = " ";
         public string executedLine;
+        public FileConstructor CurrentFile;
         public DirectoryConstructor CurrentDirectory;
         public DirectoryHandler directoryHandler = new DirectoryHandler();
+        public MusicHandler musicHandler;
+        public List<SongConstructor> songs;
+        public int currentIndex = 0;
+        public MediaPlayer mediaPlayer = new MediaPlayer();
+        public bool isPlaying = false;
 
         public MainWindow()
         {
@@ -34,7 +41,14 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             Loaded += MainWindow_Loaded;
 
             CurrentDirectory = directoryHandler.Root;
-            
+
+            musicHandler = new MusicHandler();
+            songs = new List<SongConstructor>(musicHandler.Songs);
+            if (songs.Count > 0)
+            {
+                currentIndex = 0;
+            }
+
             TerminalHistory.AppendText("Welcome to LinDesk 1.0 (Simulated Environment)\r\n\r\nSystem information as of session start:\r\n\r  System load: 0.03\n  Processes: 112 running\n  Memory usage: 842MB / 4096MB\n  Disk usage: 12% of 120GB\n  Network: connected\r\n\r\nNo updates available.\r\n\r\nDocumentation: https://lindesk.local/docs\r\nSupport: https://lindesk.local/support\r\n\r\nTip: Type 'help' to see available commands.\r\nTip: Command history (↑/↓) is not supported in this demo.\r\n\r\ndemo@lindesk:~$\r\n");
             MainPrefix = MainPrefix + justaspace;
             
@@ -46,7 +60,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
             TerminalBox.PreviewKeyDown += TerminalBox_PreviewKeyDown;
             TerminalBox.TextChanged += TerminalBox_TextChangedHandler;
-            _ = UpdateLabel(); // start background task to update directory label
+            //_ = UpdateLabel(); // start background task to update directory label
         }
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -304,6 +318,16 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 FadeOut(MP);
             }
         }
+        private void NanoEditor_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.System)
+            {
+                CurrentFile.Content = NanoContent.Text;
+                NanoEditor.Visibility = Visibility.Collapsed;
+                NewFileWarning.Visibility = Visibility.Collapsed;
+                Terminal.Visibility = Visibility.Visible;
+            }
+        }
         
         private void TerminalBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -387,7 +411,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     MainPrefix += " ";
                 }
 
-                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel,  DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor);
+                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel, DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor, FileName, NanoContent, ref CurrentFile, NewFileWarning, Terminal);
                 TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix)));
                 TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
                 TerminalBox.Focus();
@@ -464,5 +488,23 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             scale.BeginAnimation(ScaleTransform.ScaleYProperty, scaleDown);
         }
 
+        private void PlayPause_Click(object sender, RoutedEventArgs e)
+        {
+            var currentSong = songs[currentIndex];
+            mediaPlayer.Open(new Uri(currentSong.FilePath));
+            if (isPlaying == true)
+            {
+                mediaPlayer.Pause();
+                isPlaying = false;
+                PlayPause.Content = "Play";
+            }
+            else
+            {
+                mediaPlayer.Play();
+                isPlaying = true;
+                
+                PlayPause.Content = "Pause";
+            }
+        }
     }
 }

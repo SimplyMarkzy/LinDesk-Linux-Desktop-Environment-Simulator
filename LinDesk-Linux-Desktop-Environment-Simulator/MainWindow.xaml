@@ -29,7 +29,7 @@
 
         <!-- Login Screen -->
         <Grid x:Name="LoginScreen"
-              Visibility="Visible">
+              Visibility="Collapsed">
             <Grid.Background>
                 <ImageBrush ImageSource="/images/LoginBackground.png" RenderOptions.BitmapScalingMode="HighQuality"/>
             </Grid.Background>
@@ -120,7 +120,7 @@
 
 
         <!-- Desktop Screen -->
-        <Grid x:Name="DesktopScreen" Visibility="Collapsed">
+        <Grid x:Name="DesktopScreen" Visibility="Visible">
 
             <!-- Background -->
             <Image Source="/images/pc_background.png" Stretch="Fill"/>
@@ -274,7 +274,7 @@
                 </Grid>
             <!--  Music Player -->
             <Grid Name="MP"
-                  Visibility="Collapsed"
+                  Visibility="Visible"
                   Width="1000"
                   Height="600"
                   Opacity="1"
@@ -287,19 +287,22 @@
                       CornerRadius="30" 
                       Background="#1e1e1e">
                 </Border>
-                <ProgressBar Name="MusicProgressBar" Margin="100,460,100,126" />
-                <Button Name="Rewind" Content="R" Margin="89,504,716,38"/>
-                <Button Name="PlayPause" Content="PP" Margin="402,504,403,38"/>
-                <Button Name="Forward" Content="F" Margin="716,504,89,38"/>
-                <Label Name="Time" Content="00:00/00:00" Margin="788,420,112,157" Background="Gray"/>
-            </Grid>
+                <Image Name="MusicPicture" Source="/images/MusicPictures/QM.png" VerticalAlignment="Top" HorizontalAlignment="Center" Height="300" Margin="0,60,0,0"/>
+                <Slider Name="MusicSlider" Margin="100,460,100,126" Foreground="Red"/>
+                <Button Name="Rewind" Content="Rewind" Margin="89,504,716,38"/>
+                <Button Name="PlayPause" Content="Play" Margin="402,504,403,38" Click="PlayPause_Click"/>
+                <Button Name="Forward" Content="Forward" Margin="716,504,89,38"/>
+                <Label Name="Time" Content="00:00/00:00" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,130,155" Foreground="White"/>
+                <Label Name="SongName" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,155" Foreground="White" Content="Song Title"/>
+                <Label Name="ArtistName" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,155" Foreground="White" Content="Artist Name"/>
+            </Grid> 
             <!--  Nano Content Editor -->
             <Grid Name="NanoEditor"
-                  Visibility="Visible"
+                  Visibility="Collapsed"
                   Width="1000"
                   Height="600"
                   HorizontalAlignment="Center"
-                  VerticalAlignment="Center">
+                  VerticalAlignment="Center" KeyDown="NanoEditor_KeyDown">
                 <Border  
                       CornerRadius="30" 
                       Background="#1e1e1e">
@@ -328,13 +331,21 @@
                          HorizontalScrollBarVisibility="Hidden"
                          VerticalAlignment="Stretch"
                          HorizontalAlignment="Stretch"
-                         Margin="5,35,5,45"
+                         Margin="5,35,5,70"
                          AcceptsReturn="True"
-                         TextWrapping="Wrap"/> 
-
+                         TextWrapping="Wrap">
+                </TextBox>
+                <Label Name="NewFileWarning"
+                       Content="NewFile"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,45"
+                       Foreground="White"
+                       FontSize="16"
+                       Visibility="Collapsed">
+                </Label>
             </Grid>
-                <!-- Debug labels on the right -->
-            
+            <!-- Debug labels on the right -->
             <StackPanel HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Margin="0,40,20,0"

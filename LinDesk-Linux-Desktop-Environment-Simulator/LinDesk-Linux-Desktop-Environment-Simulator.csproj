@@ -13,8 +13,10 @@
     <None Remove="images\LDlogo.png" />
     <None Remove="images\LoginBackground.png" />
     <None Remove="images\Music_Icon.png" />
+    <None Remove="images\QM.png" />
     <None Remove="images\shutdownb_icon.png" />
     <None Remove="images\terminal_icon.png" />
+    <None Remove="Music\On-my-own-Kyle-The-Hooligan.mp3" />
     <None Remove="Terminal_Icon.png" />
   </ItemGroup>
 
@@ -34,10 +36,20 @@
     <Resource Include="images\power_button.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="images\MusicPictures\QM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\shutdownb_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\Terminal_Icon.png" />
+    <Content Include="Music\On-my-own-Kyle-The-Hooligan.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TagLibSharp" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>

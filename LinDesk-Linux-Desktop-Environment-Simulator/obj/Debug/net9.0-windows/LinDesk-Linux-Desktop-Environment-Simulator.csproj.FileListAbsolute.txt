@@ -40,3 +40,8 @@ C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-
 C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\obj\Debug\net9.0-windows\LinDesk-Linux-Desktop-Environment-Simulator.pdb
 C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\obj\Debug\net9.0-windows\LinDesk-Linux-Desktop-Environment-Simulator.genruntimeconfig.cache
 C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\obj\Debug\net9.0-windows\ref\LinDesk-Linux-Desktop-Environment-Simulator.dll
+C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\bin\Debug\net9.0-windows\Music\On-my-own-Kyle-The-Hooligan.mp3
+C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\obj\Debug\net9.0-windows\LinDesk-Linux-Desktop-Environment-Simulator_Content.g.cs
+C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\bin\Debug\net9.0-windows\TagLibSharp.dll
+C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\obj\Debug\net9.0-windows\LinDesk-Linux-Desktop-Environment-Simulator.csproj.AssemblyReference.cache
+C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\obj\Debug\net9.0-windows\LinDesk-.A3A9087D.Up2Date
