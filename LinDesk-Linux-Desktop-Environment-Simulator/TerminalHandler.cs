@@ -323,13 +323,68 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
             }
         }
-        public static void MusicPlayerInstall(RichTextBox TerminalHistory)
+        public static async Task MusicPlayerInstall(RichTextBox TerminalHistory)
         {
-            TerminalHistory.AppendText(Environment.NewLine);
-            TerminalHistory.AppendText("Installing media player...");
-            TerminalHistory.AppendText(Environment.NewLine);
-            TerminalHistory.AppendText("Media player installed successfully!");
-            TerminalHistory.AppendText(Environment.NewLine);
+            List<string> installOutput = new List<string>
+{
+    "Reading package lists... Done",
+    "Building dependency tree... Done",
+    "Reading state information... Done",
+    "",
+    "The following NEW packages will be installed:",
+    "  media-player libavcodec58 libavformat58 libavutil56 libswresample3",
+    "  libswscale5 libpulse0 libasound2 plugins-base plugins-good",
+    "",
+    "0 upgraded, 10 newly installed, 0 to remove and 3 not upgraded.",
+    "Need to get 12.4 MB of archives.",
+    "After this operation, 45.8 MB of additional disk space will be used.",
+    "",
+    "Get:1 http://archive.ubuntu.com/... libavutil56 [241 kB]",
+    "Get:2 http://archive.ubuntu.com/... libavcodec58 [4,800 kB]",
+    "Get:3 http://archive.ubuntu.com/... libavformat58 [1,200 kB]",
+    "Get:4 http://archive.ubuntu.com/... libswscale5 [150 kB]",
+    "Get:5 http://archive.ubuntu.com/... libswresample3 [100 kB]",
+    "Get:6 http://archive.ubuntu.com/... libpulse0 [280 kB]",
+    "Get:7 http://archive.ubuntu.com/... libasound2 [350 kB]",
+    "Get:8 http://archive.ubuntu.com/... plugins-base [2,100 kB]",
+    "Get:9 http://archive.ubuntu.com/... plugins-good [3,000 kB]",
+    "Get:10 http://archive.ubuntu.com/... media-player [200 kB]",
+    "",
+    "Fetched 12.4 MB in 2s (6,200 kB/s)",
+    "Selecting previously unselected package libavutil56.",
+    "(Reading database ... 215432 files and directories currently installed.)",
+    "Preparing to unpack ... libavutil56 ...",
+    "Unpacking libavutil56...",
+    "Selecting previously unselected package libavcodec58.",
+    "Preparing to unpack ... libavcodec58 ...",
+    "Unpacking libavcodec58...",
+    "Selecting previously unselected package libavformat58.",
+    "Preparing to unpack ... libavformat58 ...",
+    "Unpacking libavformat58...",
+    "Selecting previously unselected package media-player.",
+    "Preparing to unpack ... media-player ...",
+    "Unpacking media-player...",
+    "",
+    "Setting up libavutil56...",
+    "Setting up libavcodec58...",
+    "Setting up libavformat58...",
+    "Setting up media-player...",
+    "",
+    "Processing triggers for man-db...",
+    "Processing triggers for libc-bin...",
+    "",
+    "Installation complete."
+};
+            Random r = new Random();
+            foreach (string line in installOutput)
+            {
+
+                TerminalHistory.AppendText(line + Environment.NewLine); // pridá text na koniec a skočí na nový riadok podľa typu systému
+                TerminalHistory.ScrollToEnd(); // automaticky odroluje na koniec, aby bol vždy vidieť najnovší text
+                int wait = r.Next(250, 600); // random time in milliseconds
+                await Task.Delay(wait);
+            }
         }
+        
     }
 }

@@ -487,7 +487,6 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             scale.BeginAnimation(ScaleTransform.ScaleXProperty, scaleDown);
             scale.BeginAnimation(ScaleTransform.ScaleYProperty, scaleDown);
         }
-
         private void PlayPause_Click(object sender, RoutedEventArgs e)
         {
             var currentSong = songs[currentIndex];
@@ -506,5 +505,6 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 PlayPause.Content = "Pause";
             }
         }
+
     }
 }
