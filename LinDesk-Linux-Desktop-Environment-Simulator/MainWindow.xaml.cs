@@ -265,9 +265,9 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             }
         }
 
-        private void Shutdown_Click(object sender, RoutedEventArgs e)
+        private async void Shutdown_Click(object sender, RoutedEventArgs e)
         {
-            Thread.Sleep(1000); //simulate shutdown delay
+            await Task.Delay(1000); //simulate shutdown delay
             Process.GetCurrentProcess().Kill();
         }
 
@@ -278,18 +278,20 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             await StartBootSequence();
         }
 
-        private void Sleep_Click(object sender, RoutedEventArgs e)
+        private async void Sleep_Click(object sender, RoutedEventArgs e)
 
         {
-            Thread.Sleep(1000); //simulate sleep delay
+            await Task.Delay(1000); //simulate sleep delay
             DesktopScreen.Visibility = Visibility.Collapsed; // schova hlavny desktop
             SleepMode.Visibility = Visibility.Visible; // zobrazy obrazovku sleep
+            SleepVideo.Play(); 
         }
-        private void SleepScreen_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void SleepScreen_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Thread.Sleep(1000); //simulate wake up delay
+            await Task.Delay(1000); //simulate wake up delay
             SleepMode.Visibility = Visibility.Collapsed; // schova obrazovku sleep
-            DesktopScreen.Visibility = Visibility.Visible; // zobrazy hlavny desktop
+            DesktopScreen.Visibility = Visibility.Visible; // zobrazy hlavni desktop
+            SleepVideo.Stop();
         }
 
         private void TerminalButton_Click(object sender, RoutedEventArgs e)
@@ -411,7 +413,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     MainPrefix += " ";
                 }
 
-                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel, DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor, FileName, NanoContent, ref CurrentFile, NewFileWarning, Terminal);
+                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel, DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor, FileName, NanoContent, ref CurrentFile, NewFileWarning, Terminal, SleepMode, SleepVideo);
                 TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix)));
                 TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
                 TerminalBox.Focus();
@@ -505,6 +507,6 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 PlayPause.Content = "Pause";
             }
         }
-
+         
     }
 }

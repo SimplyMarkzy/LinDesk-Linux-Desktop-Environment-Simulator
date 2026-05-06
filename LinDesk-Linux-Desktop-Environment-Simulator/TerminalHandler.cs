@@ -23,11 +23,18 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         private static string directory;
         private static string message;
         private static DirectoryHandler directoryHandler = new DirectoryHandler();
-        public static void TerminalExecute(RichTextBox TerminalBox, RichTextBox TerminalHistory, string[] text, string executedLine, Label PrefixLabel, Label CommandLabel, Label CurrentDirectoryDebug, Label DirectoryLabel, ref DirectoryConstructor CurrentDirectory, ref string MainPrefix, Grid NanoEditor, Label FileName, TextBox NanoContent, ref FileConstructor CurrentFile, Label NewFileWarning, Grid Terminal)
+        public static void TerminalExecute(RichTextBox TerminalBox, RichTextBox TerminalHistory, string[] text, string executedLine, Label PrefixLabel, Label CommandLabel, Label CurrentDirectoryDebug, Label DirectoryLabel, ref DirectoryConstructor CurrentDirectory, ref string MainPrefix, Grid NanoEditor, Label FileName, TextBox NanoContent, ref FileConstructor CurrentFile, Label NewFileWarning, Grid Terminal, Grid SleepMode, MediaElement SleepVideo)
         {
             if (executedLine == "demo@LinDesk:~$ sudo apt install media player")
             {
                 MusicPlayerInstall(TerminalHistory);
+            }
+            else if (executedLine == "demo@LinDesk:~$ Warny Thunder")
+            {
+                SleepVideo.Source = new Uri("C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\Videos\\cinematic easter egg.mp4", UriKind.Relative);
+                TerminalHistory.AppendText(Environment.NewLine);
+                TerminalHistory.AppendText("Cleared Hot!");
+                TerminalHistory.AppendText(Environment.NewLine);
             }
             else
             {

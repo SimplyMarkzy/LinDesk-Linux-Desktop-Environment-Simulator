@@ -18,6 +18,8 @@
     <None Remove="images\terminal_icon.png" />
     <None Remove="Music\On-my-own-Kyle-The-Hooligan.mp3" />
     <None Remove="Terminal_Icon.png" />
+    <None Remove="Videos\cinematic easter egg.mp4" />
+    <None Remove="Videos\sleep screen original.mp4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +46,12 @@
     </Resource>
     <Resource Include="images\Terminal_Icon.png" />
     <Content Include="Music\On-my-own-Kyle-The-Hooligan.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\cinematic easter egg.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\sleep screen original.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

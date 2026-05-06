@@ -379,11 +379,13 @@
         <Grid x:Name="SleepMode"
               Visibility="Collapsed"
               MouseLeftButtonDown="SleepScreen_MouseLeftButtonDown">
-            <Rectangle Fill="#FF2D2828"/>
-            <Label Content="THIS IS A TEMPORARY SLEEP MODE SCREEN!!!"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="60"/>
+            <MediaElement Name="SleepVideo" 
+                            Source="C:\Users\Uzivatel\source\repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\Videos\sleep screen original.mp4" 
+                            LoadedBehavior="Manual"
+                            UnloadedBehavior="Manual"
+                            Stretch="Fill"
+                            Volume="0.1">
+            </MediaElement>
         </Grid>
 
     </Grid>

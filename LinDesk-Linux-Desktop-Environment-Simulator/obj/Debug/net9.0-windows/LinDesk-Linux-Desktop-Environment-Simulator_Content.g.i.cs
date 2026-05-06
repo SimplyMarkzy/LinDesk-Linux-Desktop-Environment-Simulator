@@ -9,5 +9,7 @@
 //------------------------------------------------------------------------------
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("music/on-my-own-kyle-the-hooligan.mp3")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("videos/cinematic%20easter%20egg.mp4")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("videos/sleep%20screen%20original.mp4")]
 
 

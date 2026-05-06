@@ -45,3 +45,5 @@ C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDes
 C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\bin\Debug\net9.0-windows\TagLibSharp.dll
 C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\obj\Debug\net9.0-windows\LinDesk-Linux-Desktop-Environment-Simulator.csproj.AssemblyReference.cache
 C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\obj\Debug\net9.0-windows\LinDesk-.A3A9087D.Up2Date
+C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\bin\Debug\net9.0-windows\Videos\cinematic easter egg.mp4
+C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\bin\Debug\net9.0-windows\Videos\sleep screen original.mp4

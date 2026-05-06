@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LinDesk-Linux-Desktop-Environment-Simulator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+439d8bb6686fe05451855008e64bc467dd42dabb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b6b433cffc8df40e3e72ea5ec6d5b710d11d4e8e")]
 [assembly: System.Reflection.AssemblyProductAttribute("LinDesk-Linux-Desktop-Environment-Simulator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LinDesk-Linux-Desktop-Environment-Simulator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
