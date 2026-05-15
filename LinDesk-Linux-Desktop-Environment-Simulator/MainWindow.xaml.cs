@@ -34,7 +34,9 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         public int currentIndex = 0;
         public MediaPlayer mediaPlayer = new MediaPlayer();
         public bool isPlaying = false;
-
+        public UsagePanel usagePanel = new UsagePanel();
+        public CalculatorLogic calculator = new CalculatorLogic();
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -61,6 +63,8 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             TerminalBox.PreviewKeyDown += TerminalBox_PreviewKeyDown;
             TerminalBox.TextChanged += TerminalBox_TextChangedHandler;
             //_ = UpdateLabel(); // start background task to update directory label
+            usagePanel.Usage(CpuUsage, RamUsage, DiskUsage, NetUsage, LoadAvg, WorldTime, UpTime);
+            _ = usagePanel.Usage(CpuUsage, RamUsage, DiskUsage, NetUsage, LoadAvg, WorldTime, UpTime);
         }
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -413,7 +417,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     MainPrefix += " ";
                 }
 
-                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel, DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor, FileName, NanoContent, ref CurrentFile, NewFileWarning, Terminal, SleepMode, SleepVideo);
+                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel, DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor, FileName, NanoContent, ref CurrentFile, NewFileWarning, Terminal, SleepMode, SleepVideo, Calculator);
                 TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix)));
                 TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
                 TerminalBox.Focus();
@@ -507,6 +511,37 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 PlayPause.Content = "Pause";
             }
         }
-         
+        private void CalculatorButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Tries to treat whatever triggered the event as a Button object
+            Button button = sender as Button;
+            string Pressed = button.Content.ToString();
+            if (calculator.Clear == true)
+            {
+                CalcOutput.Text = "";
+                calculator.Clear = false;
+            }
+            calculator.Press(Pressed);
+            if (Pressed == "+" || Pressed == "-" || Pressed == "*" || Pressed == "/")
+            {
+                CalcOutput.Text = CalcOutput.Text + " " + Pressed + " ";
+                calculator.Operator = true;
+            }
+            else if (Pressed == "=")
+            {
+                calculator.Equals = true;
+            }
+            else
+            {
+                CalcOutput.Text = CalcOutput.Text + Pressed;
+            }
+            calculator.Calculator(CalcOutput);
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Calculator.Visibility = Visibility.Collapsed;
+            CalcOutput.Text = "";
+        }
     }
 }

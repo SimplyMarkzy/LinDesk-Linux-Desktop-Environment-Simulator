@@ -23,7 +23,9 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         private static string directory;
         private static string message;
         private static DirectoryHandler directoryHandler = new DirectoryHandler();
-        public static void TerminalExecute(RichTextBox TerminalBox, RichTextBox TerminalHistory, string[] text, string executedLine, Label PrefixLabel, Label CommandLabel, Label CurrentDirectoryDebug, Label DirectoryLabel, ref DirectoryConstructor CurrentDirectory, ref string MainPrefix, Grid NanoEditor, Label FileName, TextBox NanoContent, ref FileConstructor CurrentFile, Label NewFileWarning, Grid Terminal, Grid SleepMode, MediaElement SleepVideo)
+        private static bool calculatorActive = false;
+        
+        public static void TerminalExecute(RichTextBox TerminalBox, RichTextBox TerminalHistory, string[] text, string executedLine, Label PrefixLabel, Label CommandLabel, Label CurrentDirectoryDebug, Label DirectoryLabel, ref DirectoryConstructor CurrentDirectory, ref string MainPrefix, Grid NanoEditor, Label FileName, TextBox NanoContent, ref FileConstructor CurrentFile, Label NewFileWarning, Grid Terminal, Grid SleepMode, MediaElement SleepVideo, Grid Calculator)
         {
             if (executedLine == "demo@LinDesk:~$ sudo apt install media player")
             {
@@ -111,9 +113,15 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     case "nano":
                         Nano(NanoEditor, directory, TerminalHistory, FileName, NanoContent, ref CurrentDirectory, ref CurrentFile, NewFileWarning, Terminal);
                         break;
+                    case "calculator":
+                        calculator(TerminalHistory, text, Terminal, Calculator);
+                        break;
+                    case "y":
+                        calcyes(TerminalHistory, text, Terminal, Calculator);
+                        break;
                 }
-            }
 
+            }
         }
         public static string BuildPrefix(DirectoryConstructor currentDirectory)
         {
@@ -188,7 +196,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             {
                 CurrentDirectory = directoryHandler.Root;
             }
-            else if (directory == "..")
+            else if (directory == ".." && CurrentDirectory.ParentDirectory != null)
             {
                 CurrentDirectory = CurrentDirectory.ParentDirectory;
             }
@@ -392,6 +400,24 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 await Task.Delay(wait);
             }
         }
-        
+        public static void calculator(RichTextBox TerminalHistory, string[] text,  Grid Terminal, Grid Calculator)
+        {
+            if (calculatorActive == false)
+            {
+                TerminalHistory.AppendText(Environment.NewLine);
+                TerminalHistory.AppendText("LinDesk Calculator initialized.\r\n\r\nThis calculator currently supports:\r\n- Two operands\r\n- One operator per calculation\r\n- Decimal values\r\n\r\nSupported operators:\r\n+  -  *  /\r\n\r\nNote:\r\nComplex expressions and leading negative values (example: -4+4) are not currently supported in this demo version.\r\n\r\nWould you like to continue? (Y/N)");
+                TerminalHistory.AppendText(Environment.NewLine);
+            }
+            else if (calculatorActive == true)
+            {
+                Terminal.Visibility = System.Windows.Visibility.Collapsed;
+                Calculator.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+        public static void calcyes(RichTextBox TerminalHistory, string[] text, Grid Terminal, Grid Calculator)
+        {
+            calculatorActive = true;
+            calculator(TerminalHistory, text, Terminal, Calculator);
+        }
     }
 }

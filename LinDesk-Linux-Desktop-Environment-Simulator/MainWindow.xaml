@@ -124,6 +124,23 @@
 
             <!-- Background -->
             <Image Source="/images/pc_background.png" Stretch="Fill"/>
+            <Label Name="WorldTime"
+                   Content="00:00"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Foreground="White"
+                   FontSize="80"
+                   Margin="0,250,0,0">
+
+            </Label>
+            <Label Name="UpTime"
+                   Content="uptime: 00:00:00"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   Foreground="White"
+                   FontSize="16">
+            </Label>
+                   
 
             <!-- Bottom-left buttons -->
             <StackPanel Orientation="Horizontal"
@@ -274,7 +291,7 @@
                 </Grid>
             <!--  Music Player -->
             <Grid Name="MP"
-                  Visibility="Visible"
+                  Visibility="Collapsed"
                   Width="1000"
                   Height="600"
                   Opacity="1"
@@ -372,6 +389,263 @@
                        Width="250"
                        FontSize="16"/>
             </StackPanel>
+
+            <!-- Usage Info -->
+            <StackPanel HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Width="320"
+                        Visibility="Visible">
+                <Label Name="CpuUsage"
+                       Content="Cpu: ?%"
+                       Foreground="White"
+                       FontSize="20"/>
+                <Label Name="RamUsage"
+                       Content="Ram:  ?? / ?? GB"
+                       Foreground="White"
+                       FontSize="20"/>
+                <Label Name="DiskUsage"
+                       Content="Disk: ??%"
+                       Foreground="White"
+                       FontSize="20"/>
+                <Label Name="NetUsage"
+                       Content="Net:  ?? KB/s ↓   ?? KB/s ↑"
+                       Foreground="White"
+                       FontSize="20"/>
+                <Label Name ="LoadAvg"
+                       Content="Load Average: ?.?? ?.?? ?.??"
+                       Foreground="White"
+                       FontSize="20"/>
+            </StackPanel>
+            <!-- Calculator -->
+            <Grid Name="Calculator"
+                  Width="500"
+                  Height="700"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Visibility="Visible">
+                 
+                
+                <Grid.RenderTransform>
+                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                </Grid.RenderTransform>
+                <Border  
+                           CornerRadius="30" 
+                           Background="#1e1e1e"
+                           Width="500"
+                           Height="700">
+                </Border>
+                <TextBlock x:Name="CalcOutput"
+                           Width="460"
+                           Height="130"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Top"
+                           Margin="0,70,0,0"
+                           Foreground="White"
+                           FontSize="80"
+                           >
+                </TextBlock>
+                
+                <Button Name="Zero"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,110,20"
+                        Background="Gray"
+                        Content="0"
+                        FontSize="50" Click="CalculatorButton_Click"> 
+                </Button>
+                <Button Name="Dot"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,130,20"
+                        Content="."
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="Equals"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,10,20"
+                        Content="="
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="One"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Left"
+                        Margin="20,0,0,115"
+                        Content="1"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="Two"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Left"
+                        Margin="139,0,0,115"
+                        Content="2"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="Three"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,130,115"
+                        Content="3"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="Plus"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,10,115"
+                        Content="+"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                    
+                </Button>
+                <Button Name="Four"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Left"
+                        Margin="20,0,0,210"
+                        Content="4"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="Five"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Margin="0,190,110,0"
+                        Content="5"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                    
+                </Button>
+                <Button Name="Six"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Margin="0,190,130,0"
+                        Content="6"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="Minus"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Margin="0,190,10,0"
+                        Content="-"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="Seven"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Margin="20,0,0,0"
+                        Content="7"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="Eight"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,110,0"
+                        Content="8"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="Nine"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,129,0"
+                        Content="9"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="Times"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,10,0"
+                        Content="*"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="Delete"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Margin="20,0,0,190"
+                        Content="X"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="ClearAll"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Margin="139,0,0,190"
+                        Content="CE"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="Divide"
+                        Width="112.5"
+                        Height="90"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,10,190"
+                        Content="/"
+                        FontSize="50"
+                        Background="Gray" Click="CalculatorButton_Click">
+                </Button>
+                <Button Name="Exit"
+                        Style="{StaticResource CircleButtonStyle}"
+                        Height="50"
+                        Width="50"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        Margin="0,15,25,0" Click="Exit_Click">
+                    <Border CornerRadius="50"
+                            Background="Red"
+                            Width="50"
+                            Height="50">
+                            <TextBlock Text="X"
+                                       FontSize="28"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center">
+                            </TextBlock>
+                    </Border>
+                </Button>
+            </Grid>
 
         </Grid>
 
