@@ -417,7 +417,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     MainPrefix += " ";
                 }
 
-                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel, DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor, FileName, NanoContent, ref CurrentFile, NewFileWarning, Terminal, SleepMode, SleepVideo, Calculator);
+                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel, DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor, FileName, NanoContent, ref CurrentFile, NewFileWarning, Terminal, SleepMode, SleepVideo, Calculator, SettingsMenu);
                 TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix)));
                 TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
                 TerminalBox.Focus();
@@ -542,6 +542,31 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         {
             Calculator.Visibility = Visibility.Collapsed;
             CalcOutput.Text = "";
+        }
+
+        private void SExit_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsMenu.Visibility = Visibility.Collapsed;
+        }
+
+        private void ResourceToggle_Checked(object sender, RoutedEventArgs e)
+        {
+            UsageInfo.Visibility = Visibility.Visible;
+        }
+
+        private void ResourceToggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UsageInfo.Visibility = Visibility.Collapsed;
+        }
+
+        private void UpTimeCounter_Checked(object sender, RoutedEventArgs e)
+        {
+            UpTime.Visibility = Visibility.Visible;
+        }
+
+        private void UpTimeCounter_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UpTime.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -241,7 +241,7 @@
                   Visibility="Collapsed"
                   Width="1000"
                   Height="600"
-                  Opacity="0"
+                  Opacity="1"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center">
                 <Grid.RenderTransform>
@@ -286,7 +286,8 @@
                         BorderThickness="0"
                         VerticalScrollBarVisibility="Hidden"
                         HorizontalScrollBarVisibility="Hidden"
-                        Padding="8,0,8,0"/>
+                        Padding="8,0,8,0" 
+                        Margin="0,1,0,0"/>
                     </Grid>
                 </Grid>
             <!--  Music Player -->
@@ -391,7 +392,8 @@
             </StackPanel>
 
             <!-- Usage Info -->
-            <StackPanel HorizontalAlignment="Right"
+            <StackPanel Name="UsageInfo"
+                        HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Width="320"
                         Visibility="Visible">
@@ -422,7 +424,7 @@
                   Height="700"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
-                  Visibility="Visible">
+                  Visibility="Collapsed">
                  
                 
                 <Grid.RenderTransform>
@@ -646,7 +648,69 @@
                     </Border>
                 </Button>
             </Grid>
-
+            <Grid Name="SettingsMenu"
+                  Width="300"
+                  Height="300"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Right"
+                  Margin="0,0,30,300"
+                  Visibility="Collapsed">
+                <Border CornerRadius="25"
+                        Background="#1e1e1e"
+                        Width="300"
+                        Height="300">
+                </Border>
+                <Label Name="Settings"
+                       Content="Setting Menu"
+                       Foreground="White"
+                       FontSize="16"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="15,5,0,0">
+                </Label>
+                <Button Name="SExit"
+                        Style="{StaticResource CircleButtonStyle}"
+                        Width="25"
+                        Height="25"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,10,20,0" Click="SExit_Click">
+                    <Border CornerRadius="25"
+                            Background="Red"
+                            Width="25"
+                            Height="25">
+                    <TextBlock Text="X"
+                    FontSize="16"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+                    </TextBlock>
+                    </Border>
+                </Button>
+                <CheckBox Name="ResourceToggle"
+                          Content="Resource Monitoring"
+                          Foreground="White"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Center"
+                          Margin="20,0,0,150"
+                          FontSize="16"
+                          IsChecked="True" Checked="ResourceToggle_Checked" Unchecked="ResourceToggle_Unchecked">
+                </CheckBox>
+                <CheckBox Name="UpTimeCounter"
+                          Content="Uptime Counter"
+                          Foreground="White"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Center"
+                          Margin="20,0,0,100"
+                          FontSize="16"
+                          IsChecked="True" Checked="UpTimeCounter_Checked" Unchecked="UpTimeCounter_Unchecked">
+                </CheckBox>
+                <Label Content="More to come in full release!"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Bottom"
+                       Margin="0,0,0,10"
+                       Foreground="White">
+                </Label>
+            </Grid>
         </Grid>
 
         <!-- Sleep Screen -->

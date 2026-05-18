@@ -24,8 +24,8 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         private static string message;
         private static DirectoryHandler directoryHandler = new DirectoryHandler();
         private static bool calculatorActive = false;
-        
-        public static void TerminalExecute(RichTextBox TerminalBox, RichTextBox TerminalHistory, string[] text, string executedLine, Label PrefixLabel, Label CommandLabel, Label CurrentDirectoryDebug, Label DirectoryLabel, ref DirectoryConstructor CurrentDirectory, ref string MainPrefix, Grid NanoEditor, Label FileName, TextBox NanoContent, ref FileConstructor CurrentFile, Label NewFileWarning, Grid Terminal, Grid SleepMode, MediaElement SleepVideo, Grid Calculator)
+
+        public static void TerminalExecute(RichTextBox TerminalBox, RichTextBox TerminalHistory, string[] text, string executedLine, Label PrefixLabel, Label CommandLabel, Label CurrentDirectoryDebug, Label DirectoryLabel, ref DirectoryConstructor CurrentDirectory, ref string MainPrefix, Grid NanoEditor, Label FileName, TextBox NanoContent, ref FileConstructor CurrentFile, Label NewFileWarning, Grid Terminal, Grid SleepMode, MediaElement SleepVideo, Grid Calculator, Grid SettingsMenu)
         {
             if (executedLine == "demo@LinDesk:~$ sudo apt install media player")
             {
@@ -118,6 +118,9 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                         break;
                     case "y":
                         calcyes(TerminalHistory, text, Terminal, Calculator);
+                        break;
+                    case "settings":
+                        settings(TerminalHistory, text, Terminal, SettingsMenu);
                         break;
                 }
 
@@ -400,7 +403,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 await Task.Delay(wait);
             }
         }
-        public static void calculator(RichTextBox TerminalHistory, string[] text,  Grid Terminal, Grid Calculator)
+        public static void calculator(RichTextBox TerminalHistory, string[] text, Grid Terminal, Grid Calculator)
         {
             if (calculatorActive == false)
             {
@@ -418,6 +421,10 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         {
             calculatorActive = true;
             calculator(TerminalHistory, text, Terminal, Calculator);
+        }
+        public static void settings(RichTextBox TerminalHistory, string[] text, Grid Terminal, Grid Settings)
+        {
+            Settings.Visibility = System.Windows.Visibility.Visible;
         }
     }
 }
