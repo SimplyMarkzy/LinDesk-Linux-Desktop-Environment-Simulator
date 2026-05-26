@@ -20,5 +20,57 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="FileExplorerButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="120"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="MainBorder"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="6"
+                        Padding="5">
+
+                            <StackPanel HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+
+                                <Image Source="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                               Width="80"
+                               Height="80"
+                               Stretch="Uniform"/>
+
+                                <TextBlock Text="{TemplateBinding Content}"
+                                   Margin="0,8,0,0"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   FontSize="13"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   HorizontalAlignment="Center"/>
+
+                            </StackPanel>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder"
+                                Property="Background"
+                                Value="#333333"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder"
+                                Property="Background"
+                                Value="#444444"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

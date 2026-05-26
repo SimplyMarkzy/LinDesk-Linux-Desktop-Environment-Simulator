@@ -711,6 +711,64 @@
                        Foreground="White">
                 </Label>
             </Grid>
+            <Grid Name="FE"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center"
+                  Width="1300"
+                  Height="800"
+                  Visibility="Visible">
+                <Border CornerRadius="30"
+                        Background="#1e1e1e"
+                        Width="1300"
+                        Height="800"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                </Border>
+                <Label Name="FELabel"
+                       Content="File Explorer"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="10,10,0,0"
+                       Foreground="White"
+                       FontSize="24">
+                </Label>
+                <Button Name="FEExit"
+                        Style="{StaticResource CircleButtonStyle}"
+                        Width="25"
+                        Height="25"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,20,20,0" Click="FEExit_Click">
+                    <Border CornerRadius="25"
+                            Background="Red"
+                            Width="25"
+                            Height="25">
+                        <TextBlock Text="X"
+                                   FontSize="16"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center">
+                        </TextBlock>
+                    </Border> 
+                </Button>
+                <Button Name="FEUp"
+                        Width="65"
+                        Height="65"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="30,50,0,0"
+                        Background="DarkGray">
+                    <TextBlock Text="^"
+                                   FontSize="70"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                               Margin="0,15,0,0">
+                        </TextBlock>
+                </Button>
+                <Button Name="Folder"
+                        Style="{StaticResource FileExplorerButtonStyle}"
+                        Content="Folder"
+                        Tag="C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\images\Music_Icon.png"></Button>
+            </Grid>
         </Grid>
 
         <!-- Sleep Screen -->

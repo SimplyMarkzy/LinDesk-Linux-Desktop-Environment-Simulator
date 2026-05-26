@@ -568,5 +568,10 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         {
             UpTime.Visibility = Visibility.Collapsed;
         }
+
+        private void FEExit_Click(object sender, RoutedEventArgs e)
+        {
+            FE.Visibility = Visibility.Collapsed;
+        }
     }
 }
