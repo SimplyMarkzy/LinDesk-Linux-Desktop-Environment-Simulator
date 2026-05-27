@@ -29,12 +29,12 @@
 
         <!-- Login Screen -->
         <Grid x:Name="LoginScreen"
-              Visibility="Collapsed">
+            Visibility="Collapsed">
             <Grid.Background>
                 <ImageBrush ImageSource="/images/LoginBackground.png" RenderOptions.BitmapScalingMode="HighQuality"/>
             </Grid.Background>
 
-            <!-- Centered translucent card -->
+            
             <Border Width="420"
                     Padding="36"
                     CornerRadius="20"
@@ -83,33 +83,57 @@
 
                     <!-- Password -->
                     <StackPanel Margin="0,4,0,12">
-                        <TextBlock Text="Password" Foreground="#BFC8D6" FontSize="12"/>
-                        <Grid>
+                      <TextBlock Text="Password"
+                                 Foreground="#BFC8D6"
+                                 FontSize="12"/>
+                      <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="28"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <PasswordBox Grid.Column="1" x:Name="pass" Background="Transparent" BorderThickness="0" Foreground="White" FontSize="14"/>
+                            <PasswordBox Grid.Column="1"
+                                         x:Name="pass"
+                                         Background="Transparent"
+                                         BorderThickness="0" 
+                                         Foreground="White" 
+                                         FontSize="14"/>
                         </Grid>
-                        <Rectangle Height="1" Fill="#6B6B6B" Margin="28,6,0,0"/>
+                        <Rectangle Height="1" 
+                                   Fill="#6B6B6B" 
+                                   Margin="28,6,0,0"/>
                     </StackPanel>
 
                     <!-- Login button -->
-                    <Button Name="LoginButton" Click="LoginButton_Click" Height="38" Margin="0,4,0,6" FontWeight="Bold" Foreground="White" BorderThickness="0">
+                    <Button Name="LoginButton"
+                            Click="LoginButton_Click" 
+                            Height="38" Margin="0,4,0,6"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            BorderThickness="0">
                         <Button.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                 <GradientStop Color="#6D5BFF" Offset="0"/>
                                 <GradientStop Color="#8A5BFF" Offset="1"/>
                             </LinearGradientBrush>
                         </Button.Background>
-                        <Border CornerRadius="18" Background="Transparent" Padding="8,4">
-                            <TextBlock Text="LOG IN" HorizontalAlignment="Center"/>
+                        <Border CornerRadius="18"
+                                Background="Transparent"
+                                Padding="8,4">
+                            <TextBlock Text="LOG IN" 
+                                       HorizontalAlignment="Center"/>
                         </Border>
                     </Button>
 
-                    <TextBlock Name="LoginStatus" Text="" Foreground="#FFD1D1" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,6,0,6"/>
+                    <TextBlock Name="LoginStatus"
+                               Text="" 
+                               Foreground="#FFD1D1"
+                               TextWrapping="Wrap" 
+                               HorizontalAlignment="Center" 
+                               Margin="0,6,0,6"/>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center" 
+                                Margin="0,6,0,0">
                         <TextBlock Text=" " />
                     </StackPanel>
 
@@ -123,6 +147,7 @@
         <Grid x:Name="DesktopScreen" Visibility="Visible">
 
             <!-- Background -->
+            
             <Image Source="/images/pc_background.png" Stretch="Fill"/>
             <Label Name="WorldTime"
                    Content="00:00"
@@ -131,16 +156,26 @@
                    Foreground="White"
                    FontSize="80"
                    Margin="0,250,0,0">
+                
 
             </Label>
+            <Label Name="CurrentDate"
+       Content="Wednesday, 27.05.2026"
+       HorizontalAlignment="Center"
+       VerticalAlignment="Top"
+       Foreground="White"
+       FontSize="32"
+       Margin="0,345,0,0"/>
+            
+
             <Label Name="UpTime"
-                   Content="uptime: 00:00:00"
+                   Content="uptime: 
+                   00:00:00"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"
                    Foreground="White"
                    FontSize="16">
             </Label>
-                   
 
             <!-- Bottom-left buttons -->
             <StackPanel Orientation="Horizontal"
@@ -170,17 +205,12 @@
                                     ImageSource="/images/Terminal_Icon.png"/>
                     </Button.Background>
                 </Button>
-                <Button Name="FileExplorer"
-                        Width="66"
-                        Height="66"
-                        Content="FE"
-                        BorderBrush="{x:Null}"
-                        Background="Gray">
-                </Button>
+                
                 <Button Name="MusicPlayer"
                         Width="66"
                         Height="66"
-                        BorderBrush="{x:Null}" Click="MusicPlayer_Click" >
+                        BorderBrush="{x:Null}" Click="MusicPlayer_Click" 
+                        Visibility="Collapsed">
                     <Button.Background>
                         <ImageBrush TileMode="None"
                                     Stretch="UniformToFill"
@@ -235,6 +265,34 @@
                         Click="Sleep_Click"
                         BorderThickness="0"/>
             </Grid>
+
+            <!-- Usage Info -->
+            <StackPanel Name="UsageInfo"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Width="320"
+            Visibility="Visible">
+                <Label Name="CpuUsage"
+           Content="Cpu: ?%"
+           Foreground="White"
+           FontSize="20"/>
+                <Label Name="RamUsage"
+           Content="Ram:  ?? / ?? GB"
+           Foreground="White"
+           FontSize="20"/>
+                <Label Name="DiskUsage"
+           Content="Disk: ??%"
+           Foreground="White"
+           FontSize="20"/>
+                <Label Name="NetUsage"
+           Content="Net:  ?? KB/s ↓   ?? KB/s ↑"
+           Foreground="White"
+           FontSize="20"/>
+                <Label Name ="LoadAvg"
+           Content="Load Average: ?.?? ?.?? ?.??"
+           Foreground="White"
+           FontSize="20"/>
+            </StackPanel>
 
             <!-- Terminal window -->
                 <Grid x:Name="Terminal"
@@ -291,29 +349,7 @@
                     </Grid>
                 </Grid>
             <!--  Music Player -->
-            <Grid Name="MP"
-                  Visibility="Collapsed"
-                  Width="1000"
-                  Height="600"
-                  Opacity="1"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center">
-                <Grid.RenderTransform>
-                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
-                </Grid.RenderTransform>
-                <Border  
-                      CornerRadius="30" 
-                      Background="#1e1e1e">
-                </Border>
-                <Image Name="MusicPicture" Source="/images/MusicPictures/QM.png" VerticalAlignment="Top" HorizontalAlignment="Center" Height="300" Margin="0,60,0,0"/>
-                <Slider Name="MusicSlider" Margin="100,460,100,126" Foreground="Red"/>
-                <Button Name="Rewind" Content="Rewind" Margin="89,504,716,38"/>
-                <Button Name="PlayPause" Content="Play" Margin="402,504,403,38" Click="PlayPause_Click"/>
-                <Button Name="Forward" Content="Forward" Margin="716,504,89,38"/>
-                <Label Name="Time" Content="00:00/00:00" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,130,155" Foreground="White"/>
-                <Label Name="SongName" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,155" Foreground="White" Content="Song Title"/>
-                <Label Name="ArtistName" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,155" Foreground="White" Content="Artist Name"/>
-            </Grid> 
+          
             <!--  Nano Content Editor -->
             <Grid Name="NanoEditor"
                   Visibility="Collapsed"
@@ -332,13 +368,7 @@
                        HorizontalAlignment="Center"
                        Foreground="White">
                 </Label>
-                <Label Name="Command"
-                       Content="Save: F10"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Bottom"
-                       Foreground="White"
-                       Padding="30,0,0,30">
-                </Label>
+
                 <TextBox Name="NanoContent"
                          Background="Transparent"
                          Foreground="Lime"
@@ -391,33 +421,32 @@
                        FontSize="16"/>
             </StackPanel>
 
-            <!-- Usage Info -->
-            <StackPanel Name="UsageInfo"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        Width="320"
-                        Visibility="Visible">
-                <Label Name="CpuUsage"
-                       Content="Cpu: ?%"
-                       Foreground="White"
-                       FontSize="20"/>
-                <Label Name="RamUsage"
-                       Content="Ram:  ?? / ?? GB"
-                       Foreground="White"
-                       FontSize="20"/>
-                <Label Name="DiskUsage"
-                       Content="Disk: ??%"
-                       Foreground="White"
-                       FontSize="20"/>
-                <Label Name="NetUsage"
-                       Content="Net:  ?? KB/s ↓   ?? KB/s ↑"
-                       Foreground="White"
-                       FontSize="20"/>
-                <Label Name ="LoadAvg"
-                       Content="Load Average: ?.?? ?.?? ?.??"
-                       Foreground="White"
-                       FontSize="20"/>
-            </StackPanel>
+            
+            <!--  Music Player -->
+
+            <Grid Name="MP"
+        Visibility="Collapsed"
+        Width="1000"
+        Height="600"
+        Opacity="1"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center">
+                <Grid.RenderTransform>
+                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                </Grid.RenderTransform>
+                <Border  
+            CornerRadius="30" 
+            Background="#1e1e1e">
+                </Border>
+                <Image Name="MusicPicture" Source="/images/MusicPictures/QM.png" VerticalAlignment="Top" HorizontalAlignment="Center" Height="300" Margin="0,60,0,0"/>
+                <Slider Name="MusicSlider" Margin="100,460,100,126" Foreground="Red"/>
+                <Button Name="Rewind" Content="Rewind" Margin="89,504,716,38"/>
+                <Button Name="PlayPause" Content="Play" Margin="402,504,403,38" Click="PlayPause_Click"/>
+                <Button Name="Forward" Content="Forward" Margin="716,504,89,38"/>
+                <Label Name="Time" Content="00:00/00:00" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,130,155" Foreground="White"/>
+                <Label Name="SongName" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,155" Foreground="White" Content="Song Title"/>
+                <Label Name="ArtistName" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,155" Foreground="White" Content="Artist Name"/>
+            </Grid>
             <!-- Calculator -->
             <Grid Name="Calculator"
                   Width="500"
@@ -716,7 +745,10 @@
                   HorizontalAlignment="Center"
                   Width="1300"
                   Height="800"
-                  Visibility="Visible">
+                  Visibility="Collapsed">
+                <Grid.RenderTransform>
+                    <ScaleTransform ScaleX="0.95" ScaleY="0.95" />
+                </Grid.RenderTransform>
                 <Border CornerRadius="30"
                         Background="#1e1e1e"
                         Width="1300"
@@ -768,6 +800,22 @@
                         Style="{StaticResource FileExplorerButtonStyle}"
                         Content="Folder"
                         Tag="C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\images\Music_Icon.png"></Button>
+                <!-- Files area: dynamically populated from code-behind. Uses ItemsControl with WrapPanel for fluid layout -->
+                <ScrollViewer HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,50,20,20" Width="1160" Height="680">
+                    <ItemsControl x:Name="FEItemsControl" HorizontalAlignment="Left">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <!-- Use existing FileExplorerButtonStyle for each item -->
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource FileExplorerButtonStyle}" Content="{Binding Name}" Tag="/images/filemanager.png" Click="FEFileButton_Click" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
             </Grid>
         </Grid>
 

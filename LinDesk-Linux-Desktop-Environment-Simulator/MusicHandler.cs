@@ -13,12 +13,21 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         public SongConstructor On_My_Own { get; }
         public List<SongConstructor> Songs = new List<SongConstructor>();
         public int currentIndex;
-  
-        public MusicHandler()
-        { 
-           
-        }
 
+        public MusicHandler()
+        {
+            AddSong("On My Own", "C:\\Users\\marta\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator\\Music\\On-my-own-Kyle-The-Hooligan.mp3");
+            AddSong("CITY OF ANGELS", "C:\\Users\\marta\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator\\Music\\24kGoldn - CITY OF ANGELS(Official Audio).mp3");
+        }
+        public void AddSong(string nazov, string cestaKSuboru)
+        {
+
+            Songs.Add(new SongConstructor(TimeSpan.Zero)
+            {
+                Title = nazov,
+                FilePath = cestaKSuboru
+            });
+        }
     }
 
 }

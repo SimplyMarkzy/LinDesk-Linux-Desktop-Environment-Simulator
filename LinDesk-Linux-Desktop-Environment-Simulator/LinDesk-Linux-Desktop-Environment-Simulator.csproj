@@ -10,12 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\filemanager.png" />
     <None Remove="images\LDlogo.png" />
     <None Remove="images\LoginBackground.png" />
     <None Remove="images\Music_Icon.png" />
     <None Remove="images\QM.png" />
     <None Remove="images\shutdownb_icon.png" />
     <None Remove="images\terminal_icon.png" />
+    <None Remove="Music\24kGoldn - CITY OF ANGELS %28Official Audio%29.mp3" />
     <None Remove="Music\On-my-own-Kyle-The-Hooligan.mp3" />
     <None Remove="Terminal_Icon.png" />
     <None Remove="Videos\cinematic easter egg.mp4" />
@@ -45,6 +47,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\Terminal_Icon.png" />
+    <Resource Include="images\filemanager.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Music\24kGoldn - CITY OF ANGELS (Official Audio).mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Music\On-my-own-Kyle-The-Hooligan.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

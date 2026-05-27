@@ -25,11 +25,12 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         private static DirectoryHandler directoryHandler = new DirectoryHandler();
         private static bool calculatorActive = false;
 
-        public static void TerminalExecute(RichTextBox TerminalBox, RichTextBox TerminalHistory, string[] text, string executedLine, Label PrefixLabel, Label CommandLabel, Label CurrentDirectoryDebug, Label DirectoryLabel, ref DirectoryConstructor CurrentDirectory, ref string MainPrefix, Grid NanoEditor, Label FileName, TextBox NanoContent, ref FileConstructor CurrentFile, Label NewFileWarning, Grid Terminal, Grid SleepMode, MediaElement SleepVideo, Grid Calculator, Grid SettingsMenu)
+        public static void TerminalExecute(RichTextBox TerminalBox, RichTextBox TerminalHistory, string[] text, string executedLine, Label PrefixLabel, Label CommandLabel, Label CurrentDirectoryDebug, Label DirectoryLabel, ref DirectoryConstructor CurrentDirectory, ref string MainPrefix, Grid NanoEditor, Label FileName, TextBox NanoContent, ref FileConstructor CurrentFile, Label NewFileWarning, Grid Terminal, Grid SleepMode, MediaElement SleepVideo, Grid Calculator, Grid SettingsMenu, Button MusicPlayer)
         {
             if (executedLine == "demo@LinDesk:~$ sudo apt install media player")
             {
                 MusicPlayerInstall(TerminalHistory);
+                MusicPlayer.Visibility = System.Windows.Visibility.Visible;
             }
             else if (executedLine == "demo@LinDesk:~$ Warny Thunder")
             {
@@ -313,7 +314,6 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         }
         public static void Nano(Grid NanoEditor, string directory, RichTextBox TerminalHistory, Label FileName, TextBox NanoContent, ref DirectoryConstructor CurrentDirectory, ref FileConstructor CurrentFile, Label NewFileWarning, Grid Terminal)
         {
-
             if (directory == "")
             {
                 TerminalHistory.AppendText("No file name Specified");

@@ -1,0 +1,68 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace LinDesk_Linux_Desktop_Environment_Simulator
+{
+    public class MusicHandler
+    {
+        public SongConstructor CurrentSong { get; set; }
+        public SongConstructor On_My_Own { get; }
+        public List<SongConstructor> Songs = new List<SongConstructor>();
+        public int currentIndex;
+  
+        public MusicHandler()
+        { 
+            currentIndex = 0;
+        }
+
+        // Add a single song by file path. Returns the SongConstructor on success or null on failure.
+        public SongConstructor? AddSong(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return null;
+            try
+            {
+                if (!System.IO.File.Exists(path)) return null;
+                // Use SongConstructor.LoadSong to read metadata
+                var loader = new SongConstructor(TimeSpan.Zero);
+                var song = loader.LoadSong(path);
+                Songs.Add(song);
+                return song;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        // Add multiple songs from an enumerable of paths. Returns number of successfully added songs.
+        public int AddSongs(IEnumerable<string> paths)
+        {
+            int added = 0;
+            foreach (var p in paths)
+            {
+                if (AddSong(p) != null) added++;
+            }
+            return added;
+        }
+
+        // Remove a song by its file path. Returns true if removed.
+        public bool RemoveSongByPath(string path)
+        {
+            var s = Songs.FirstOrDefault(x => string.Equals(x.FilePath, path, StringComparison.OrdinalIgnoreCase));
+            if (s != null)
+            {
+                Songs.Remove(s);
+                return true;
+            }
+            return false;
+        }
+
+        public IEnumerable<SongConstructor> GetAllSongs() => Songs.AsReadOnly();
+
+    }
+
+}

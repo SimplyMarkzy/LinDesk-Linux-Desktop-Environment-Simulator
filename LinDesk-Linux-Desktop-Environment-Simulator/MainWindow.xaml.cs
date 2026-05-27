@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using LinDesk_Linux_Desktop_Environment_Simulator;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,10 +17,11 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 
 namespace LinDesk_Linux_Desktop_Environment_Simulator
@@ -36,10 +41,16 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         public bool isPlaying = false;
         public UsagePanel usagePanel = new UsagePanel();
         public CalculatorLogic calculator = new CalculatorLogic();
-        
+        // timer for media player updates
+        private DispatcherTimer timer;
+        // track last visited directory for FE back button
+        private DirectoryConstructor LastDirectory;
+
         public MainWindow()
         {
             InitializeComponent();
+            CurrentDate.Content = DateTime.Now.ToString("dddd, dd.MM.yyyy", new System.Globalization.CultureInfo("en-US"));
+
             Loaded += MainWindow_Loaded;
 
             CurrentDirectory = directoryHandler.Root;
@@ -50,14 +61,35 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             {
                 currentIndex = 0;
             }
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+
+            Loaded += MainWindow_Loaded;
+
+            CurrentDirectory = directoryHandler.Root;
+
+            musicHandler = new MusicHandler();
+            songs = new List<SongConstructor>(musicHandler.Songs);
+            if (songs.Count > 0)
+            {
+                currentIndex = 0;
+            }
+            if (songs.Count > 0)
+            {
+                SongName.Content = System.IO.Path.GetFileNameWithoutExtension(songs[currentIndex].FilePath);
+                ArtistName.Content = songs[currentIndex].Artist;
+            }
+
+
 
             TerminalHistory.AppendText("Welcome to LinDesk 1.0 (Simulated Environment)\r\n\r\nSystem information as of session start:\r\n\r  System load: 0.03\n  Processes: 112 running\n  Memory usage: 842MB / 4096MB\n  Disk usage: 12% of 120GB\n  Network: connected\r\n\r\nNo updates available.\r\n\r\nDocumentation: https://lindesk.local/docs\r\nSupport: https://lindesk.local/support\r\n\r\nTip: Type 'help' to see available commands.\r\nTip: Command history (↑/↓) is not supported in this demo.\r\n\r\ndemo@lindesk:~$\r\n");
             MainPrefix = MainPrefix + justaspace;
-            
+
             // init single-line prompt and hook events
             TerminalBox.Document.Blocks.Clear();
             TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix)));
-                TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+            TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
             TerminalBox.Focus();
 
             TerminalBox.PreviewKeyDown += TerminalBox_PreviewKeyDown;
@@ -65,6 +97,11 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             //_ = UpdateLabel(); // start background task to update directory label
             usagePanel.Usage(CpuUsage, RamUsage, DiskUsage, NetUsage, LoadAvg, WorldTime, UpTime);
             _ = usagePanel.Usage(CpuUsage, RamUsage, DiskUsage, NetUsage, LoadAvg, WorldTime, UpTime);
+
+            // Bind the FE items control to the current directory's files collection
+            FEItemsControl.ItemsSource = CurrentDirectory.Files;
+            // Listen for collection changes on the files collection to ensure UI updates when files are created
+            // (ObservableCollection will notify automatically; this assignment is sufficient)
         }
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -86,7 +123,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             PowerOptions.Visibility = Visibility.Collapsed;
             DesktopScreen.Visibility = Visibility.Collapsed; // skryje hlavni desktop
             BootScreen.Visibility = Visibility.Visible; // zobrazy bootovaci panel
-           
+
             await Task.Delay(1000); //simulate initial delay
             {
                 List<string> bootLines = new List<string>()
@@ -234,20 +271,21 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 }
 
                 await Task.Delay(3000);
-                BootScreen.Visibility = Visibility.Collapsed; // skryje bootovací panel po dokončení simulace
-                LoginScreen.Visibility = Visibility.Visible; // zobrazí přihlašovací obrazovku
+                BootScreen.Visibility = Visibility.Collapsed;
+                LoginScreen.Visibility = Visibility.Visible;
 
             }
 
         }
+        //LOGIN button handler checks if the username and password are correct demo/demo and if so, simulates a short delay before showing the desktop screen. If the credentials are incorrect, it updates the login status text to inform the user.
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
 
             if (UsernameBox.Text == "demo" && pass.Password == "demo")
             {
                 Thread.Sleep(3000);
-                LoginScreen.Visibility = Visibility.Collapsed; // skryje přihlašovaciu obrazovku
-                DesktopScreen.Visibility = Visibility.Visible; // zobrazí hlavní desktop
+                LoginScreen.Visibility = Visibility.Collapsed;
+                DesktopScreen.Visibility = Visibility.Visible;
             }
             else
             {
@@ -288,7 +326,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             await Task.Delay(1000); //simulate sleep delay
             DesktopScreen.Visibility = Visibility.Collapsed; // schova hlavny desktop
             SleepMode.Visibility = Visibility.Visible; // zobrazy obrazovku sleep
-            SleepVideo.Play(); 
+            SleepVideo.Play();
         }
         private async void SleepScreen_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -334,7 +372,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 Terminal.Visibility = Visibility.Visible;
             }
         }
-        
+
         private void TerminalBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // ai made this code to prevent user from deleting the prompt prefix, not manually written by me
@@ -417,7 +455,12 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     MainPrefix += " ";
                 }
 
-                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel, DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor, FileName, NanoContent, ref CurrentFile, NewFileWarning, Terminal, SleepMode, SleepVideo, Calculator, SettingsMenu);
+                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel, DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor, FileName, NanoContent, ref CurrentFile, NewFileWarning, Terminal, SleepMode, SleepVideo, Calculator, SettingsMenu, MusicPlayer);
+                // Ensure FE shows files from the (possibly updated) current directory
+                if (FEItemsControl != null)
+                {
+                    FEItemsControl.ItemsSource = CurrentDirectory.Files;
+                }
                 TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix)));
                 TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
                 TerminalBox.Focus();
@@ -429,28 +472,28 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             // ai made this code to restore the prompt prefix if user tries to delete it, not manually written by me
             // get last paragraph text (preserves previous prompt lines)
             var lastBlock = TerminalBox.Document.Blocks.LastBlock as Paragraph;
-           string lastText = lastBlock != null
-           ? new TextRange(lastBlock.ContentStart, lastBlock.ContentEnd).Text.Replace("\r", "").Replace("\n", ""):
-           "";
-           
+            string lastText = lastBlock != null
+            ? new TextRange(lastBlock.ContentStart, lastBlock.ContentEnd).Text.Replace("\r", "").Replace("\n", "") :
+            "";
+
             // if the current editing line lost the prefix, restore it while preserving typed tail
-           if (!lastText.StartsWith(MainPrefix))
-           { 
+            if (!lastText.StartsWith(MainPrefix))
+            {
 
-              string tail = lastText;
-              int idx = tail.IndexOf(MainPrefix);
-              if (idx >= 0) tail = tail.Substring(idx + MainPrefix.Length);
+                string tail = lastText;
+                int idx = tail.IndexOf(MainPrefix);
+                if (idx >= 0) tail = tail.Substring(idx + MainPrefix.Length);
 
-           // replace only the last block so previous prompts remain intact
-           if (lastBlock != null)
-              TerminalBox.Document.Blocks.Remove(lastBlock);
-              TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix + tail)));
-              TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
-           }
-           else 
-           {
-             TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
-           }
+                // replace only the last block so previous prompts remain intact
+                if (lastBlock != null)
+                    TerminalBox.Document.Blocks.Remove(lastBlock);
+                TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix + tail)));
+                TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+            }
+            else
+            {
+                TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
+            }
 
         }
         private async Task UpdateLabel()
@@ -493,24 +536,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             scale.BeginAnimation(ScaleTransform.ScaleXProperty, scaleDown);
             scale.BeginAnimation(ScaleTransform.ScaleYProperty, scaleDown);
         }
-        private void PlayPause_Click(object sender, RoutedEventArgs e)
-        {
-            var currentSong = songs[currentIndex];
-            mediaPlayer.Open(new Uri(currentSong.FilePath));
-            if (isPlaying == true)
-            {
-                mediaPlayer.Pause();
-                isPlaying = false;
-                PlayPause.Content = "Play";
-            }
-            else
-            {
-                mediaPlayer.Play();
-                isPlaying = true;
-                
-                PlayPause.Content = "Pause";
-            }
-        }
+        
         private void CalculatorButton_Click(object sender, RoutedEventArgs e)
         {
             //Tries to treat whatever triggered the event as a Button object
@@ -573,5 +599,177 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         {
             FE.Visibility = Visibility.Collapsed;
         }
+
+        // Handler for file buttons inside the File Explorer ItemsControl
+        private void FEFileButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            Button btn = sender as Button;
+            if (btn == null) return;
+
+            string fileName = btn.Content?.ToString() ?? "";
+            FileConstructor file = CurrentDirectory.Files.FirstOrDefault(f => f.Name == fileName);
+            if (file != null)
+            {
+                CurrentFile = file;
+                FileName.Content = file.Name;
+                NanoContent.Text = file.Content;
+                Terminal.Visibility = Visibility.Collapsed;
+                NanoEditor.Visibility = Visibility.Visible;
+                NewFileWarning.Visibility = Visibility.Collapsed;
+            }
+        }
+        
+        private void PlayPause_Click(object sender, RoutedEventArgs e)
+        {
+            var currentSong = songs[currentIndex];
+            if (!string.IsNullOrEmpty(currentSong.FilePath))
+            {
+                mediaPlayer.Open(new Uri(currentSong.FilePath));
+            }
+            // update UI mEDIAdata
+            SongName.Content = System.IO.Path.GetFileNameWithoutExtension(currentSong.FilePath);
+            ArtistName.Content = currentSong.Artist;
+            if (isPlaying == true)
+            {
+                mediaPlayer.Pause();
+                isPlaying = false;
+                PlayPause.Content = "Play";
+                timer.Stop();
+            }
+            else
+            {
+                mediaPlayer.Play();
+                isPlaying = true;
+
+                PlayPause.Content = "Pause";
+                timer.Start();
+            }
+
+        }
+
+        private void Rewind_Click(object sender, RoutedEventArgs e)
+        {
+            // If more than 10 seconds into the song restart same song
+            if (mediaPlayer.Position.TotalSeconds > 10)
+            {
+                mediaPlayer.Position = TimeSpan.Zero;
+                //mediAdata 
+                SongName.Content = System.IO.Path.GetFileNameWithoutExtension(songs[currentIndex].FilePath);
+                ArtistName.Content = songs[currentIndex].Artist;
+                if (!isPlaying)
+                {
+                    mediaPlayer.Play();
+                    isPlaying = true;
+                    PlayPause.Content = "Pause";
+                    timer.Start();
+                }
+            }
+            else
+            {
+                // otherwise go to previous song wrap around
+                if (songs.Count == 0) return;
+                currentIndex = (currentIndex - 1 + songs.Count) % songs.Count;
+                var currentSong = songs[currentIndex];
+                mediaPlayer.Open(new Uri(currentSong.FilePath));
+                mediaPlayer.Position = TimeSpan.Zero;
+                mediaPlayer.Play();
+                isPlaying = true;
+                PlayPause.Content = "Pause";
+                SongName.Content = System.IO.Path.GetFileNameWithoutExtension(currentSong.FilePath);
+                ArtistName.Content = currentSong.Artist;
+                timer.Start();
+            }
+        }
+        //otherwise go to next song wrap around
+        private void Forward_Click(object sender, RoutedEventArgs e)
+        {
+            if (songs.Count == 0) return;
+            currentIndex = (currentIndex + 1) % songs.Count;
+            var currentSong = songs[currentIndex];
+            mediaPlayer.Open(new Uri(currentSong.FilePath));
+            mediaPlayer.Position = TimeSpan.Zero;
+            mediaPlayer.Play();
+            isPlaying = true;
+            PlayPause.Content = "Pause";
+            SongName.Content = System.IO.Path.GetFileNameWithoutExtension(currentSong.FilePath);
+            ArtistName.Content = currentSong.Artist;
+            timer.Start();
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (mediaPlayer.NaturalDuration.HasTimeSpan)
+            {
+                Time.Content = $"{mediaPlayer.Position:mm\\:ss}/{mediaPlayer.NaturalDuration.TimeSpan:mm\\:ss}";
+                MusicSlider.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                MusicSlider.Value = mediaPlayer.Position.TotalSeconds;
+            }
+        }
+
+        // handler for the MusicSlider 
+        private void MusicSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+            try
+            {
+                if (mediaPlayer.NaturalDuration.HasTimeSpan)
+                {
+
+                    var seconds = e.NewValue;
+                    var newPos = TimeSpan.FromSeconds(seconds);
+                    if (Math.Abs((mediaPlayer.Position - newPos).TotalSeconds) > 0.5)
+                    {
+                        mediaPlayer.Position = newPos;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
+       
+      
+
+
+
+        //file manager buttons front and back 
+
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LastDirectory != null)
+            {
+                CurrentDirectory = LastDirectory;
+            }
+            else if (CurrentDirectory.ParentDirectory == null)
+            {
+
+            }
+            //song player 
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+
+            Loaded += MainWindow_Loaded;
+
+            CurrentDirectory = directoryHandler.Root;
+
+            musicHandler = new MusicHandler();
+            songs = new List<SongConstructor>(musicHandler.Songs);
+            if (songs.Count > 0)
+            {
+                currentIndex = 0;
+            }
+            if (songs.Count > 0)
+            {
+                SongName.Content = System.IO.Path.GetFileNameWithoutExtension(songs[currentIndex].FilePath);
+                ArtistName.Content = songs[currentIndex].Artist;
+            }
+
+
+
+        }
+
+
     }
 }
