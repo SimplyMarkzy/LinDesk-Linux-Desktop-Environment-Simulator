@@ -3,28 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|c:\\users\\uzivatel\\source\\repos\\lindesk-linux-desktop-environment-simulato\\lindesk-linux-desktop-environment-simulator\\mainwindow.xaml||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|solutionrelative:lindesk-linux-desktop-environment-simulator\\mainwindow.xaml||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|c:\\users\\uzivatel\\source\\repos\\lindesk-linux-desktop-environment-simulato\\lindesk-linux-desktop-environment-simulator\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|solutionrelative:lindesk-linux-desktop-environment-simulator\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|c:\\users\\uzivatel\\source\\repos\\lindesk-linux-desktop-environment-simulato\\lindesk-linux-desktop-environment-simulator\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|solutionrelative:lindesk-linux-desktop-environment-simulator\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|c:\\users\\uzivatel\\source\\repos\\lindesk-linux-desktop-environment-simulato\\lindesk-linux-desktop-environment-simulator\\terminalhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|solutionrelative:lindesk-linux-desktop-environment-simulator\\terminalhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|c:\\users\\uzivatel\\source\\repos\\lindesk-linux-desktop-environment-simulato\\lindesk-linux-desktop-environment-simulator\\musichandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|solutionrelative:lindesk-linux-desktop-environment-simulator\\musichandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|c:\\users\\uzivatel\\source\\repos\\lindesk-linux-desktop-environment-simulato\\lindesk-linux-desktop-environment-simulator\\mainwindow.xaml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|solutionrelative:lindesk-linux-desktop-environment-simulator\\mainwindow.xaml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|c:\\users\\uzivatel\\source\\repos\\lindesk-linux-desktop-environment-simulato\\lindesk-linux-desktop-environment-simulator\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|solutionrelative:lindesk-linux-desktop-environment-simulator\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|c:\\users\\uzivatel\\source\\repos\\lindesk-linux-desktop-environment-simulato\\lindesk-linux-desktop-environment-simulator\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|solutionrelative:lindesk-linux-desktop-environment-simulator\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|c:\\users\\uzivatel\\source\\repos\\lindesk-linux-desktop-environment-simulato\\lindesk-linux-desktop-environment-simulator\\usagepanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|solutionrelative:lindesk-linux-desktop-environment-simulator\\usagepanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|c:\\users\\uzivatel\\source\\repos\\lindesk-linux-desktop-environment-simulato\\lindesk-linux-desktop-environment-simulator\\terminalhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|solutionrelative:lindesk-linux-desktop-environment-simulator\\terminalhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\obj\\Debug\\net9.0-windows\\MainWindow.g.i.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -51,10 +55,6 @@
       "RelativeMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|solutionrelative:lindesk-linux-desktop-environment-simulator\\images\\musicpictures\\omopicture.png||{177559E0-D141-11D0-92DF-00A0C9138C45}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|c:\\users\\uzivatel\\source\\repos\\lindesk-linux-desktop-environment-simulato\\lindesk-linux-desktop-environment-simulator\\musichandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|solutionrelative:lindesk-linux-desktop-environment-simulator\\musichandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|c:\\users\\uzivatel\\source\\repos\\lindesk-linux-desktop-environment-simulato\\lindesk-linux-desktop-environment-simulator\\songconstructor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{709E2DAC-A6F2-454D-8D2F-73AE961D5714}|LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj|solutionrelative:lindesk-linux-desktop-environment-simulator\\songconstructor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -74,7 +74,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 15,
           "Children": [
             {
               "$type": "Bookmark",
@@ -82,7 +82,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "CalculatorLogic.cs",
               "DocumentMoniker": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\CalculatorLogic.cs",
               "RelativeDocumentMoniker": "LinDesk-Linux-Desktop-Environment-Simulator\\CalculatorLogic.cs",
@@ -94,7 +94,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "App.xaml",
               "DocumentMoniker": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\App.xaml",
               "RelativeDocumentMoniker": "LinDesk-Linux-Desktop-Environment-Simulator\\App.xaml",
@@ -106,7 +106,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "UsagePanel.cs",
               "DocumentMoniker": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\UsagePanel.cs",
               "RelativeDocumentMoniker": "LinDesk-Linux-Desktop-Environment-Simulator\\UsagePanel.cs",
@@ -118,7 +118,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "OMOPicture.png - PNG [223x226, 32 bit, PNG]",
               "DocumentMoniker": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\images\\MusicPictures\\OMOPicture.png",
               "RelativeDocumentMoniker": "LinDesk-Linux-Desktop-Environment-Simulator\\images\\MusicPictures\\OMOPicture.png",
@@ -142,19 +142,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 3,
               "Title": "MusicHandler.cs",
               "DocumentMoniker": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\MusicHandler.cs",
               "RelativeDocumentMoniker": "LinDesk-Linux-Desktop-Environment-Simulator\\MusicHandler.cs",
               "ToolTip": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\MusicHandler.cs",
               "RelativeToolTip": "LinDesk-Linux-Desktop-Environment-Simulator\\MusicHandler.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAALAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwA0AAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-29T06:58:02.475Z"
+              "WhenOpened": "2026-04-29T06:58:02.475Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "MPHandler.cs",
               "DocumentMoniker": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\MPHandler.cs",
               "RelativeDocumentMoniker": "LinDesk-Linux-Desktop-Environment-Simulator\\MPHandler.cs",
@@ -166,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "AssemblyInfo.cs",
               "DocumentMoniker": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\AssemblyInfo.cs",
               "RelativeDocumentMoniker": "LinDesk-Linux-Desktop-Environment-Simulator\\AssemblyInfo.cs",
@@ -190,7 +191,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "MainWindow.g.i.cs",
               "DocumentMoniker": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\obj\\Debug\\net9.0-windows\\MainWindow.g.i.cs",
               "RelativeDocumentMoniker": "LinDesk-Linux-Desktop-Environment-Simulator\\obj\\Debug\\net9.0-windows\\MainWindow.g.i.cs",
@@ -214,7 +215,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "DirectoryHandler.cs",
               "DocumentMoniker": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\DirectoryHandler.cs",
               "RelativeDocumentMoniker": "LinDesk-Linux-Desktop-Environment-Simulator\\DirectoryHandler.cs",
@@ -238,26 +239,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "TerminalHandler.cs",
               "DocumentMoniker": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\TerminalHandler.cs",
               "RelativeDocumentMoniker": "LinDesk-Linux-Desktop-Environment-Simulator\\TerminalHandler.cs",
               "ToolTip": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\TerminalHandler.cs",
               "RelativeToolTip": "LinDesk-Linux-Desktop-Environment-Simulator\\TerminalHandler.cs",
-              "ViewState": "AgIAAGQAAAAAAAAAAAAgwHoAAABOAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAArwB8AAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-15T07:35:14.775Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "LinDesk-Linux-Desktop-Environment-Simulator\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\MainWindow.xaml.cs",
               "RelativeToolTip": "LinDesk-Linux-Desktop-Environment-Simulator\\MainWindow.xaml.cs",
-              "ViewState": "AgIAADgCAAAAAAAAAAAYwD0CAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAowG0AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-15T17:23:12.699Z",
               "EditorCaption": ""
@@ -285,13 +286,13 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\MainWindow.xaml",
               "RelativeDocumentMoniker": "LinDesk-Linux-Desktop-Environment-Simulator\\MainWindow.xaml",
               "ToolTip": "C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\MainWindow.xaml",
               "RelativeToolTip": "LinDesk-Linux-Desktop-Environment-Simulator\\MainWindow.xaml",
-              "ViewState": "AgIAAOkCAAAAAAAAAAAswAEDAACoAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAAswB8AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-05-15T17:49:04.441Z",
               "EditorCaption": ""

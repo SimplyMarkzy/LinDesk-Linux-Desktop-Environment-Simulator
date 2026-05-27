@@ -29,8 +29,8 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         {
             if (executedLine == "demo@LinDesk:~$ sudo apt install media player")
             {
-                MusicPlayerInstall(TerminalHistory);
-                MusicPlayer.Visibility = System.Windows.Visibility.Visible;
+                MusicPlayerInstall(TerminalHistory, MusicPlayer);
+                
             }
             else if (executedLine == "demo@LinDesk:~$ Warny Thunder")
             {
@@ -341,7 +341,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
             }
         }
-        public static async Task MusicPlayerInstall(RichTextBox TerminalHistory)
+        public static async Task MusicPlayerInstall(RichTextBox TerminalHistory, Button MusicPlayer)
         {
             List<string> installOutput = new List<string>
 {
@@ -402,6 +402,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 int wait = r.Next(250, 600); // random time in milliseconds
                 await Task.Delay(wait);
             }
+            MusicPlayer.Visibility = System.Windows.Visibility.Visible;
         }
         public static void calculator(RichTextBox TerminalHistory, string[] text, Grid Terminal, Grid Calculator)
         {

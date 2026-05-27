@@ -16,7 +16,7 @@
     <Grid>
 
         <!-- Boot Screen -->
-        <Grid x:Name="BootScreen" Visibility="Collapsed">
+        <Grid x:Name="BootScreen" Visibility="Visible">
             <TextBox x:Name="BootOutput"
                      Background="Black"
                      Foreground="Lime"
@@ -144,7 +144,7 @@
 
 
         <!-- Desktop Screen -->
-        <Grid x:Name="DesktopScreen" Visibility="Visible">
+        <Grid x:Name="DesktopScreen" Visibility="Collapsed">
 
             <!-- Background -->
             
@@ -439,10 +439,10 @@
             Background="#1e1e1e">
                 </Border>
                 <Image Name="MusicPicture" Source="/images/MusicPictures/QM.png" VerticalAlignment="Top" HorizontalAlignment="Center" Height="300" Margin="0,60,0,0"/>
-                <Slider Name="MusicSlider" Margin="100,460,100,126" Foreground="Red"/>
-                <Button Name="Rewind" Content="Rewind" Margin="89,504,716,38"/>
+                <Slider Name="MusicSlider" Margin="100,460,100,126" Foreground="Red" ValueChanged="MusicSlider_ValueChanged"/>
+                <Button Name="Rewind" Content="Rewind" Margin="89,504,716,38" Click="Rewind_Click"/>
                 <Button Name="PlayPause" Content="Play" Margin="402,504,403,38" Click="PlayPause_Click"/>
-                <Button Name="Forward" Content="Forward" Margin="716,504,89,38"/>
+                <Button Name="Forward" Content="Forward" Margin="716,504,89,38" Click="Forward_Click"/>
                 <Label Name="Time" Content="00:00/00:00" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,130,155" Foreground="White"/>
                 <Label Name="SongName" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,155" Foreground="White" Content="Song Title"/>
                 <Label Name="ArtistName" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,155" Foreground="White" Content="Artist Name"/>

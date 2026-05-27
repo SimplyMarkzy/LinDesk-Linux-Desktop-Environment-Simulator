@@ -107,7 +107,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             // Start boot sequence asynchronously and await it to avoid CS1998 warning.
-            //await StartBootSequence();
+            await StartBootSequence();
         }
 
         private async Task StartBootSequence()
