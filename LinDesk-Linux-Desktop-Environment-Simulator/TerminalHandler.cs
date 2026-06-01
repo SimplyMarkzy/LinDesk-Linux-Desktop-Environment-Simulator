@@ -259,7 +259,13 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         }
         public static void remove(RichTextBox TerminalHistory, string[] text, string MainPrefix, string directory, ref DirectoryConstructor CurrentDirectory)
         {
-            if (CurrentDirectory.SubDirectories.Any(subDir => subDir.DirectoryName == directory))
+            if(directory == "/")
+            {
+                TerminalHistory.AppendText("Nice try....");
+                TerminalHistory.AppendText(Environment.NewLine);
+               
+            }
+            else if (CurrentDirectory.SubDirectories.Any(subDir => subDir.DirectoryName == directory))
             {
                 CurrentDirectory.SubDirectories.Remove(CurrentDirectory.SubDirectories.First(subDir => subDir.DirectoryName == directory));
             }

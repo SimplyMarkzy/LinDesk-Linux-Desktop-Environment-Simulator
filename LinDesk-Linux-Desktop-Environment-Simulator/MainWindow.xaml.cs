@@ -83,7 +83,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
 
 
-            TerminalHistory.AppendText("Welcome to LinDesk 1.0 (Simulated Environment)\r\n\r\nSystem information as of session start:\r\n\r  System load: 0.03\n  Processes: 112 running\n  Memory usage: 842MB / 4096MB\n  Disk usage: 12% of 120GB\n  Network: connected\r\n\r\nNo updates available.\r\n\r\nDocumentation: https://lindesk.local/docs\r\nSupport: https://lindesk.local/support\r\n\r\nTip: Type 'help' to see available commands.\r\nTip: Command history (↑/↓) is not supported in this demo.\r\n\r\ndemo@lindesk:~$\r\n");
+            TerminalHistory.AppendText("Welcome to LinDesk 1.0 (Simulated Environment)\r\n\r\nSystem information as of session start:\r\n\r  System load: 0.03\n  Processes: 112 running\n  Memory usage: 842MB / 4096MB\n  Disk usage: 12% of 120GB\n  Network: connected\r\n\r\nNo updates available.\r\n\r\nDocumentation: https://lindesk.local/docs\r\nSupport: https://lindesk.local/support\r\n\r\nTip: Type 'help' to see available commands.\r\nTip:  \r\n\r\ndemo@lindesk:~$\r\n");
             MainPrefix = MainPrefix + justaspace;
 
             // init single-line prompt and hook events
