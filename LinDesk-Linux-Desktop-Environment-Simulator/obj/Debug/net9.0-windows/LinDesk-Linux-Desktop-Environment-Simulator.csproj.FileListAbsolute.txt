@@ -79,3 +79,14 @@ C:\Users\marta\source\repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-
 C:\Users\marta\source\repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\obj\Debug\net9.0-windows\ref\LinDesk-Linux-Desktop-Environment-Simulator.dll
 C:\Users\marta\source\repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\bin\Debug\net9.0-windows\Music\24kGoldn - CITY OF ANGELS (Official Audio).mp3
 C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\bin\Debug\net9.0-windows\Music\24kGoldn - CITY OF ANGELS (Official Audio).mp3
+C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\bin\Debug\net9.0-windows\Music\24kGoldn - CITY OF ANGELS (Official Audio).mp3
+C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\bin\Debug\net9.0-windows\Music\On-my-own-Kyle-The-Hooligan.mp3
+C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\bin\Debug\net9.0-windows\Videos\cinematic easter egg.mp4
+C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\bin\Debug\net9.0-windows\Videos\sleep screen original.mp4
+C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\bin\Debug\net9.0-windows\TagLibSharp.dll
+C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\obj\Debug\net9.0-windows\LinDesk-Linux-Desktop-Environment-Simulator.csproj.AssemblyReference.cache
+C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\obj\Debug\net9.0-windows\LinDesk-Linux-Desktop-Environment-Simulator_Content.g.cs
+C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\obj\Debug\net9.0-windows\App.baml
+C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\obj\Debug\net9.0-windows\LinDesk-.A3A9087D.Up2Date
+C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\bin\Debug\net9.0-windows\images\document.png
+C:\Users\jajin\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulator\LinDesk-Linux-Desktop-Environment-Simulator\bin\Debug\net9.0-windows\images\folder.png

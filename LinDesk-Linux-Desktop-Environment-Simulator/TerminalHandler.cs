@@ -34,7 +34,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             }
             else if (executedLine == "demo@LinDesk:~$ Warny Thunder")
             {
-                SleepVideo.Source = new Uri("C:\\Users\\Uzivatel\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\Videos\\cinematic easter egg.mp4", UriKind.Relative);
+                SleepVideo.Source = new Uri("Videos/cinematic easter egg.mp4", UriKind.Relative);
                 TerminalHistory.AppendText(Environment.NewLine);
                 TerminalHistory.AppendText("Cleared Hot!");
                 TerminalHistory.AppendText(Environment.NewLine);
@@ -112,7 +112,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                         CurrentDateTime(TerminalHistory);
                         break;
                     case "nano":
-                        Nano(NanoEditor, directory, TerminalHistory, FileName, NanoContent, ref CurrentDirectory, ref CurrentFile, NewFileWarning, Terminal);
+                        Nano(NanoEditor, TerminalHistory, FileName, NanoContent, ref CurrentDirectory, ref CurrentFile, NewFileWarning, Terminal);
                         break;
                     case "calculator":
                         calculator(TerminalHistory, text, Terminal, Calculator);
@@ -312,34 +312,45 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             TerminalHistory.AppendText(DateTime.Now.ToString());
             TerminalHistory.AppendText(Environment.NewLine);
         }
-        public static void Nano(Grid NanoEditor, string directory, RichTextBox TerminalHistory, Label FileName, TextBox NanoContent, ref DirectoryConstructor CurrentDirectory, ref FileConstructor CurrentFile, Label NewFileWarning, Grid Terminal)
+        public static void Nano(Grid NanoEditor, RichTextBox TerminalHistory, Label FileName, TextBox NanoContent, ref DirectoryConstructor CurrentDirectory, ref FileConstructor CurrentFile, Label NewFileWarning, Grid Terminal)
         {
-            if (directory == "")
+            if (CurrentFile != null)
             {
-                TerminalHistory.AppendText("No file name Specified");
-                TerminalHistory.AppendText(Environment.NewLine);
-            }
-            else if (CurrentDirectory.Files.Any(file => file.Name == directory))
-            {
-                CurrentFile = CurrentDirectory.Files.First(file => file.Name == directory);
                 FileName.Content = CurrentFile.Name;
                 NanoContent.Text = CurrentFile.Content;
                 Terminal.Visibility = System.Windows.Visibility.Collapsed;
                 NanoEditor.Visibility = System.Windows.Visibility.Visible;
                 NewFileWarning.Visibility = System.Windows.Visibility.Hidden;
             }
-            else
+            else if (CurrentFile == null)
             {
-                FileConstructor newFile = new FileConstructor(directory);
-                CurrentDirectory.Files.Add(newFile);
-                CurrentFile = newFile;
-                FileName.Content = newFile.Name;
-                NanoContent.Text = newFile.Content;
-                Terminal.Visibility = System.Windows.Visibility.Collapsed;
-                NanoEditor.Visibility = System.Windows.Visibility.Visible;
-                NewFileWarning.Visibility = System.Windows.Visibility.Visible;
+                if (directory == "")
+                {
+                    TerminalHistory.AppendText("No file name Specified");
+                    TerminalHistory.AppendText(Environment.NewLine);
+                }
+                else if (CurrentDirectory.Files.Any(file => file.Name == directory))
+                {
+                    CurrentFile = CurrentDirectory.Files.First(file => file.Name == directory);
+                    FileName.Content = CurrentFile.Name;
+                    NanoContent.Text = CurrentFile.Content;
+                    Terminal.Visibility = System.Windows.Visibility.Collapsed;
+                    NanoEditor.Visibility = System.Windows.Visibility.Visible;
+                    NewFileWarning.Visibility = System.Windows.Visibility.Hidden;
+                }
+                else
+                {
+                    FileConstructor newFile = new FileConstructor(directory);
+                    CurrentDirectory.Files.Add(newFile);
+                    CurrentFile = newFile;
+                    FileName.Content = newFile.Name;
+                    NanoContent.Text = newFile.Content;
+                    Terminal.Visibility = System.Windows.Visibility.Collapsed;
+                    NanoEditor.Visibility = System.Windows.Visibility.Visible;
+                    NewFileWarning.Visibility = System.Windows.Visibility.Visible;
 
-            }
+                }
+            }    
         }
         public static async Task MusicPlayerInstall(RichTextBox TerminalHistory, Button MusicPlayer)
         {

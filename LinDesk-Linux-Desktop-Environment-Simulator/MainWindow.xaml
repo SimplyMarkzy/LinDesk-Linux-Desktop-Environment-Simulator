@@ -16,7 +16,7 @@
     <Grid>
 
         <!-- Boot Screen -->
-        <Grid x:Name="BootScreen" Visibility="Visible">
+        <Grid x:Name="BootScreen" Visibility="Collapsed">
             <TextBox x:Name="BootOutput"
                      Background="Black"
                      Foreground="Lime"
@@ -144,7 +144,7 @@
 
 
         <!-- Desktop Screen -->
-        <Grid x:Name="DesktopScreen" Visibility="Collapsed">
+        <Grid x:Name="DesktopScreen" Visibility="Visible">
 
             <!-- Background -->
             
@@ -205,7 +205,16 @@
                                     ImageSource="/images/Terminal_Icon.png"/>
                     </Button.Background>
                 </Button>
-                
+                <Button Name="FEButton"
+                        Width="66"
+                        Height="66"
+                        BorderBrush="{x:Null}"
+                        Foreground="{x:Null}" Click="FEButton_Click"
+                        >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/images/filemanager.png"/>
+                    </Button.Background>
+                </Button>
                 <Button Name="MusicPlayer"
                         Width="66"
                         Height="66"
@@ -348,7 +357,79 @@
                         Margin="0,1,0,0"/>
                     </Grid>
                 </Grid>
-            <!--  Music Player -->
+           
+            <Grid Name="FE"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center"
+                  Width="1300"
+                  Height="800"
+                  Visibility="Collapsed">
+                <Grid.RenderTransform>
+                    <ScaleTransform ScaleX="0.95" ScaleY="0.95" />
+                </Grid.RenderTransform>
+                <Border CornerRadius="30"
+                        Background="#1e1e1e"
+                        Width="1300"
+                        Height="800"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                </Border>
+                <Label Name="FELabel"
+                       Content="File Explorer"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="10,10,0,0"
+                       Foreground="White"
+                       FontSize="24">
+                </Label>
+                <Button Name="FEExit"
+                        Style="{StaticResource CircleButtonStyle}"
+                        Width="25"
+                        Height="25"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,20,20,0" Click="FEExit_Click">
+                    <Border CornerRadius="25"
+                            Background="Red"
+                            Width="25"
+                            Height="25">
+                        <TextBlock Text="X"
+                                   FontSize="16"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center">
+                        </TextBlock>
+                    </Border> 
+                </Button>
+                <Button Name="FEUp"
+                        Width="65"
+                        Height="65"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="30,50,0,0"
+                        Background="DarkGray" Click="FEUp_Click">
+                    <TextBlock Text="^"
+                                   FontSize="70"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                               Margin="0,15,0,0">
+                    </TextBlock>
+                </Button>
+                <ScrollViewer HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,50,20,20" Width="1160" Height="730" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl x:Name="FEItemsControl" HorizontalAlignment="Left">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                               
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
           
             <!--  Nano Content Editor -->
             <Grid Name="NanoEditor"
@@ -391,6 +472,14 @@
                        Foreground="White"
                        FontSize="16"
                        Visibility="Collapsed">
+                </Label>
+                <Label Name="SaveInstruction"
+                       Content="Save: F10"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"
+                       Margin="50,0,0,20"
+                       Foreground="White"
+                       FontSize="12">
                 </Label>
             </Grid>
             <!-- Debug labels on the right -->
@@ -740,83 +829,6 @@
                        Foreground="White">
                 </Label>
             </Grid>
-            <Grid Name="FE"
-                  VerticalAlignment="Center"
-                  HorizontalAlignment="Center"
-                  Width="1300"
-                  Height="800"
-                  Visibility="Collapsed">
-                <Grid.RenderTransform>
-                    <ScaleTransform ScaleX="0.95" ScaleY="0.95" />
-                </Grid.RenderTransform>
-                <Border CornerRadius="30"
-                        Background="#1e1e1e"
-                        Width="1300"
-                        Height="800"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                </Border>
-                <Label Name="FELabel"
-                       Content="File Explorer"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       Margin="10,10,0,0"
-                       Foreground="White"
-                       FontSize="24">
-                </Label>
-                <Button Name="FEExit"
-                        Style="{StaticResource CircleButtonStyle}"
-                        Width="25"
-                        Height="25"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        Margin="0,20,20,0" Click="FEExit_Click">
-                    <Border CornerRadius="25"
-                            Background="Red"
-                            Width="25"
-                            Height="25">
-                        <TextBlock Text="X"
-                                   FontSize="16"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center">
-                        </TextBlock>
-                    </Border> 
-                </Button>
-                <Button Name="FEUp"
-                        Width="65"
-                        Height="65"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Margin="30,50,0,0"
-                        Background="DarkGray">
-                    <TextBlock Text="^"
-                                   FontSize="70"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                               Margin="0,15,0,0">
-                        </TextBlock>
-                </Button>
-                <Button Name="Folder"
-                        Style="{StaticResource FileExplorerButtonStyle}"
-                        Content="Folder"
-                        Tag="C:\Users\Uzivatel\Source\Repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\images\Music_Icon.png"></Button>
-                <!-- Files area: dynamically populated from code-behind. Uses ItemsControl with WrapPanel for fluid layout -->
-                <ScrollViewer HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,50,20,20" Width="1160" Height="680">
-                    <ItemsControl x:Name="FEItemsControl" HorizontalAlignment="Left">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <!-- Use existing FileExplorerButtonStyle for each item -->
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Button Style="{StaticResource FileExplorerButtonStyle}" Content="{Binding Name}" Tag="/images/filemanager.png" Click="FEFileButton_Click" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-            </Grid>
         </Grid>
 
         <!-- Sleep Screen -->
@@ -824,11 +836,11 @@
               Visibility="Collapsed"
               MouseLeftButtonDown="SleepScreen_MouseLeftButtonDown">
             <MediaElement Name="SleepVideo" 
-                            Source="C:\Users\Uzivatel\source\repos\LinDesk-Linux-Desktop-Environment-Simulato\LinDesk-Linux-Desktop-Environment-Simulator\Videos\sleep screen original.mp4" 
+                            Source="Videos\sleep screen original.mp4" 
                             LoadedBehavior="Manual"
                             UnloadedBehavior="Manual"
                             Stretch="Fill"
-                            Volume="0.1">
+                            Volume="0.1" MediaEnded="SleepVideo_MediaEnded">
             </MediaElement>
         </Grid>
 

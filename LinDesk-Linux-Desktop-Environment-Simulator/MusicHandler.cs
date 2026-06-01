@@ -17,8 +17,8 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
         public MusicHandler()
         {
-            AddSong("On My Own", "C:\\Users\\Uzivatel\\Source\\Repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\Music\\On-my-own-Kyle-The-Hooligan.mp3");
-            AddSong("CITY OF ANGELS", "C:\\Users\\Uzivatel\\Source\\Repos\\LinDesk-Linux-Desktop-Environment-Simulato\\LinDesk-Linux-Desktop-Environment-Simulator\\Music\\24kGoldn - CITY OF ANGELS (Official Audio).mp3");
+            AddSong("On My Own", "C:\\Users\\jajin\\Source\\Repos\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator\\Music\\On-my-own-Kyle-The-Hooligan.mp3");
+            AddSong("CITY OF ANGELS", "C:\\Users\\jajin\\Source\\Repos\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator\\Music\\24kGoldn - CITY OF ANGELS (Official Audio).mp3");
                 On_My_Own = Songs[0];
                 CurrentSong = On_My_Own;
                 City_of_Angels = Songs[1];

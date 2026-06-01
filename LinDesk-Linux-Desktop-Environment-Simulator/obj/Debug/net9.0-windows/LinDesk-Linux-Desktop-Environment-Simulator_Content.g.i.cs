@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/document.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/folder.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("music/24kgoldn%20-%20city%20of%20angels%20(official%20audio).mp3")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("music/on-my-own-kyle-the-hooligan.mp3")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("videos/cinematic%20easter%20egg.mp4")]

@@ -10,7 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\document.png" />
     <None Remove="images\filemanager.png" />
+    <None Remove="images\folder.png" />
     <None Remove="images\LDlogo.png" />
     <None Remove="images\LoginBackground.png" />
     <None Remove="images\Music_Icon.png" />
@@ -50,6 +52,12 @@
     <Resource Include="images\filemanager.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Content Include="images\document.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\folder.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Music\24kGoldn - CITY OF ANGELS (Official Audio).mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

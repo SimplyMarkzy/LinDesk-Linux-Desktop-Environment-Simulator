@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Numerics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -16,7 +17,6 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -97,11 +97,8 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             //_ = UpdateLabel(); // start background task to update directory label
             usagePanel.Usage(CpuUsage, RamUsage, DiskUsage, NetUsage, LoadAvg, WorldTime, UpTime);
             _ = usagePanel.Usage(CpuUsage, RamUsage, DiskUsage, NetUsage, LoadAvg, WorldTime, UpTime);
-
-            // Bind the FE items control to the current directory's files collection
-            FEItemsControl.ItemsSource = CurrentDirectory.Files;
-            // Listen for collection changes on the files collection to ensure UI updates when files are created
-            // (ObservableCollection will notify automatically; this assignment is sufficient)
+            FELogic.LastDirectory = CurrentDirectory;
+            FELogic.Refresh(FEItemsControl, ref CurrentDirectory, FEM_Click);
         }
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -457,10 +454,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
                 TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel, DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor, FileName, NanoContent, ref CurrentFile, NewFileWarning, Terminal, SleepMode, SleepVideo, Calculator, SettingsMenu, MusicPlayer);
                 // Ensure FE shows files from the (possibly updated) current directory
-                if (FEItemsControl != null)
-                {
-                    FEItemsControl.ItemsSource = CurrentDirectory.Files;
-                }
+                FELogic.Refresh(FEItemsControl, ref CurrentDirectory, FEM_Click);
                 TerminalBox.Document.Blocks.Add(new Paragraph(new Run(MainPrefix)));
                 TerminalBox.CaretPosition = TerminalBox.Document.ContentEnd;
                 TerminalBox.Focus();
@@ -536,7 +530,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             scale.BeginAnimation(ScaleTransform.ScaleXProperty, scaleDown);
             scale.BeginAnimation(ScaleTransform.ScaleYProperty, scaleDown);
         }
-        
+
         private void CalculatorButton_Click(object sender, RoutedEventArgs e)
         {
             //Tries to treat whatever triggered the event as a Button object
@@ -619,7 +613,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 NewFileWarning.Visibility = Visibility.Collapsed;
             }
         }
-        
+
         private void PlayPause_Click(object sender, RoutedEventArgs e)
         {
             var currentSong = songs[currentIndex];
@@ -728,8 +722,8 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
             }
         }
-       
-      
+
+
 
 
 
@@ -770,6 +764,63 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
 
         }
 
+        private void SleepVideo_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            SleepVideo.Position = TimeSpan.Zero;
+            SleepVideo.Play();
+        }
+        public void FEM_Click(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = sender as Button;
 
+            if (clickedButton == null)
+                return;
+
+            string clickedName = clickedButton.Content.ToString();
+
+            foreach (var folder in CurrentDirectory.SubDirectories)
+            {
+                if (folder.DirectoryName == clickedName)
+                {
+                    CurrentDirectory = folder;
+                    FEItemsControl.ItemsSource = null;
+                    FELogic.Refresh(FEItemsControl, ref CurrentDirectory, FEM_Click);
+
+                    return;
+                }
+            }
+            foreach (var file in CurrentDirectory.Files)
+            {
+                if (file.Name == clickedName)
+                {
+                    CurrentFile = file;
+                    TerminalHandler.Nano(NanoEditor, TerminalHistory, FileName, NanoContent, ref CurrentDirectory, ref CurrentFile, NewFileWarning, Terminal);
+                    FE.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        private void FEUp_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentDirectory.ParentDirectory != null)
+            {
+                CurrentDirectory = CurrentDirectory.ParentDirectory;
+                FEItemsControl.ItemsSource = null;
+                FELogic.Refresh(FEItemsControl, ref CurrentDirectory, FEM_Click);
+            }
+        }
+        private void FEButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (FE.Visibility == Visibility.Collapsed)
+            {
+                FE.Visibility = Visibility.Visible;
+                FadeIn(FE);
+            }
+            else
+            {
+                FE.Visibility = Visibility.Collapsed;
+                FadeOut(FE);
+            }
+        }
     }
 }
