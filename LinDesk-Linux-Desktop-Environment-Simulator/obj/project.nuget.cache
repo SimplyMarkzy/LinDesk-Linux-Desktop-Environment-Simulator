@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BzmX+giMEPE=",
+  "dgSpecHash": "h5nSsXhVG3w=",
   "success": true,
-  "projectFilePath": "C:\\Users\\jajin\\Source\\Repos\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj",
+  "projectFilePath": "C:\\Users\\jajin\\source\\repos\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator\\LinDesk-Linux-Desktop-Environment-Simulator.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jajin\\.nuget\\packages\\taglibsharp\\2.3.0\\taglibsharp.2.3.0.nupkg.sha512"
   ],
