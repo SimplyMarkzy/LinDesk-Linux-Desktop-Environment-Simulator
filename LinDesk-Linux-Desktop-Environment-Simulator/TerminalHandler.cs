@@ -44,31 +44,39 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 directory = "";
                 foreach (string line in text)
                 {
-                    string[] splits = line.Split(" ");
-                    PrefixLabel.Content = splits[0];
-                    if (splits.Length > 1)
+                    if (line != null)
                     {
-                        CommandLabel.Content = splits[1];
-                        prefix = splits[0];
-                        command = splits[1];
+
+                        string[] splits = line.Split(" ");
+                        PrefixLabel.Content = splits[0];
+                        if (splits.Length > 1)
+                        {
+                            CommandLabel.Content = splits[1];
+                            prefix = splits[0];
+                            command = splits[1];
+                        }
+                        else
+                        {
+                            CommandLabel.Content = "";
+                        }
+                        if (splits.Length > 2)
+                        {
+                            DirectoryLabel.Content = splits[2];
+                            prefix = splits[0];
+                            command = splits[1];
+                            directory = splits[2];
+                        }
+                        else
+                        {
+                            DirectoryLabel.Content = "";
+                        }
+                        //ai recommended this bit here for echo command, it just takes everything after the first two splits and makes it the message to be echoed
+                        message = string.Join(" ", splits.Skip(2));
                     }
                     else
                     {
-                        CommandLabel.Content = "";
+
                     }
-                    if (splits.Length > 2)
-                    {
-                        DirectoryLabel.Content = splits[2];
-                        prefix = splits[0];
-                        command = splits[1];
-                        directory = splits[2];
-                    }
-                    else
-                    {
-                        DirectoryLabel.Content = "";
-                    }
-                    //ai recommended this bit here for echo command, it just takes everything after the first two splits and makes it the message to be echoed
-                    message = string.Join(" ", splits.Skip(2));
                 }
                 switch (command)
                 {
@@ -122,6 +130,9 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                         break;
                     case "settings":
                         settings(TerminalHistory, text, Terminal, SettingsMenu);
+                        break;
+                    default:
+                        MainPrefix = BuildPrefix(CurrentDirectory);
                         break;
                 }
 

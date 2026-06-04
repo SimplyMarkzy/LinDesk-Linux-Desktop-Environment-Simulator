@@ -16,6 +16,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         public static void Refresh(ItemsControl FEItemsControl, ref DirectoryConstructor CurrentDirectory, RoutedEventHandler clickHandler)
         {
             FEItemsControl.Items.Clear();
+            
 
             foreach (var folder in CurrentDirectory.SubDirectories)
             {

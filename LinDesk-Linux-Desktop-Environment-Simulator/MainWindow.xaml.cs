@@ -104,7 +104,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             // Start boot sequence asynchronously and await it to avoid CS1998 warning.
-            await StartBootSequence();
+            //await StartBootSequence();
         }
 
         private async Task StartBootSequence()
@@ -798,6 +798,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     FE.Visibility = Visibility.Collapsed;
                 }
             }
+            TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel, DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor, FileName, NanoContent, ref CurrentFile, NewFileWarning, Terminal, SleepMode, SleepVideo, Calculator, SettingsMenu, MusicPlayer);
         }
 
         private void FEUp_Click(object sender, RoutedEventArgs e)
@@ -807,6 +808,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 CurrentDirectory = CurrentDirectory.ParentDirectory;
                 FEItemsControl.ItemsSource = null;
                 FELogic.Refresh(FEItemsControl, ref CurrentDirectory, FEM_Click);
+                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel, DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor, FileName, NanoContent, ref CurrentFile, NewFileWarning, Terminal, SleepMode, SleepVideo, Calculator, SettingsMenu, MusicPlayer);
             }
         }
         private void FEButton_Click(object sender, RoutedEventArgs e)
