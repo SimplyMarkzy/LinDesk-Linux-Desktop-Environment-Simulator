@@ -367,6 +367,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 NanoEditor.Visibility = Visibility.Collapsed;
                 NewFileWarning.Visibility = Visibility.Collapsed;
                 Terminal.Visibility = Visibility.Visible;
+                CurrentFile = null;
             }
         }
 
@@ -723,13 +724,6 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             }
         }
 
-
-
-
-
-        //file manager buttons front and back 
-
-
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             if (LastDirectory != null)
@@ -798,7 +792,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                     FE.Visibility = Visibility.Collapsed;
                 }
             }
-            TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel, DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor, FileName, NanoContent, ref CurrentFile, NewFileWarning, Terminal, SleepMode, SleepVideo, Calculator, SettingsMenu, MusicPlayer);
+            MainPrefix = TerminalHandler.BuildPrefix(CurrentDirectory);
         }
 
         private void FEUp_Click(object sender, RoutedEventArgs e)
@@ -808,7 +802,7 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
                 CurrentDirectory = CurrentDirectory.ParentDirectory;
                 FEItemsControl.ItemsSource = null;
                 FELogic.Refresh(FEItemsControl, ref CurrentDirectory, FEM_Click);
-                TerminalHandler.TerminalExecute(TerminalBox, TerminalHistory, new string[] { executedLine }, executedLine, PrefixLabel, CommandLabel, DirectoryLabel, DirectoryLabel, ref CurrentDirectory, ref MainPrefix, NanoEditor, FileName, NanoContent, ref CurrentFile, NewFileWarning, Terminal, SleepMode, SleepVideo, Calculator, SettingsMenu, MusicPlayer);
+                MainPrefix = TerminalHandler.BuildPrefix(CurrentDirectory);
             }
         }
         private void FEButton_Click(object sender, RoutedEventArgs e)

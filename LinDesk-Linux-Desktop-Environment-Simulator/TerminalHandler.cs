@@ -235,6 +235,10 @@ namespace LinDesk_Linux_Desktop_Environment_Simulator
             {
                 TerminalHistory.AppendText("No directory name provided.");
             }
+            else if (CurrentDirectory.SubDirectories.Any(subDir => subDir.DirectoryName == directory))
+            {
+                TerminalHistory.AppendText("A directory with that name already exists.");
+            }
             else
             {
                 DirectoryConstructor newDir = new DirectoryConstructor(directory, CurrentDirectory);
